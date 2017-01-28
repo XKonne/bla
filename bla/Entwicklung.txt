@@ -1,0 +1,25 @@
+Meilensteine der Programmentwicklung
+Version	Meilenstein
+A.1	GUI: 6x6 großes vorgegebenes Spielfeld; 4 Minen; Beschriftete Felder
+GUI: Aufdecken per Klick
+Reset-Funktion
+(Einzelspieler; lokal)
+A.2	Spielfeld als Datenstruktur gespeichert
+Einzelspieler; lokals (Spieler als Objekt)
+GUI: Rahmen farbig wo Spieler gedrückt
+Zählen der Minen; Spielende(Textnachricht) bei Minenfeld
+A.3a	Spielfeld dynamisch erstellen; feste größe
+A.3b	Spielfeldgröße dynamisch; 2 Größen zu Spielbeginn wählbar
+A.4	2-Spieler-Modus; lokal
+GUI: Anpassung an 2 Spieler
+A.5	Fehlerbehebung
+Optimierung Programmcode
+GUI: Bilder für Minen u.ä.
+GUI: Verbesserung Bedienung
+B.1	Spielname?
+---
+Spielernamen
+Highscore
+Spielstatistik
+Spielfeldgröße: Normal, Freies Spiel (= Freie Spielfeldgröße; Anzahl Minen frei)
+B.2	Spiel pausieren/unterbrechen = Speichern
