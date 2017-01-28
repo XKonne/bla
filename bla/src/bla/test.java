@@ -13,7 +13,8 @@ import javax.swing.event.*;
   * Beschreibung
   *
   * @version 1.0 vom 16.11.2016
-  * @author 
+  * @author XKonne
+  * @author p0sE-Git
   */
 
 
