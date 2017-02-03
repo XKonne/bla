@@ -23,6 +23,7 @@ public class test extends JFrame {
   // Anfang Attribute
   private JLabel jLabel1 = new JLabel();
   private JButton jButton1 = new JButton();
+  private JButton jButton2 = new JButton();
   // Ende Attribute
   
   public test() { 
