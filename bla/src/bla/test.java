@@ -16,6 +16,7 @@ import javax.swing.event.*;
   * @author XKonne
   * @author p0sE-Git
   * juhu
+  * wirklich?
   */
 
 
@@ -69,7 +70,7 @@ public class test extends JFrame {
   } // end of main
   
   public void jButton1_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einfügen
+    // TODO hier Quelltext einfÃ¼gen
     jLabel1.setText("bla");
   } // end of jButton1_ActionPerformed
 
