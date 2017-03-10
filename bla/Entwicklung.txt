@@ -1,8 +1,17 @@
 Meilensteine der Programmentwicklung
 
-Version	Erledigt  Meilenstein
-A.1		done	GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons
-				GUI: Aufdecken per Klick
+Status:		done = fertig, fehlerfrei
+			work = es wird dran gearbeitet, unfertig
+			bug = ausführbar, aber fehlerhaft
+
+
+Version	Status  	Meilenstein															Datum		interne-Version
+					
+A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2017	A.1.1
+
+		done		Raster auf 4x4 erweitert, Testspiel angelegt						11.03.2017	A.1.2
+					GUI: Button-Klick im Spielfeld deckt Feld auf
+				
 				Reset-Funktion (Button)
 				(Einzelspieler; lokal)
 A.2				Spielfeld als Datenstruktur gespeichert
