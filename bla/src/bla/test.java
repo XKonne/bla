@@ -25,7 +25,7 @@ public class test extends JFrame {
   private JButton jButton2 = new JButton();
   
   //MFeld = Minenfeld	            Testspielfeld 4x4
-  //3x3-Raster   1   2   3  4       -  -  1  M
+  //4x4-Raster   1   2   3  4       -  -  1  M
   //             5   6   7  8  <=>  1  2  3  2
   //             9   10  11 12      1  M  M  1
   //             13  14  15 16      1  2  2  1
