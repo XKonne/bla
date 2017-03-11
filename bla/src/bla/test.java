@@ -27,6 +27,10 @@ public class test extends JFrame {
   //Spiel-Oberflaeche
   private JButton ButtonResetSpielfeld = new JButton();
   
+  //Spielername-Eingabefeld
+  private JTextField jTextField1 = new JTextField();
+  private JButton ButtonSpielernameOK = new JButton(); 
+  
   //MFeld = Minenfeld	            Testspielfeld 4x4
   //4x4-Raster   1   2   3  4       -  -  1  M
   //             5   6   7  8  <=>  1  2  3  2
@@ -54,7 +58,7 @@ public class test extends JFrame {
     // Frame-Initialisierung
     super();
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    int frameWidth = 300; 
+    int frameWidth = 330; 
     int frameHeight = 300;
     setSize(frameWidth, frameHeight);
     Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -71,7 +75,18 @@ public class test extends JFrame {
     ButtonResetSpielfeld.setBounds(10, 200, 100, 30);
     ButtonResetSpielfeld.setText("Reset Spiel");
     ButtonResetSpielfeld.setMargin(new Insets(2, 2, 2, 2));
+    
+    //Spielername-Eingabe
+    jTextField1.setBounds(170, 10, 100, 30);
+    cp.add(jTextField1);
 
+    ButtonSpielernameOK.setBounds(280, 10, 30, 30);
+    ButtonSpielernameOK.setText("Go");
+    ButtonSpielernameOK.setMargin(new Insets(2, 2, 2, 2));
+    ButtonSpielernameOK.setEnabled(false);   // Button derzeit deaktiviert. Button-Aufruf nicht implementiert
+    
+
+    
     //Spielfeld
     //MFeld - erste Reihe
     MFeld1.setBounds(10, 10, 30, 30);
@@ -145,6 +160,11 @@ public class test extends JFrame {
         }
       });
     
+    ButtonSpielernameOK.addActionListener(new ActionListener() { 
+        public void actionPerformed(ActionEvent evt) { 
+          ButtonSpielernameOK_ActionPerformed(evt);
+        }
+      });
     
     
     MFeld1.addActionListener(new ActionListener() { 
@@ -232,6 +252,7 @@ public class test extends JFrame {
     //Komponenten erzeugen
     cp.add(jButton1);
     cp.add(ButtonResetSpielfeld);
+    cp.add(ButtonSpielernameOK);
     
     cp.add(MFeld1);
     cp.add(MFeld2);
@@ -266,6 +287,17 @@ public class test extends JFrame {
     jButton1.setText("bla");
   } // end of jButton1_ActionPerformed
   
+  public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) {
+	  
+	  	// Spielfeld zu Programmstart deaktiviert
+	  			//  Erst nach Texteingabe wird "go" Button aktiviert
+	  					//   Nach "go" wird Spielfeld aktiviert
+	  
+	    // Einlesen von String aus Texteingabe > in Label speichern
+	  	// Label mit Spielername > visible = true
+	    // Texteingabefeld > visible = false
+	  
+	  } // end of jButton1_ActionPerformed  
   
   public void ButtonResetSpielfeld_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen

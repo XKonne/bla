@@ -14,12 +14,17 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2
 		done		GUI: Reset-Button setzt Spielfeld zurueck; gibt Buttons frei		11.03.2017  A.1.3
 					Nachricht, falls ein Minenfeld gedrueckt wurde
 						Mine gedrueckt > Spielfeld-Buttons deaktiviert
-
+		
+		work		Spielername eingeben
+						Weitere Entwicklungsschritte in
+						<<< public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) >>> beschrieben
 					
 		work		Linksklick-Spielfeld-Button > Markierung für (potentielle) Mine
 
-					
-				(Einzelspieler; lokal)
+		work		Einzelspieler-Spiel (lokal) / Spielstatistik
+						Ein Spiel ist erfolgreich beendet, wenn alle Felder, außer die Minen aufgedeckt sind.
+							Es muss eine Variable mittracken, damit erkannt wird, ein Spiel ist zuende.			
+				
 A.2				Spielfeld als Datenstruktur gespeichert
 				Einzelspieler; lokals (Spieler als Objekt)
 				GUI: Rahmen farbig wo Spieler gedrückt
