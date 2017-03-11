@@ -11,8 +11,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2
 
 		done		Raster auf 4x4 erweitert, Testspiel angelegt						11.03.2017	A.1.2
 					GUI: Button-Klick im Spielfeld deckt Feld auf
-				
-				Reset-Funktion (Button)
+		done		GUI: Reset-Button setzt Spielfeld zurueck; gibt Buttons frei		11.03.2017  A.1.3
+					Nachricht, falls ein Minenfeld gedrueckt wurde
+						Mine gedrueckt > Spielfeld-Buttons deaktiviert
+
+					
+		work		Linksklick-Spielfeld-Button > Markierung für (potentielle) Mine
+
+					
 				(Einzelspieler; lokal)
 A.2				Spielfeld als Datenstruktur gespeichert
 				Einzelspieler; lokals (Spieler als Objekt)

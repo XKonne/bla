@@ -7,11 +7,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+
 /**
   * Spielprojekt "Seawolf"
   * 	GameApp-Name <not set/actually nameless>
   *
-  * @version A.1.2 vom 11.03.2017
+  * @version A.1.3 vom 11.03.2017
   * @author XKonne
   * @author p0sE-Git
   * 
@@ -22,7 +23,9 @@ public class test extends JFrame {
   // Anfang Attribute
   private JLabel jLabel1 = new JLabel();
   private JButton jButton1 = new JButton();
-  private JButton jButton2 = new JButton();
+  
+  //Spiel-Oberflaeche
+  private JButton ButtonResetSpielfeld = new JButton();
   
   //MFeld = Minenfeld	            Testspielfeld 4x4
   //4x4-Raster   1   2   3  4       -  -  1  M
@@ -64,6 +67,12 @@ public class test extends JFrame {
     cp.setLayout(null);
     // Anfang Komponenten
     
+    //Oberflaeche
+    ButtonResetSpielfeld.setBounds(10, 200, 100, 30);
+    ButtonResetSpielfeld.setText("Reset Spiel");
+    ButtonResetSpielfeld.setMargin(new Insets(2, 2, 2, 2));
+
+    //Spielfeld
     //MFeld - erste Reihe
     MFeld1.setBounds(10, 10, 30, 30);
     MFeld1.setText(".");
@@ -120,7 +129,7 @@ public class test extends JFrame {
     jLabel1.setBounds(192, 112, 110, 20);
     jLabel1.setText("text");
     cp.add(jLabel1);
-    jButton1.setBounds(10, 160, 75, 25);
+    jButton1.setBounds(200, 90, 75, 25);
     jButton1.setText("jButton1");
     jButton1.setMargin(new Insets(2, 2, 2, 2));
     jButton1.addActionListener(new ActionListener() { 
@@ -130,6 +139,14 @@ public class test extends JFrame {
     });
     
     //Methode zum Button-klick-ausfuehren
+    ButtonResetSpielfeld.addActionListener(new ActionListener() { 
+        public void actionPerformed(ActionEvent evt) { 
+          ButtonResetSpielfeld_ActionPerformed(evt);
+        }
+      });
+    
+    
+    
     MFeld1.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld1_ActionPerformed(evt);
@@ -210,10 +227,12 @@ public class test extends JFrame {
         	MFeld16_ActionPerformed(evt);
         }
       });
-    
+
     
     //Komponenten erzeugen
     cp.add(jButton1);
+    cp.add(ButtonResetSpielfeld);
+    
     cp.add(MFeld1);
     cp.add(MFeld2);
     cp.add(MFeld3);
@@ -246,6 +265,46 @@ public class test extends JFrame {
     jLabel1.setText("bla");
     jButton1.setText("bla");
   } // end of jButton1_ActionPerformed
+  
+  
+  public void ButtonResetSpielfeld_ActionPerformed(ActionEvent evt) {
+	    // TODO hier Quelltext einfügen
+	    MFeld1.setText(".");
+	    MFeld2.setText(".");
+	    MFeld3.setText(".");
+	    MFeld4.setText(".");
+	    MFeld5.setText(".");
+	    MFeld6.setText(".");
+	    MFeld7.setText(".");
+	    MFeld8.setText(".");
+	    MFeld9.setText(".");
+	    MFeld10.setText(".");
+	    MFeld11.setText(".");
+	    MFeld12.setText(".");
+	    MFeld13.setText(".");
+	    MFeld14.setText(".");
+	    MFeld15.setText(".");
+	    MFeld16.setText(".");
+	    
+	    MFeld1.setEnabled(true);
+	    MFeld2.setEnabled(true);
+	    MFeld3.setEnabled(true);
+	    MFeld4.setEnabled(true);
+	    MFeld5.setEnabled(true);
+	    MFeld6.setEnabled(true);
+	    MFeld7.setEnabled(true);
+	    MFeld8.setEnabled(true);
+	    MFeld9.setEnabled(true);
+	    MFeld10.setEnabled(true);
+	    MFeld11.setEnabled(true);
+	    MFeld12.setEnabled(true);
+	    MFeld13.setEnabled(true);
+	    MFeld14.setEnabled(true);
+	    MFeld15.setEnabled(true);
+	    MFeld16.setEnabled(true);
+	  } // end of jButton1_ActionPerformed
+  
+  
 
   public void MFeld1_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
@@ -265,9 +324,26 @@ public class test extends JFrame {
   public void MFeld4_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld4.setText("M");
+	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
+	    MFeld1.setEnabled(false);
+	    MFeld2.setEnabled(false);
+	    MFeld3.setEnabled(false);
+	    MFeld4.setEnabled(false);
+	    MFeld5.setEnabled(false);
+	    MFeld6.setEnabled(false);
+	    MFeld7.setEnabled(false);
+	    MFeld8.setEnabled(false);
+	    MFeld9.setEnabled(false);
+	    MFeld10.setEnabled(false);
+	    MFeld11.setEnabled(false);
+	    MFeld12.setEnabled(false);
+	    MFeld13.setEnabled(false);
+	    MFeld14.setEnabled(false);
+	    MFeld15.setEnabled(false);
+	    MFeld16.setEnabled(false);
 	  } // end of jButton1_ActionPerformed
   
-  
+    
   
   public void MFeld5_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
@@ -299,11 +375,45 @@ public class test extends JFrame {
   public void MFeld10_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld10.setText("M");
+	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
+	    MFeld1.setEnabled(false);
+	    MFeld2.setEnabled(false);
+	    MFeld3.setEnabled(false);
+	    MFeld4.setEnabled(false);
+	    MFeld5.setEnabled(false);
+	    MFeld6.setEnabled(false);
+	    MFeld7.setEnabled(false);
+	    MFeld8.setEnabled(false);
+	    MFeld9.setEnabled(false);
+	    MFeld10.setEnabled(false);
+	    MFeld11.setEnabled(false);
+	    MFeld12.setEnabled(false);
+	    MFeld13.setEnabled(false);
+	    MFeld14.setEnabled(false);
+	    MFeld15.setEnabled(false);
+	    MFeld16.setEnabled(false);
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld11_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld11.setText("M");
+	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
+	    MFeld1.setEnabled(false);
+	    MFeld2.setEnabled(false);
+	    MFeld3.setEnabled(false);
+	    MFeld4.setEnabled(false);
+	    MFeld5.setEnabled(false);
+	    MFeld6.setEnabled(false);
+	    MFeld7.setEnabled(false);
+	    MFeld8.setEnabled(false);
+	    MFeld9.setEnabled(false);
+	    MFeld10.setEnabled(false);
+	    MFeld11.setEnabled(false);
+	    MFeld12.setEnabled(false);
+	    MFeld13.setEnabled(false);
+	    MFeld14.setEnabled(false);
+	    MFeld15.setEnabled(false);
+	    MFeld16.setEnabled(false);
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld12_ActionPerformed(ActionEvent evt) {
