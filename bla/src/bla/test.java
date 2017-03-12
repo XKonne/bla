@@ -12,7 +12,7 @@ import javax.swing.event.*;
   * Spielprojekt "Seawolf"
   * 	GameApp-Name <not set/actually nameless>
   *
-  * @version A.1.4 vom 12.03.2017
+  * @version A.1.5 vom 12.03.2017
   * @author XKonne
   * @author p0sE-Git
   * 
@@ -23,6 +23,8 @@ public class test extends JFrame {
   // Anfang Attribute
 	
   String Spielername;
+  int gewonnen=16;
+  int minen=3;
 	
   private JLabel jLabel1 = new JLabel();
   private JButton ButtonSpielNeustart = new JButton();
@@ -56,6 +58,8 @@ public class test extends JFrame {
   private JButton MFeld15 = new JButton(); 
   private JButton MFeld16 = new JButton(); 
   // Ende Attribute
+  
+ 
   
   public test() { 
     // Frame-Initialisierung
@@ -344,6 +348,7 @@ public class test extends JFrame {
 	    MFeld15.setEnabled(true);
 	    MFeld16.setEnabled(true);
 	  
+	    gewonnen=16;
   } // end of jButton1_ActionPerformed
   
   public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) {
@@ -376,7 +381,7 @@ public class test extends JFrame {
 	    jLabel1.setVisible(true);
 	    
 	    ButtonSpielNeustart.setEnabled(true);
-	    
+	    	    
 	    //Button zum Schluss deaktivieren
 	    ButtonSpielernameOK.setEnabled(false);
 	  
@@ -428,6 +433,8 @@ public class test extends JFrame {
 	    jLabel1.setVisible(false);
 	    ButtonSpielernameOK.setEnabled(true);
 	    ButtonSpielNeustart.setEnabled(false);
+	    
+	    gewonnen=16;
 	  } // end of jButton1_ActionPerformed
   
   
@@ -435,16 +442,22 @@ public class test extends JFrame {
   public void MFeld1_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld1.setText("-");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld2_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld2.setText("-");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld3_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld3.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld4_ActionPerformed(ActionEvent evt) {
@@ -474,21 +487,29 @@ public class test extends JFrame {
   public void MFeld5_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld5.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld6_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld6.setText("2");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld7_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld7.setText("3");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld8_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld8.setText("2");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   
@@ -496,6 +517,8 @@ public class test extends JFrame {
   public void MFeld9_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld9.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld10_ActionPerformed(ActionEvent evt) {
@@ -545,6 +568,8 @@ public class test extends JFrame {
   public void MFeld12_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld12.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   
@@ -552,24 +577,57 @@ public class test extends JFrame {
   public void MFeld13_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld13.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld14_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld14.setText("2");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld15_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld15.setText("2");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
   
   public void MFeld16_ActionPerformed(ActionEvent evt) {
 	    // TODO hier Quelltext einfügen
 	    MFeld16.setText("1");
+	    gewonnen=gewonnen-1;
+	    sieg();
 	  } // end of jButton1_ActionPerformed
  
-  
+  public void sieg() {
+	  	  if (gewonnen==minen) {
+	  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
+	  	     
+	  	      //To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der Sieg-Meldung
+	  		 
+	  		  // Hier jetzt: Spiel gewonnen = Spielfeld deaktiviert. Reset und Neustart k�nnen ausgew�hlt werden.
+	 	    MFeld1.setEnabled(false);
+		    MFeld2.setEnabled(false);
+		    MFeld3.setEnabled(false);
+		    MFeld4.setEnabled(false);
+		    MFeld5.setEnabled(false);
+		    MFeld6.setEnabled(false);
+		    MFeld7.setEnabled(false);
+		    MFeld8.setEnabled(false);
+		    MFeld9.setEnabled(false);
+		    MFeld10.setEnabled(false);
+		    MFeld11.setEnabled(false);
+		    MFeld12.setEnabled(false);
+		    MFeld13.setEnabled(false);
+		    MFeld14.setEnabled(false);
+		    MFeld15.setEnabled(false);
+		    MFeld16.setEnabled(false);
+	  	  }
+	  	  
+  }
   
   
   

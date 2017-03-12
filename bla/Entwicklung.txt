@@ -19,9 +19,15 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2
 					> Spielername eingeben > Go klicken
 						 (aktiviert Spielfeld, Eingabe unsichtbar,
 						  Spielername(Label) sichtbar)
-					Neuer Button: Neustarten. Spielername bleibt, Spielfeld auf Anfangszustand
-					Reset-Button: Abgeändert, dass Spielername, Eingabe, Go-Button wieder funktionren
+					Neuer Button: Neustarten. Spielername bleibt, 
+								  Spielfeld auf Anfangszustand
+					Reset-Button: Abgeändert, dass Spielername, Eingabe, 
+								  Go-Button wieder aktiviert sind.
 		
+		done		Sieg-Meldung: Verbleiben die Minenfelder unaufgedeckt (ungeklickt)	12.03.2017	A.1.5
+					und sind alle anderen Felder aufgedeckt, so kommt die Meldung, dass
+					das Spiel gewonnen wurde. 
+					> Spielfeld deaktiviert >> Reset oder Neustart zum weiterführen
 		
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen eingegeben wurden
 		To-Do		Label und Textfiel > passende Namen vergeben	
