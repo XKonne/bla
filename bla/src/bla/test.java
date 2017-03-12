@@ -12,7 +12,7 @@ import javax.swing.event.*;
   * Spielprojekt "Seawolf"
   * 	GameApp-Name <not set/actually nameless>
   *
-  * @version A.1.3 vom 11.03.2017
+  * @version A.1.4 vom 12.03.2017
   * @author XKonne
   * @author p0sE-Git
   * 
@@ -21,8 +21,11 @@ import javax.swing.event.*;
 
 public class test extends JFrame {
   // Anfang Attribute
+	
+  String Spielername;
+	
   private JLabel jLabel1 = new JLabel();
-  private JButton jButton1 = new JButton();
+  private JButton ButtonSpielNeustart = new JButton();
   
   //Spiel-Oberflaeche
   private JButton ButtonResetSpielfeld = new JButton();
@@ -83,8 +86,12 @@ public class test extends JFrame {
     ButtonSpielernameOK.setBounds(280, 10, 30, 30);
     ButtonSpielernameOK.setText("Go");
     ButtonSpielernameOK.setMargin(new Insets(2, 2, 2, 2));
-    ButtonSpielernameOK.setEnabled(false);   // Button derzeit deaktiviert. Button-Aufruf nicht implementiert
+    ButtonSpielernameOK.setEnabled(true); 
     
+    ButtonSpielNeustart.setBounds(120, 200, 100, 30);
+    ButtonSpielNeustart.setText("Neustarten");
+    ButtonSpielNeustart.setMargin(new Insets(2, 2, 2, 2));
+    ButtonSpielNeustart.setEnabled(false);
 
     
     //Spielfeld
@@ -92,66 +99,82 @@ public class test extends JFrame {
     MFeld1.setBounds(10, 10, 30, 30);
     MFeld1.setText(".");
     MFeld1.setMargin(new Insets(2, 2, 2, 2));
+    MFeld1.setEnabled(false);
     MFeld2.setBounds(50, 10, 30, 30);
     MFeld2.setText(".");
     MFeld2.setMargin(new Insets(2, 2, 2, 2));
+    MFeld2.setEnabled(false);
     MFeld3.setBounds(90, 10, 30, 30);
     MFeld3.setText(".");
     MFeld3.setMargin(new Insets(2, 2, 2, 2));
+    MFeld3.setEnabled(false);
     MFeld4.setBounds(130, 10, 30, 30);
     MFeld4.setText(".");
     MFeld4.setMargin(new Insets(2, 2, 2, 2));
+    MFeld4.setEnabled(false);
     //zweite Reihe
     MFeld5.setBounds(10, 50, 30, 30);
     MFeld5.setText(".");
     MFeld5.setMargin(new Insets(2, 2, 2, 2));
+    MFeld5.setEnabled(false);
     MFeld6.setBounds(50, 50, 30, 30);
     MFeld6.setText(".");
     MFeld6.setMargin(new Insets(2, 2, 2, 2));
+    MFeld6.setEnabled(false);
     MFeld7.setBounds(90, 50, 30, 30);
     MFeld7.setText(".");
     MFeld7.setMargin(new Insets(2, 2, 2, 2));
+    MFeld7.setEnabled(false);
     MFeld8.setBounds(130, 50, 30, 30);
     MFeld8.setText(".");
     MFeld8.setMargin(new Insets(2, 2, 2, 2));
+    MFeld8.setEnabled(false);
     //dritte Reihe
     MFeld9.setBounds(10, 90, 30, 30);
     MFeld9.setText(".");
     MFeld9.setMargin(new Insets(2, 2, 2, 2));
+    MFeld9.setEnabled(false);
     MFeld10.setBounds(50, 90, 30, 30);
     MFeld10.setText(".");
     MFeld10.setMargin(new Insets(2, 2, 2, 2));
+    MFeld10.setEnabled(false);
     MFeld11.setBounds(90, 90, 30, 30);
     MFeld11.setText(".");
     MFeld11.setMargin(new Insets(2, 2, 2, 2));
+    MFeld11.setEnabled(false);
     MFeld12.setBounds(130, 90, 30, 30);
     MFeld12.setText(".");
     MFeld12.setMargin(new Insets(2, 2, 2, 2));
+    MFeld12.setEnabled(false);
     //vierte Reihe
     MFeld13.setBounds(10, 130, 30, 30);
     MFeld13.setText(".");
     MFeld13.setMargin(new Insets(2, 2, 2, 2));
+    MFeld13.setEnabled(false);
     MFeld14.setBounds(50, 130, 30, 30);
     MFeld14.setText(".");
     MFeld14.setMargin(new Insets(2, 2, 2, 2));
+    MFeld14.setEnabled(false);
     MFeld15.setBounds(90, 130, 30, 30);
     MFeld15.setText(".");
     MFeld15.setMargin(new Insets(2, 2, 2, 2));
+    MFeld15.setEnabled(false);
     MFeld16.setBounds(130, 130, 30, 30);
     MFeld16.setText(".");
     MFeld16.setMargin(new Insets(2, 2, 2, 2));
+    MFeld16.setEnabled(false);
     
-    jLabel1.setBounds(192, 112, 110, 20);
-    jLabel1.setText("text");
+    jLabel1.setBounds(170, 10, 100, 30);
+    jLabel1.setVisible(false);
     cp.add(jLabel1);
-    jButton1.setBounds(200, 90, 75, 25);
-    jButton1.setText("jButton1");
-    jButton1.setMargin(new Insets(2, 2, 2, 2));
-    jButton1.addActionListener(new ActionListener() { 
-      public void actionPerformed(ActionEvent evt) { 
-        jButton1_ActionPerformed(evt);
-      }
-    });
+    
+       
+    
+    ButtonSpielNeustart.addActionListener(new ActionListener() { 
+        public void actionPerformed(ActionEvent evt) { 
+            ButtonSpielNeustart_ActionPerformed(evt);
+          }
+        });
     
     //Methode zum Button-klick-ausfuehren
     ButtonResetSpielfeld.addActionListener(new ActionListener() { 
@@ -250,7 +273,7 @@ public class test extends JFrame {
 
     
     //Komponenten erzeugen
-    cp.add(jButton1);
+    cp.add(ButtonSpielNeustart);
     cp.add(ButtonResetSpielfeld);
     cp.add(ButtonSpielernameOK);
     
@@ -277,30 +300,15 @@ public class test extends JFrame {
   
   // Anfang Methoden
   
+
   public static void main(String[] args) {
     new test();
+
   } // end of main
   
-  public void jButton1_ActionPerformed(ActionEvent evt) {
+  public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
     // TODO hier Quelltext einfügen
-    jLabel1.setText("bla");
-    jButton1.setText("bla");
-  } // end of jButton1_ActionPerformed
-  
-  public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) {
-	  
-	  	// Spielfeld zu Programmstart deaktiviert
-	  			//  Erst nach Texteingabe wird "go" Button aktiviert
-	  					//   Nach "go" wird Spielfeld aktiviert
-	  
-	    // Einlesen von String aus Texteingabe > in Label speichern
-	  	// Label mit Spielername > visible = true
-	    // Texteingabefeld > visible = false
-	  
-	  } // end of jButton1_ActionPerformed  
-  
-  public void ButtonResetSpielfeld_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
+	  // Spielfeld Oberflaeche zu beginn
 	    MFeld1.setText(".");
 	    MFeld2.setText(".");
 	    MFeld3.setText(".");
@@ -318,6 +326,7 @@ public class test extends JFrame {
 	    MFeld15.setText(".");
 	    MFeld16.setText(".");
 	    
+	    //Spielfeld aktivieren
 	    MFeld1.setEnabled(true);
 	    MFeld2.setEnabled(true);
 	    MFeld3.setEnabled(true);
@@ -334,6 +343,91 @@ public class test extends JFrame {
 	    MFeld14.setEnabled(true);
 	    MFeld15.setEnabled(true);
 	    MFeld16.setEnabled(true);
+	  
+  } // end of jButton1_ActionPerformed
+  
+  public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) {
+	    /* !!! Noch zu implementieren
+	     * 		"Go"-Button erst aktiviert / klickbar, wenn mindestens 3 Zeichen eingegeben sind
+	     */
+	  	  
+	    // Spielfeld aktivieren
+	    MFeld1.setEnabled(true);
+	    MFeld2.setEnabled(true);
+	    MFeld3.setEnabled(true);
+	    MFeld4.setEnabled(true);
+	    MFeld5.setEnabled(true);
+	    MFeld6.setEnabled(true);
+	    MFeld7.setEnabled(true);
+	    MFeld8.setEnabled(true);
+	    MFeld9.setEnabled(true);
+	    MFeld10.setEnabled(true);
+	    MFeld11.setEnabled(true);
+	    MFeld12.setEnabled(true);
+	    MFeld13.setEnabled(true);
+	    MFeld14.setEnabled(true);
+	    MFeld15.setEnabled(true);
+	    MFeld16.setEnabled(true);
+	    
+	    // Name einlesen
+	    Spielername=jTextField1.getText();
+	    jTextField1.setVisible(false);
+	    jLabel1.setText(Spielername);
+	    jLabel1.setVisible(true);
+	    
+	    ButtonSpielNeustart.setEnabled(true);
+	    
+	    //Button zum Schluss deaktivieren
+	    ButtonSpielernameOK.setEnabled(false);
+	  
+	  } // end of jButton1_ActionPerformed  
+  
+  public void ButtonResetSpielfeld_ActionPerformed(ActionEvent evt) {
+	    // TODO hier Quelltext einfügen
+	    // Spielfeld Oberflaeche zu beginn
+	    MFeld1.setText(".");
+	    MFeld2.setText(".");
+	    MFeld3.setText(".");
+	    MFeld4.setText(".");
+	    MFeld5.setText(".");
+	    MFeld6.setText(".");
+	    MFeld7.setText(".");
+	    MFeld8.setText(".");
+	    MFeld9.setText(".");
+	    MFeld10.setText(".");
+	    MFeld11.setText(".");
+	    MFeld12.setText(".");
+	    MFeld13.setText(".");
+	    MFeld14.setText(".");
+	    MFeld15.setText(".");
+	    MFeld16.setText(".");
+	    
+	    // Spielfeld aktivieren
+	    MFeld1.setEnabled(false);
+	    MFeld2.setEnabled(false);
+	    MFeld3.setEnabled(false);
+	    MFeld4.setEnabled(false);
+	    MFeld5.setEnabled(false);
+	    MFeld6.setEnabled(false);
+	    MFeld7.setEnabled(false);
+	    MFeld8.setEnabled(false);
+	    MFeld9.setEnabled(false);
+	    MFeld10.setEnabled(false);
+	    MFeld11.setEnabled(false);
+	    MFeld12.setEnabled(false);
+	    MFeld13.setEnabled(false);
+	    MFeld14.setEnabled(false);
+	    MFeld15.setEnabled(false);
+	    MFeld16.setEnabled(false);
+	    
+	    
+	    //Spielername zur�cksetze, Label weg, Eingabe da
+	    Spielername="none";
+	    jTextField1.setVisible(true);
+	    jTextField1.setText("");
+	    jLabel1.setVisible(false);
+	    ButtonSpielernameOK.setEnabled(true);
+	    ButtonSpielNeustart.setEnabled(false);
 	  } // end of jButton1_ActionPerformed
   
   

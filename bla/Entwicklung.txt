@@ -15,10 +15,17 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2
 					Nachricht, falls ein Minenfeld gedrueckt wurde
 						Mine gedrueckt > Spielfeld-Buttons deaktiviert
 		
-		work		Spielername eingeben
-						Weitere Entwicklungsschritte in
-						<<< public void ButtonSpielernameOK_ActionPerformed(ActionEvent evt) >>> beschrieben
-					
+		done		Spielstart: Spielfeld deaktiviert									12.03.2017	A.1.4
+					> Spielername eingeben > Go klicken
+						 (aktiviert Spielfeld, Eingabe unsichtbar,
+						  Spielername(Label) sichtbar)
+					Neuer Button: Neustarten. Spielername bleibt, Spielfeld auf Anfangszustand
+					Reset-Button: Abgeändert, dass Spielername, Eingabe, Go-Button wieder funktionren
+		
+		
+		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen eingegeben wurden
+		To-Do		Label und Textfiel > passende Namen vergeben	
+				
 		work		Linksklick-Spielfeld-Button > Markierung für (potentielle) Mine
 
 		work		Einzelspieler-Spiel (lokal) / Spielstatistik
