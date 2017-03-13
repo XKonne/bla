@@ -4,6 +4,13 @@ public class Codeschnipsel {
 
 }
 
+
+
+// Linksklick aus Beispiel
+// http://www.java2s.com/Tutorials/Java/java.awt.event/MouseEvent/Java_MouseEvent_getButton_.htm
+
+
+
 /*
 
 // Eine Methode wie man Buttons dynamisch erstellen kann

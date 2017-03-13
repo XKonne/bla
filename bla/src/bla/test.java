@@ -2,6 +2,7 @@
 package bla;
 
 
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -25,6 +26,8 @@ public class test extends JFrame {
   String Spielername;
   int gewonnen=16;
   int minen=3;
+  //Variable für Abfrage für Linkslick ob Spielfeld freigegeben
+  boolean Spielfeldgesperrt=true;
 	
   private JLabel jLabel1 = new JLabel();
   private JButton ButtonSpielNeustart = new JButton();
@@ -59,7 +62,7 @@ public class test extends JFrame {
   private JButton MFeld16 = new JButton(); 
   // Ende Attribute
   
- 
+  
   
   public test() { 
     // Frame-Initialisierung
@@ -199,9 +202,30 @@ public class test extends JFrame {
         	MFeld1_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld1.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld1.setText("*");
+        }
+      });
+    
     MFeld2.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld2_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld2.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld2.setText("*");
         }
       });
     MFeld3.addActionListener(new ActionListener() { 
@@ -209,9 +233,29 @@ public class test extends JFrame {
         	MFeld3_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld3.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld3.setText("*");
+        }
+      });
     MFeld4.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld4_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld4.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld4.setText("*");
         }
       });
     MFeld5.addActionListener(new ActionListener() { 
@@ -219,9 +263,29 @@ public class test extends JFrame {
         	MFeld5_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld5.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld5.setText("*");
+        }
+      });
     MFeld6.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld6_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld6.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld6.setText("*");
         }
       });
     MFeld7.addActionListener(new ActionListener() { 
@@ -229,9 +293,29 @@ public class test extends JFrame {
         	MFeld7_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld7.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld7.setText("*");
+        }
+      });
     MFeld8.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld8_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld8.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld8.setText("*");
         }
       });
     MFeld9.addActionListener(new ActionListener() { 
@@ -239,9 +323,29 @@ public class test extends JFrame {
         	MFeld9_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld9.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld9.setText("*");
+        }
+      });
     MFeld10.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld10_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld10.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld10.setText("*");
         }
       });
     MFeld11.addActionListener(new ActionListener() { 
@@ -249,9 +353,29 @@ public class test extends JFrame {
         	MFeld11_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld11.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld11.setText("*");
+        }
+      });
     MFeld12.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld12_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld12.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld12.setText("*");
         }
       });
     MFeld13.addActionListener(new ActionListener() { 
@@ -259,9 +383,29 @@ public class test extends JFrame {
         	MFeld13_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld3.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld13.setText("*");
+        }
+      });
     MFeld14.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld14_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld14.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld14.setText("*");
         }
       });
     MFeld15.addActionListener(new ActionListener() { 
@@ -269,11 +413,32 @@ public class test extends JFrame {
         	MFeld15_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld15.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld15.setText("*");
+        }
+      });
     MFeld16.addActionListener(new ActionListener() { 
         public void actionPerformed(ActionEvent evt) { 
         	MFeld16_ActionPerformed(evt);
         }
       });
+    //Links
+    MFeld16.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld16.setText("*");
+        }
+      });
+
 
     
     //Komponenten erzeugen
@@ -308,7 +473,10 @@ public class test extends JFrame {
   public static void main(String[] args) {
     new test();
 
+
   } // end of main
+  
+
   
   public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
     // TODO hier Quelltext einfÃ¼gen
@@ -347,6 +515,8 @@ public class test extends JFrame {
 	    MFeld14.setEnabled(true);
 	    MFeld15.setEnabled(true);
 	    MFeld16.setEnabled(true);
+	    
+	    Spielfeldgesperrt=false;
 	  
 	    gewonnen=16;
   } // end of jButton1_ActionPerformed
@@ -381,6 +551,7 @@ public class test extends JFrame {
 	    jLabel1.setVisible(true);
 	    
 	    ButtonSpielNeustart.setEnabled(true);
+	    Spielfeldgesperrt=false;
 	    	    
 	    //Button zum Schluss deaktivieren
 	    ButtonSpielernameOK.setEnabled(false);
@@ -424,6 +595,8 @@ public class test extends JFrame {
 	    MFeld14.setEnabled(false);
 	    MFeld15.setEnabled(false);
 	    MFeld16.setEnabled(false);
+	    
+	    Spielfeldgesperrt=true;
 	    
 	    
 	    //Spielername zurücksetze, Label weg, Eingabe da
@@ -601,7 +774,10 @@ public class test extends JFrame {
 	    gewonnen=gewonnen-1;
 	    sieg();
 	  } // end of jButton1_ActionPerformed
- 
+  
+  
+  
+  
   public void sieg() {
 	  	  if (gewonnen==minen) {
 	  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
@@ -633,4 +809,5 @@ public class test extends JFrame {
   
   // Ende Methoden
 } // end of class dqw
+
 
