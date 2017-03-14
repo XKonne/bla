@@ -13,7 +13,7 @@ import javax.swing.event.*;
   * Spielprojekt "Seawolf"
   * 	GameApp-Name <not set/actually nameless>
   *
-  * @version A.1.5 vom 12.03.2017
+  * @version A.1.6 vom 13.03.2017
   * @author XKonne
   * @author p0sE-Git
   * 
@@ -28,8 +28,11 @@ public class test extends JFrame {
   int minen=3;
   //Variable f�r Abfrage f�r Linkslick ob Spielfeld freigegeben
   boolean Spielfeldgesperrt=true;
+  //0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedr�ckt
+  int[] Spielfeldgeklickt = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //i=1..16 genutzt
 	
   private JLabel jLabel1 = new JLabel();
+  private JLabel Spielfeldaufdecken = new JLabel();
   private JButton ButtonSpielNeustart = new JButton();
   
   //Spiel-Oberflaeche
@@ -175,6 +178,11 @@ public class test extends JFrame {
     jLabel1.setVisible(false);
     cp.add(jLabel1);
     
+    Spielfeldaufdecken.setBounds(170, 150, 100, 30);
+    Spielfeldaufdecken.setVisible(true);
+    Spielfeldaufdecken.setText(Integer.toString(gewonnen));
+    cp.add(Spielfeldaufdecken);
+    
        
     
     ButtonSpielNeustart.addActionListener(new ActionListener() { 
@@ -197,250 +205,335 @@ public class test extends JFrame {
       });
     
     
-    MFeld1.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld1_ActionPerformed(evt);
-        }
-      });
-    //Links
+    //Rechts-Links auf Spielfeld
     MFeld1.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld1.setText("*");
-        }
-      });
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld1.setText("-");
+        			if (Spielfeldgeklickt[1]==0) {
+        				Spielfeldgeklickt[1]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld1.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
     
-    MFeld2.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld2_ActionPerformed(evt);
-        }
-      });
-    //Links
     MFeld2.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld2.setText("*");
-        }
-      });
-    MFeld3.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld3_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld2.setText("-");
+        			if (Spielfeldgeklickt[2]==0) {
+        	        	Spielfeldgeklickt[2]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld2.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld3.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld3.setText("*");
-        }
-      });
-    MFeld4.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld4_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld3.setText("1");
+        			if (Spielfeldgeklickt[3]==0) {
+        	        	Spielfeldgeklickt[3]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld3.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld4.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld4.setText("*");
-        }
-      });
-    MFeld5.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld5_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld4.setText("M");
+        			mine();
+        			Spielfeldgeklickt[4]=1;
+        			if (Spielfeldgeklickt[4]==0) {
+        	        	Spielfeldgeklickt[4]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld4.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld5.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld5.setText("*");
-        }
-      });
-    MFeld6.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld6_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld5.setText("1");
+        			if (Spielfeldgeklickt[5]==0) {
+        	        	Spielfeldgeklickt[5]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld5.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld6.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld6.setText("*");
-        }
-      });
-    MFeld7.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld7_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld6.setText("2");
+        			if (Spielfeldgeklickt[6]==0) {
+        				Spielfeldgeklickt[6]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld6.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld7.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld7.setText("*");
-        }
-      });
-    MFeld8.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld8_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld7.setText("3");
+        			if (Spielfeldgeklickt[7]==0) {
+        				Spielfeldgeklickt[7]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld7.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld8.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld8.setText("*");
-        }
-      });
-    MFeld9.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld9_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld8.setText("2");
+        			if (Spielfeldgeklickt[8]==0) {
+        	        	Spielfeldgeklickt[8]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld8.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld9.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld9.setText("*");
-        }
-      });
-    MFeld10.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld10_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld9.setText("1");
+        			if (Spielfeldgeklickt[9]==0) {
+        	        	Spielfeldgeklickt[9]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld9.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld10.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld10.setText("*");
-        }
-      });
-    MFeld11.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld11_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld10.setText("M");
+        			mine();
+        			Spielfeldgeklickt[10]=1;
+        			if (Spielfeldgeklickt[10]==0) {
+        	        	Spielfeldgeklickt[10]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld10.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld11.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld11.setText("*");
-        }
-      });
-    MFeld12.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld12_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld11.setText("M");
+        			mine();
+        			Spielfeldgeklickt[11]=1;
+        			if (Spielfeldgeklickt[11]==0) {
+        	        	Spielfeldgeklickt[11]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld11.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld12.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld12.setText("*");
-        }
-      });
-    MFeld13.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld13_ActionPerformed(evt);
-        }
-      });
-    //Links
-    MFeld3.addMouseListener(new MouseAdapter() {
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld12.setText("1");
+        			if (Spielfeldgeklickt[12]==0) {
+        	        	Spielfeldgeklickt[12]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld12.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
+    MFeld13.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld13.setText("*");
-        }
-      });
-    MFeld14.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld14_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld13.setText("1");
+        			if (Spielfeldgeklickt[13]==0) {
+        	        	Spielfeldgeklickt[13]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld13.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld14.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld14.setText("*");
-        }
-      });
-    MFeld15.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld15_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld14.setText("2");
+        			if (Spielfeldgeklickt[14]==0) {
+        	        	Spielfeldgeklickt[14]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld14.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld15.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld15.setText("*");
-        }
-      });
-    MFeld16.addActionListener(new ActionListener() { 
-        public void actionPerformed(ActionEvent evt) { 
-        	MFeld16_ActionPerformed(evt);
-        }
-      });
-    //Links
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld15.setText("2");
+        			if (Spielfeldgeklickt[15]==0) {
+        	        	Spielfeldgeklickt[15]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld15.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
+    
     MFeld16.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-          if (Spielfeldgesperrt==true)
-          {
-        	  //do nothing
-          }
-          else MFeld16.setText("*");
-        }
-      });
-
-
+        	if (e.getButton() == MouseEvent.BUTTON1) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld16.setText("1");
+        			if (Spielfeldgeklickt[16]==0) {
+        	        	Spielfeldgeklickt[16]=1;
+        				gewonnen=gewonnen-1;
+        				sieg();
+        				}
+        			}
+        		}
+        	if (e.getButton() == MouseEvent.BUTTON3) {
+        		if (Spielfeldgesperrt==false) {
+        			MFeld16.setText("*");
+        			}
+        		}
+        } // end-mousePressed       
+      }); // end-addMouseListener
     
+    
+       
     //Komponenten erzeugen
     cp.add(ButtonSpielNeustart);
     cp.add(ButtonResetSpielfeld);
@@ -517,6 +610,10 @@ public class test extends JFrame {
 	    MFeld16.setEnabled(true);
 	    
 	    Spielfeldgesperrt=false;
+	    //Spielfeldgeklickt Array zur�cksetzen
+	    for (int i=0; i<17; i++) {
+	    	Spielfeldgeklickt[i]=0;
+	    }
 	  
 	    gewonnen=16;
   } // end of jButton1_ActionPerformed
@@ -597,6 +694,10 @@ public class test extends JFrame {
 	    MFeld16.setEnabled(false);
 	    
 	    Spielfeldgesperrt=true;
+	    //Spielfeldgeklickt Array zur�cksetzen
+	    for (int i=0; i<17; i++) {
+	    	Spielfeldgeklickt[i]=0;
+	    }
 	    
 	    
 	    //Spielername zur�cksetze, Label weg, Eingabe da
@@ -610,176 +711,11 @@ public class test extends JFrame {
 	    gewonnen=16;
 	  } // end of jButton1_ActionPerformed
   
-  
-
-  public void MFeld1_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld1.setText("-");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld2_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld2.setText("-");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld3_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld3.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld4_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld4.setText("M");
-	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
-	    MFeld1.setEnabled(false);
-	    MFeld2.setEnabled(false);
-	    MFeld3.setEnabled(false);
-	    MFeld4.setEnabled(false);
-	    MFeld5.setEnabled(false);
-	    MFeld6.setEnabled(false);
-	    MFeld7.setEnabled(false);
-	    MFeld8.setEnabled(false);
-	    MFeld9.setEnabled(false);
-	    MFeld10.setEnabled(false);
-	    MFeld11.setEnabled(false);
-	    MFeld12.setEnabled(false);
-	    MFeld13.setEnabled(false);
-	    MFeld14.setEnabled(false);
-	    MFeld15.setEnabled(false);
-	    MFeld16.setEnabled(false);
-	  } // end of jButton1_ActionPerformed
-  
     
   
-  public void MFeld5_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld5.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld6_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld6.setText("2");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld7_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld7.setText("3");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld8_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld8.setText("2");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  
-  
-  public void MFeld9_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld9.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld10_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld10.setText("M");
-	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
-	    MFeld1.setEnabled(false);
-	    MFeld2.setEnabled(false);
-	    MFeld3.setEnabled(false);
-	    MFeld4.setEnabled(false);
-	    MFeld5.setEnabled(false);
-	    MFeld6.setEnabled(false);
-	    MFeld7.setEnabled(false);
-	    MFeld8.setEnabled(false);
-	    MFeld9.setEnabled(false);
-	    MFeld10.setEnabled(false);
-	    MFeld11.setEnabled(false);
-	    MFeld12.setEnabled(false);
-	    MFeld13.setEnabled(false);
-	    MFeld14.setEnabled(false);
-	    MFeld15.setEnabled(false);
-	    MFeld16.setEnabled(false);
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld11_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld11.setText("M");
-	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
-	    MFeld1.setEnabled(false);
-	    MFeld2.setEnabled(false);
-	    MFeld3.setEnabled(false);
-	    MFeld4.setEnabled(false);
-	    MFeld5.setEnabled(false);
-	    MFeld6.setEnabled(false);
-	    MFeld7.setEnabled(false);
-	    MFeld8.setEnabled(false);
-	    MFeld9.setEnabled(false);
-	    MFeld10.setEnabled(false);
-	    MFeld11.setEnabled(false);
-	    MFeld12.setEnabled(false);
-	    MFeld13.setEnabled(false);
-	    MFeld14.setEnabled(false);
-	    MFeld15.setEnabled(false);
-	    MFeld16.setEnabled(false);
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld12_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld12.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  
-  
-  public void MFeld13_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld13.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld14_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld14.setText("2");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld15_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld15.setText("2");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  public void MFeld16_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
-	    MFeld16.setText("1");
-	    gewonnen=gewonnen-1;
-	    sieg();
-	  } // end of jButton1_ActionPerformed
-  
-  
-  
-  
   public void sieg() {
-	  	  if (gewonnen==minen) {
+	    Spielfeldaufdecken.setText(Integer.toString(gewonnen));	  
+	  if (gewonnen==minen) {
 	  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 	  	     
 	  	      //To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der Sieg-Meldung
@@ -804,6 +740,28 @@ public class test extends JFrame {
 	  	  }
 	  	  
   }
+  
+  public void mine() {
+	    JOptionPane.showMessageDialog(null, "Mine! Verloren");
+	    MFeld1.setEnabled(false);
+	    MFeld2.setEnabled(false);
+	    MFeld3.setEnabled(false);
+	    MFeld4.setEnabled(false);
+	    MFeld5.setEnabled(false);
+	    MFeld6.setEnabled(false);
+	    MFeld7.setEnabled(false);
+	    MFeld8.setEnabled(false);
+	    MFeld9.setEnabled(false);
+	    MFeld10.setEnabled(false);
+	    MFeld11.setEnabled(false);
+	    MFeld12.setEnabled(false);
+	    MFeld13.setEnabled(false);
+	    MFeld14.setEnabled(false);
+	    MFeld15.setEnabled(false);
+	    MFeld16.setEnabled(false);
+	  	}
+	  	  
+
   
   
   

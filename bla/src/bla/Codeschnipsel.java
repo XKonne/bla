@@ -1,5 +1,10 @@
 package bla;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class Codeschnipsel {
 
 }
@@ -9,7 +14,25 @@ public class Codeschnipsel {
 // Linksklick aus Beispiel
 // http://www.java2s.com/Tutorials/Java/java.awt.event/MouseEvent/Java_MouseEvent_getButton_.htm
 
-
+/* Alte Rechtsklick mit Linksklick Routine
+ * 
+ *    MFeld2.addActionListener(new ActionListener() { 
+        public void actionPerformed(ActionEvent evt) { 
+        	MFeld2_ActionPerformed(evt);
+        }
+      });
+    //Links
+    MFeld2.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent e) {
+          if (Spielfeldgesperrt==true)
+          {
+        	  //do nothing
+          }
+          else MFeld2.setText("*");
+        }
+      });
+      
+ */
 
 /*
 

@@ -1,21 +1,21 @@
 Meilensteine der Programmentwicklung
 
 Status:		done = fertig, fehlerfrei
-			work = es wird dran gearbeitet, unfertig
+			work = es wird dran gearbeitet, unfertig / Teilweise lauffähig 
 			bug = ausführbar, aber fehlerhaft
 
 
-Version	Status  	Meilenstein															Datum		interne-Version
+Version	Status  	Meilenstein																		Datum		interne-Version
 					
-A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2017	A.1.1
+A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.03.2017	A.1.1
 
-		done		Raster auf 4x4 erweitert, Testspiel angelegt						11.03.2017	A.1.2
+		done		Raster auf 4x4 erweitert, Testspiel angelegt									11.03.2017	A.1.2
 					GUI: Button-Klick im Spielfeld deckt Feld auf
-		done		GUI: Reset-Button setzt Spielfeld zurueck; gibt Buttons frei		11.03.2017  A.1.3
+		done		GUI: Reset-Button setzt Spielfeld zurueck; gibt Buttons frei					11.03.2017  A.1.3
 					Nachricht, falls ein Minenfeld gedrueckt wurde
 						Mine gedrueckt > Spielfeld-Buttons deaktiviert
 		
-		done		Spielstart: Spielfeld deaktiviert									12.03.2017	A.1.4
+		done		Spielstart: Spielfeld deaktiviert												12.03.2017	A.1.4
 					> Spielername eingeben > Go klicken
 						 (aktiviert Spielfeld, Eingabe unsichtbar,
 						  Spielername(Label) sichtbar)
@@ -24,15 +24,34 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons		09.03.2
 					Reset-Button: Abgeändert, dass Spielername, Eingabe, 
 								  Go-Button wieder aktiviert sind.
 		
-		done		Sieg-Meldung: Verbleiben die Minenfelder unaufgedeckt (ungeklickt)	12.03.2017	A.1.5
-					und sind alle anderen Felder aufgedeckt, so kommt die Meldung, dass
-					das Spiel gewonnen wurde. 
-					> Spielfeld deaktiviert >> Reset oder Neustart zum weiterführen
+		work		Sieg-Meldung: Verbleiben die Minenfelder unaufgedeckt (ungeklickt)				12.03.2017	A.1.5
+		+			und sind alle anderen Felder aufgedeckt, so kommt die Meldung, dass
+		+			das Spiel gewonnen wurde. 
+		+			> Spielfeld deaktiviert >> Reset oder Neustart zum weiterführen
+		+
+		Bug			Sieg-Erkennung: Durch mehrmaliges drücken eines Spielfeld-Button				14.03.2017  A.1.7
+		^Fixed		kann fälschlicherweise Sieg erkannt werden.
+					> Durch "Spielfeldgeklickt"-Variable wird nun jedes Spielfeld nur noch 1x gezählt
+					
+		done		Spielfeld als Mine markieren													13.03.2017  A.1.6					
+		^Fixed		Bug:	Bei Rechtsklick wird kurz Markierung (*) angezeigt						14.03.2017  A.1.7
+					> Ersetze "ActionListener" durch "MouseEvent" (kann sowohl Rechts- als auch
+					  Linksklick erkennen)
+					
+					>> Ersetze alle "ActionListener" durch eigene "MouseEvent"-Routine, welche		14.03.2017	A.1.7
+					   sowohl den Rechtsklick, als auch Linksklick beinhaltet
+					   
+		
+		To-Do		Sieg-Erkennung ignoriert derzeit markierte Felder
+					> Erkenne ob markiertes Feld auch tatsächlich Mine
+					Anmerkung (Konne): Ist das überhaupt wichtig?!
+					
+
 		
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen eingegeben wurden
 		To-Do		Label und Textfiel > passende Namen vergeben	
 				
-		work		Linksklick-Spielfeld-Button > Markierung für (potentielle) Mine
+
 
 		work		Einzelspieler-Spiel (lokal) / Spielstatistik
 						Ein Spiel ist erfolgreich beendet, wenn alle Felder, außer die Minen aufgedeckt sind.
