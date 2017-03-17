@@ -14,40 +14,34 @@ import javax.swing.event.*;
  * 
  */
 
-public class test extends JFrame {
-	// Anfang Attribute
-
-	String Spielername;
-	int gewonnen = 16;
-	int minen = 3;
+public class Test extends JFrame {
 	
-	// Variable für Abfrage für Linkslick ob Spielfeld freigegeben
-	boolean Spielfeldgesperrt = true;
-	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
-	int[] Spielfeldgeklickt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // i=1..16
-																						// genutzt
-
-	private JLabel jLabel1 = new JLabel();
-	private JLabel Spielfeldaufdecken = new JLabel();
+	// Attribute
+	static boolean Spielfeldgesperrt = true;
+	static int gewonnen = 16;
+	static int minen = 3;
 	private JButton ButtonSpielNeustart = new JButton();
-
-	// Spiel-Oberflaeche
 	private JButton ButtonResetSpielfeld = new JButton();
-
-	// Spielername-Eingabefeld
-	private JTextField jTextField1 = new JTextField();
 	private JButton ButtonSpielernameOK = new JButton();
+	private JLabel jLabel1 = new JLabel();
+	private static JLabel Spielfeldaufdecken = new JLabel();
+	private JTextField jTextField1 = new JTextField();
 
+	// Arrays
+	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
+	static int[] Spielfeldgeklickt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // i=1..16
+	static JButton[] buttons = new JButton[16];
 	// MFeld = Minenfeld Testspielfeld 4x4
-	// 4x4-Raster 1 2 3 4 - - 1 M
+	// 4x4-Raster
+	// 1 2 3 4 <=> - - 1 M
 	// 5 6 7 8 <=> 1 2 3 2
-	// 9 10 11 12 1 M M 1
-	// 13 14 15 16 1 2 2 1
-
-	private static JButton[] buttons = new JButton[16];
+	// 9 10 11 12 <=> 1 M M 1
+	// 13 14 15 16 <=> 1 2 2 1
+	static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
+	String Spielername;
 	// Ende Attribute
 
-	public test() {
+	public Test() {
 		// Frame-Initialisierung
 		super();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -62,16 +56,10 @@ public class test extends JFrame {
 		setResizable(false);
 		Container cp = getContentPane();
 		cp.setLayout(null);
-		// Anfang Komponenten
-
 		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
 				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
-		String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
-
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new JButton(a_btnNames[i]);
-		}
-
+		
+		// Anfang Komponenten
 		// Oberflaeche
 		ButtonResetSpielfeld.setBounds(10, 200, 100, 30);
 		ButtonResetSpielfeld.setText("Reset Spiel");
@@ -92,12 +80,20 @@ public class test extends JFrame {
 		ButtonSpielNeustart.setEnabled(false);
 
 		// Spielfeld
+		
+		// Buttons bauen
 		for (int i = 0; i < buttons.length; i++) {
-
+			
+			buttons[i] = new JButton(a_btnNames[i]);
 			// buttons[i].setBounds(10, 10, 30, 30);
 			buttons[i].setText(".");
 			buttons[i].setMargin(new Insets(2, 2, 2, 2));
 			buttons[i].setEnabled(false);
+			
+			MouseInput mouse = new MouseInput(i);
+			buttons[i].addMouseListener(mouse);
+			
+			cp.add(buttons[i]);
 
 		}
 
@@ -146,55 +142,19 @@ public class test extends JFrame {
 			}
 		});
 
-//		for (int i = 0; i < buttons.length; i++) {
-//
-//			buttons[i].addMouseListener(new MouseAdapter() {
-//				public void mousePressed(MouseEvent e) {
-//					if (e.getButton() == MouseEvent.BUTTON1) {
-//						if (Spielfeldgesperrt == false) {
-//							// buttons[i].setText(a_btnText[i]);
-//							JButton tempbutton = (JButton) e.getSource();
-////							tempbutton.setText(a_btnText[i]);
-//							tempbutton.setText(tempbutton.getName());
-//							if (tempbutton.getName() == "M") {
-//								mine();
-//								Spielfeldgeklickt[i] = 1;
-//							}
-//							if (Spielfeldgeklickt[i] == 0) {
-//								Spielfeldgeklickt[i] = 1;
-//								gewonnen = gewonnen - 1;
-//								sieg();
-//							}
-//						}
-//					}
-//					if (e.getButton() == MouseEvent.BUTTON3) {
-//						if (Spielfeldgesperrt == false) {
-//							buttons[i].setText("*");
-//						}
-//					}
-//				}
-//			});
-//
-//		}
-		
-
 		// Komponenten erzeugen
 		cp.add(ButtonSpielNeustart);
 		cp.add(ButtonResetSpielfeld);
 		cp.add(ButtonSpielernameOK);
-
-		for (int i = 0; i < buttons.length; i++) {
-			cp.add(buttons[i]);
-		}
 		// Ende Komponenten
 
 		setVisible(true);
-	} // end of public test
+	} // end of public Test
 
+	
 	// Anfang Methoden
-
 	public static void main(String[] args) {
-		new test();
+		new Test();
 	}
 
 	public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
@@ -275,7 +235,7 @@ public class test extends JFrame {
 		gewonnen = 16;
 	}
 
-	public void sieg() {
+	public static void sieg() {
 
 		Spielfeldaufdecken.setText(Integer.toString(gewonnen));
 		if (gewonnen == minen) {
@@ -291,18 +251,29 @@ public class test extends JFrame {
 				buttons[i].setEnabled(false);
 			}
 		}
-
 	}
 
-	public void mine() {
+	public static void mine() {
 
 		JOptionPane.showMessageDialog(null, "Mine! Verloren");
 
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setEnabled(false);
 		}
-
+		
 	}
 
+	public static void setText(int i) {
+		buttons[i].setText(a_btnText[i]);
+	}
+
+	public static void setText(int i,String text) {
+		buttons[i].setText(text);
+	}
+	
+	public static void setSpielfeldgeklickt(int i) {
+		Spielfeldgeklickt[i] = 1;
+	}
 	// Ende Methoden
-} // end of class test
+	
+} // end of class Test
