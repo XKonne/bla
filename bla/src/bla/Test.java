@@ -18,14 +18,12 @@ public class Test extends JFrame {
 	
 	// Attribute
 	static boolean Spielfeldgesperrt = true;
-	static int gewonnen = 16;
 	static int minen = 3;
 	static int mine = 3;
 	private JButton ButtonSpielNeustart = new JButton();
 	private JButton ButtonResetSpielfeld = new JButton();
 	private JButton ButtonSpielernameOK = new JButton();
 	private JLabel jLabel1 = new JLabel();
-	private static JLabel Spielfeldaufdecken = new JLabel();
 	private JTextField jTextField1 = new JTextField();
 	
 	private static JLabel RestMinen = new JLabel();
@@ -34,6 +32,7 @@ public class Test extends JFrame {
 
 	// Arrays
 	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
+	// 5=Linksklick. Spielfeld aufgedeckt. Keine weiteren Aktion möglich
 	static int[] Spielfeldgeklickt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; // i=1..16
 	static JButton[] buttons = new JButton[16];
 	// MFeld = Minenfeld Testspielfeld 4x4
@@ -123,11 +122,6 @@ public class Test extends JFrame {
 		jLabel1.setVisible(false);
 		cp.add(jLabel1);
 
-		Spielfeldaufdecken.setBounds(170, 150, 100, 30);
-		Spielfeldaufdecken.setVisible(true);
-		Spielfeldaufdecken.setText(Integer.toString(gewonnen));
-		cp.add(Spielfeldaufdecken);
-
 	    RestMinen.setBounds(170, 50, 100, 30);
 	    RestMinen.setVisible(true);
 	    RestMinen.setText("Minen zähler "+Integer.toString(minen));
@@ -192,8 +186,10 @@ public class Test extends JFrame {
 		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
 			Spielfeldgeklickt[i] = 0;
 		}
-
-		gewonnen = 16;
+		minen=3;
+		RestMinen.setText("Minen zähler "+Integer.toString(minen));
+		minerichtig=0;
+		MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
 	}
 
 	public void ButtonSpielernameOK_ActionPerformed() {
@@ -247,8 +243,10 @@ public class Test extends JFrame {
 		jLabel1.setVisible(false);
 		ButtonSpielernameOK.setEnabled(true);
 		ButtonSpielNeustart.setEnabled(false);
-
-		gewonnen = 16;
+		minen=3;
+		RestMinen.setText("Minen zähler "+Integer.toString(minen));
+		minerichtig=0;
+		MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
 	}
 
 	public static void sieg() {
