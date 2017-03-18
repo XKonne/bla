@@ -52,6 +52,18 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		To-Do		Label und Textfiel > passende Namen vergeben	
 				
 
+			18.03.2017
+					Rechts-/Linksklick-Routine komplett neu erstellt
+					> Angepasst an "Dynamische Buttons"
+					
+					Neue Sieg-Bedingung: Markiere alle Minen Richtig, und das Spiel ist vorbei.
+					Das Spielfeld muss nicht weiter aufgedeckt sein.
+					
+					Oberfläche: Ist ein Button mit Linksklick gedrückt, wird er deaktiviert.
+							    Weiteres klicken wird ignoriert.
+
+
+
 
 		work		Einzelspieler-Spiel (lokal) / Spielstatistik
 						Ein Spiel ist erfolgreich beendet, wenn alle Felder, außer die Minen aufgedeckt sind.
