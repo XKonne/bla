@@ -40,35 +40,55 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					
 					>> Ersetze alle "ActionListener" durch eigene "MouseEvent"-Routine, welche		14.03.2017	A.1.7
 					   sowohl den Rechtsklick, als auch Linksklick beinhaltet
-					   
-		
-		To-Do		Sieg-Erkennung ignoriert derzeit markierte Felder
-					> Erkenne ob markiertes Feld auch tatsächlich Mine
-					Anmerkung (Konne): Ist das überhaupt wichtig?!
-					
 
+		done		Rechts-/Linksklick-Routine komplett neu erstellt								17.03.2017	A.1.8
+		+			> Linkslick deckt Spielfeld auf. Danach ist der Button deaktiviert - es können
+		+			  klicks mehr ausgeführt werden
+		+			> Rechtsklick markiert Spielfeld als potentielle Mine
+		+			> Erneuter Rechtsklick auf markiertes Spielfeld entfernt Markierung
+		+			
+		+			Neue Sieg-Bedingung: Das Spiel ist gewonnen, wenn alle Markieren richtig markiert sind
+		+			> Anpassungen an Spielinfos: Minen markiert, Minen richtig markiert (dient nur zum Fehlerfinden)
+		+
+		done		Label1 und Textfield1 > passende Namen vergeben	
 		
+		
+ => => => => Alpha-1 Status beendet. Alle Grundlegenden Elemente des Einzelspieler-Spiels entwickelt.
+		     Weiter geht es, wenn die Routinen dynamisch erzeugt werden.			   
+	
+
+=== A.2.0 ===========================================================================================================
+
+		done		Modularisierung																	17.03.2017  A.2.1
+					> Buttons als Array erzeugen
+					> Maus-Klick aufruf (MouseListener) in "MouseInput" ausgelagert
+					> Diverse Operationen mit Schleifen realisiert
+					
+		done		Neue Rechts-Linksklick-Routine (aus A.1.8) - jetzt fehlerfrei					17.03.2017	A.2.2
+					Neue Sieg-Bedingung (aus A.1.8) übernommen
+					GUI: Neue Infos zum Spiel > Spielmodus (zZ noch 4x4)
+											  > Minen markiert
+											  > Minen richtig markiert (dient zu Fehlersuche, wird später entfernt)
+		
+		done		Reset/Neustart-Button Routine an neue Elemente angepasst						18.03.2017	A.2.3
+					Spielfeld-Button Position jetzt per Schleife erzeugt
+					GUI: Neue Anordnung von Spielername-Eingabe, Spielername, Spielinfos
+						 > jetzt über dem Spielfeld
+				         Sichtbare Versionsnummer rechts unten eingefügt
+
+
+
+
+
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen (und maximum!) eingegeben wurden, Tooltipp
-		To-Do		Label und Textfiel > passende Namen vergeben	
 				
+		work		Spiel / Spielerstatistik
+					> gespielte runden
+					> zeit
+					.....
 
-			18.03.2017
-					Rechts-/Linksklick-Routine komplett neu erstellt
-					> Angepasst an "Dynamische Buttons"
-					
-					Neue Sieg-Bedingung: Markiere alle Minen Richtig, und das Spiel ist vorbei.
-					Das Spielfeld muss nicht weiter aufgedeckt sein.
-					
-					Oberfläche: Ist ein Button mit Linksklick gedrückt, wird er deaktiviert.
-							    Weiteres klicken wird ignoriert.
+Weiterentwicklungsideen
 
-
-
-
-		work		Einzelspieler-Spiel (lokal) / Spielstatistik
-						Ein Spiel ist erfolgreich beendet, wenn alle Felder, außer die Minen aufgedeckt sind.
-							Es muss eine Variable mittracken, damit erkannt wird, ein Spiel ist zuende.			
-				
 A.2				Spielfeld als Datenstruktur gespeichert
 				Einzelspieler; lokals (Spieler als Objekt)
 				GUI: Rahmen farbig wo Spieler gedrückt

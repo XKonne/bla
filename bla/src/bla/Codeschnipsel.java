@@ -10,6 +10,16 @@ public class Codeschnipsel {
 }
 
 
+// Ausführliche video tutorial wie ein dame spiel programmiert wird
+// http://www.java-tutorial.org/video-tutorial-dame3.html
+
+
+
+// jLabel mit icon
+// http://www.java-tutorial.org/jlabel.html
+
+
+
 
 // Linksklick aus Beispiel
 // http://www.java2s.com/Tutorials/Java/java.awt.event/MouseEvent/Java_MouseEvent_getButton_.htm

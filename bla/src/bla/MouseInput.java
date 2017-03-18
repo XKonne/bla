@@ -20,7 +20,7 @@ public class MouseInput implements MouseListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-/*
+/* alte test-routine von p0se
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			if (test.Spielfeldgesperrt == false) {
 

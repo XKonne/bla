@@ -13,7 +13,7 @@ import javax.swing.event.*;
   * Spielprojekt "Seawolf"
   * 	GameApp-Name <not set/actually nameless>
   *
-  * @version A.1.7 vom 14.03.2017
+  * @version A.1.8 vom 17.03.2017 - finished
   * @author XKonne
   * @author p0sE-Git
   * 
