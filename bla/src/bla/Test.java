@@ -20,12 +20,17 @@ public class Test extends JFrame {
 	static boolean Spielfeldgesperrt = true;
 	static int gewonnen = 16;
 	static int minen = 3;
+	static int mine = 3;
 	private JButton ButtonSpielNeustart = new JButton();
 	private JButton ButtonResetSpielfeld = new JButton();
 	private JButton ButtonSpielernameOK = new JButton();
 	private JLabel jLabel1 = new JLabel();
 	private static JLabel Spielfeldaufdecken = new JLabel();
 	private JTextField jTextField1 = new JTextField();
+	
+	private static JLabel RestMinen = new JLabel();
+	static int minerichtig=0;
+	private static JLabel MinenRichtig = new JLabel();
 
 	// Arrays
 	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
@@ -123,6 +128,17 @@ public class Test extends JFrame {
 		Spielfeldaufdecken.setText(Integer.toString(gewonnen));
 		cp.add(Spielfeldaufdecken);
 
+	    RestMinen.setBounds(170, 50, 100, 30);
+	    RestMinen.setVisible(true);
+	    RestMinen.setText("Minen zähler "+Integer.toString(minen));
+	    cp.add(RestMinen);
+	    
+	    MinenRichtig.setBounds(170, 80, 100, 30);
+	    MinenRichtig.setVisible(true);
+	    MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
+	    cp.add(MinenRichtig);
+		
+		
 		ButtonSpielNeustart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				ButtonSpielNeustart_ActionPerformed(evt);
@@ -237,10 +253,9 @@ public class Test extends JFrame {
 
 	public static void sieg() {
 
-		Spielfeldaufdecken.setText(Integer.toString(gewonnen));
-		if (gewonnen == minen) {
-
-			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
+		   MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	  
+			  if (minerichtig==mine && minen==0) {
+			  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 
 			// To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der
 			// Sieg-Meldung
@@ -262,17 +277,37 @@ public class Test extends JFrame {
 		}
 		
 	}
+	
+	
+	  public static void setMineMarkiert() {
+		  minen=minen-1;
+		  RestMinen.setText("Minen zähler "+Integer.toString(minen));
+	  }
+	  public static void setMarkierteMineFreigeben() {
+		  minen=minen+1;
+		  RestMinen.setText("Minen zähler "+Integer.toString(minen));
+	  }
+	  
+	  public static void mineRichtig(int i) {
+		  minerichtig=minerichtig+i;
+	  }
+	
+	
+	//Button aus MouseInput heraus deaktivieren
+	public static void setDisabled(int i) {
+		buttons[i].setEnabled(false);
+	}
 
 	public static void setText(int i) {
 		buttons[i].setText(a_btnText[i]);
 	}
-
+	
 	public static void setText(int i,String text) {
 		buttons[i].setText(text);
 	}
 	
-	public static void setSpielfeldgeklickt(int i) {
-		Spielfeldgeklickt[i] = 1;
+	public static void setSpielfeldgeklickt(int i, int j) {
+		Spielfeldgeklickt[i] = j;
 	}
 	// Ende Methoden
 	

@@ -25,14 +25,29 @@ public class TestAlpha extends JFrame {
 	
   String Spielername;
   int gewonnen=16;
+  //für Label minenzähler
   int minen=3;
+  //anzahl der minen im spiel
+  int mine=3;
+  //zähler richtig markierte mine
+  int minerichtig=0;
+  
+  String a_Spielfeld[] = { "X", "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
+  
   //Variable für Abfrage für Linkslick ob Spielfeld freigegeben
   boolean Spielfeldgesperrt=true;
   //0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
   int[] Spielfeldgeklickt = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //i=1..16 genutzt
 	
+  long startTime = System.nanoTime();
+  long estimatedTime = System.nanoTime() - startTime;
+  
   private JLabel jLabel1 = new JLabel();
+  private JLabel RestMinen = new JLabel();
+  private JLabel MinenRichtig = new JLabel();
+  
   private JLabel Spielfeldaufdecken = new JLabel();
+  
   private JButton ButtonSpielNeustart = new JButton();
   
   //Spiel-Oberflaeche
@@ -174,6 +189,16 @@ public class TestAlpha extends JFrame {
     MFeld16.setMargin(new Insets(2, 2, 2, 2));
     MFeld16.setEnabled(false);
     
+    RestMinen.setBounds(170, 50, 100, 30);
+    RestMinen.setVisible(true);
+    RestMinen.setText("Minen zähler "+Integer.toString(minen));
+    cp.add(RestMinen);
+    
+    MinenRichtig.setBounds(170, 80, 100, 30);
+    MinenRichtig.setVisible(true);
+    MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
+    cp.add(MinenRichtig);
+    
     jLabel1.setBounds(170, 10, 100, 30);
     jLabel1.setVisible(false);
     cp.add(jLabel1);
@@ -208,23 +233,66 @@ public class TestAlpha extends JFrame {
     //Rechts-Links auf Spielfeld
     MFeld1.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
-        	if (e.getButton() == MouseEvent.BUTTON1) {
-        		if (Spielfeldgesperrt==false) {
-        			MFeld1.setText("-");
+           	if (Spielfeldgesperrt==false) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			MFeld1.setText(a_Spielfeld[1]);
+        			MFeld1.setEnabled(false);
+        			if (Spielfeldgeklickt[1]==2) {
+        				minendemarkiert();
+        			}
+        			if (MFeld1.getText()==("M")) {
+        				mine();
+        			}
+        		}
+        		if (e.getButton() == MouseEvent.BUTTON3) {
+        			if (MFeld1.getText()!="*") {
+        				MFeld1.setText("*");
+        				if (Spielfeldgeklickt[1]!=2) {
+        					if (a_Spielfeld[1]==("M")) {
+        						minerichtig=minerichtig+1;
+        					}
+        					minenmarkiert();
+        				}
+        				Spielfeldgeklickt[1]=2;
+        			}
+        			else {
+        				MFeld1.setText(".");
+    					if (a_Spielfeld[1]==("M")) {
+    						minerichtig=minerichtig-1;
+    					}
+        				minendemarkiert();
+        				Spielfeldgeklickt[1]=0;
+        			}
+        		}
+        	}
+        	sieg();        	
+        } // end-mousePressed       
+    }); // end-addMouseListener  	
+
+    /*
+        			
         			if (Spielfeldgeklickt[1]==0) {
         				Spielfeldgeklickt[1]=1;
-        				gewonnen=gewonnen-1;
-        				sieg();
+        				if (MFeld1.getText()=="*") {
+        					MFeld1.setText(".");
+        					minen=minen+2;
+        					RestMinen.setText(Integer.toString(minen));
         				}
-        			}
+        				else {	
+        					MFeld1.setText("*");
+        					minenmarkiert();
+        					if (a_Spielfeld[1]==("M")) {
+        						minerichtig=minerichtig+1;
+        					}
+        				}
+        			sieg();
         		}
-        	if (e.getButton() == MouseEvent.BUTTON3) {
-        		if (Spielfeldgesperrt==false) {
-        			MFeld1.setText("*");
-        			}
         		}
-        } // end-mousePressed       
+        	}
+        } }
+        	// end-mousePressed       
       }); // end-addMouseListener
+      */
     
     MFeld2.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
@@ -233,14 +301,25 @@ public class TestAlpha extends JFrame {
         			MFeld2.setText("-");
         			if (Spielfeldgeklickt[2]==0) {
         	        	Spielfeldgeklickt[2]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld2.getText()=="*") {
+        				MFeld2.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld2.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[2]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -253,14 +332,25 @@ public class TestAlpha extends JFrame {
         			MFeld3.setText("1");
         			if (Spielfeldgeklickt[3]==0) {
         	        	Spielfeldgeklickt[3]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld3.getText()=="*") {
+        				MFeld3.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld3.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[3]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -275,15 +365,27 @@ public class TestAlpha extends JFrame {
         			Spielfeldgeklickt[4]=1;
         			if (Spielfeldgeklickt[4]==0) {
         	        	Spielfeldgeklickt[4]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
-        			MFeld4.setText("*");
+        			if (MFeld4.getText()=="*") {
+        				MFeld4.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
         			}
+        			else	
+        			MFeld4.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[4]==("M")) {
+        				minerichtig=minerichtig+1;
+        				//sieg();
+        			}
+        			}
+        		sieg();
         		}
         } // end-mousePressed       
       }); // end-addMouseListener
@@ -295,14 +397,25 @@ public class TestAlpha extends JFrame {
         			MFeld5.setText("1");
         			if (Spielfeldgeklickt[5]==0) {
         	        	Spielfeldgeklickt[5]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld5.getText()=="*") {
+        				MFeld5.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld5.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[5]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -315,14 +428,25 @@ public class TestAlpha extends JFrame {
         			MFeld6.setText("2");
         			if (Spielfeldgeklickt[6]==0) {
         				Spielfeldgeklickt[6]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld6.getText()=="*") {
+        				MFeld6.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld6.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[6]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -335,14 +459,25 @@ public class TestAlpha extends JFrame {
         			MFeld7.setText("3");
         			if (Spielfeldgeklickt[7]==0) {
         				Spielfeldgeklickt[7]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld7.getText()=="*") {
+        				MFeld7.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld7.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[7]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -355,14 +490,25 @@ public class TestAlpha extends JFrame {
         			MFeld8.setText("2");
         			if (Spielfeldgeklickt[8]==0) {
         	        	Spielfeldgeklickt[8]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld8.getText()=="*") {
+        				MFeld8.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld8.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[8]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -375,14 +521,25 @@ public class TestAlpha extends JFrame {
         			MFeld9.setText("1");
         			if (Spielfeldgeklickt[9]==0) {
         	        	Spielfeldgeklickt[9]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld9.getText()=="*") {
+        				MFeld9.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld9.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[9]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -397,14 +554,25 @@ public class TestAlpha extends JFrame {
         			Spielfeldgeklickt[10]=1;
         			if (Spielfeldgeklickt[10]==0) {
         	        	Spielfeldgeklickt[10]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld10.getText()=="*") {
+        				MFeld10.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld10.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[10]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -419,14 +587,25 @@ public class TestAlpha extends JFrame {
         			Spielfeldgeklickt[11]=1;
         			if (Spielfeldgeklickt[11]==0) {
         	        	Spielfeldgeklickt[11]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld11.getText()=="*") {
+        				MFeld11.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld11.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[11]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -439,14 +618,25 @@ public class TestAlpha extends JFrame {
         			MFeld12.setText("1");
         			if (Spielfeldgeklickt[12]==0) {
         	        	Spielfeldgeklickt[12]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld12.getText()=="*") {
+        				MFeld12.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld12.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[12]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -459,14 +649,25 @@ public class TestAlpha extends JFrame {
         			MFeld13.setText("1");
         			if (Spielfeldgeklickt[13]==0) {
         	        	Spielfeldgeklickt[13]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld13.getText()=="*") {
+        				MFeld13.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld13.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[13]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -479,14 +680,25 @@ public class TestAlpha extends JFrame {
         			MFeld14.setText("2");
         			if (Spielfeldgeklickt[14]==0) {
         	        	Spielfeldgeklickt[14]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld14.getText()=="*") {
+        				MFeld14.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld14.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[14]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -499,14 +711,25 @@ public class TestAlpha extends JFrame {
         			MFeld15.setText("2");
         			if (Spielfeldgeklickt[15]==0) {
         	        	Spielfeldgeklickt[15]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld15.getText()=="*") {
+        				MFeld15.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld15.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[15]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -519,14 +742,25 @@ public class TestAlpha extends JFrame {
         			MFeld16.setText("1");
         			if (Spielfeldgeklickt[16]==0) {
         	        	Spielfeldgeklickt[16]=1;
-        				gewonnen=gewonnen-1;
+        				//gewonnen=gewonnen-1;
         				sieg();
         				}
         			}
         		}
         	if (e.getButton() == MouseEvent.BUTTON3) {
         		if (Spielfeldgesperrt==false) {
+        			if (MFeld16.getText()=="*") {
+        				MFeld16.setText(".");
+        				minen=minen+2;
+        				RestMinen.setText(Integer.toString(minen));
+        			}
+        			else	
         			MFeld16.setText("*");
+        			minenmarkiert();
+        			if (a_Spielfeld[16]==("M")) {
+        				minerichtig=minerichtig+1;
+        				sieg();
+        			}
         			}
         		}
         } // end-mousePressed       
@@ -714,8 +948,8 @@ public class TestAlpha extends JFrame {
     
   
   public void sieg() {
-	    Spielfeldaufdecken.setText(Integer.toString(gewonnen));	  
-	  if (gewonnen==minen) {
+	    MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	  
+	  if (minerichtig==mine && minen==0) {
 	  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 	  	     
 	  	      //To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der Sieg-Meldung
@@ -760,11 +994,15 @@ public class TestAlpha extends JFrame {
 	    MFeld15.setEnabled(false);
 	    MFeld16.setEnabled(false);
 	  	}
-	  	  
 
-  
-  
-  
+  public void minenmarkiert() {
+	  minen=minen-1;
+	  RestMinen.setText("Minen zähler "+Integer.toString(minen));
+  }
+  public void minendemarkiert() {
+	  minen=minen+1;
+	  RestMinen.setText("Minen zähler "+Integer.toString(minen));
+  }
   // Ende Methoden
 } // end of class dqw
 
