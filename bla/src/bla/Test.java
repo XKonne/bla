@@ -104,7 +104,7 @@ public class Test extends JFrame {
 		// Anfang Komponenten
 		// Oberflaeche
 
-		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("../profil.jpg")));
+		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("profil.jpg")));
 		btn_SpielerProfil.setBounds(10, 5, 40, 40);
 		btn_SpielerProfil.setVisible(false);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
