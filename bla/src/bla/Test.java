@@ -10,10 +10,9 @@ import javax.swing.event.*;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.3 vom 18.03.2017
+ * @version A.2.4 vom 19.03.2017
  * @author XKonne
  * @author p0sE-Git
- * 
  */
 
 public class Test extends JFrame {
@@ -22,24 +21,24 @@ public class Test extends JFrame {
 	static boolean Spielfeldgesperrt = true;
 	static int minen = 3;
 	static int mine = 3;
-	static String versiont="A.2.3";
-	private JButton ButtonSpielNeustart = new JButton();
-	private JButton ButtonResetSpielfeld = new JButton();
-	private JButton ButtonSpielernameOK = new JButton();
+	static String versiont="A.2.4";
+	private JButton btn_SpielNeustart = new JButton();
+	private JButton btn_SpielReset = new JButton();
+	private JButton btn_Spielstarten = new JButton();
 
-	private JLabel labVersion = new JLabel();
-	private JTextField textfSpielernameEingabe = new JTextField();
+	private JLabel lab_Version = new JLabel();
+	private JTextField txtfield_Spielername = new JTextField();
 	
 	//GUI Elemente
 	//Bereich "Spielerinformationen"
-	private JLabel labSpielername = new JLabel();
-	private JLabel labSpielModus = new JLabel();	  
+	private JLabel lab_Spielername = new JLabel();
+	private JLabel lab_Spielmodus = new JLabel();	  
 	
-	private static JLabel labRestminen = new JLabel();
+	private static JLabel lab_Restminen = new JLabel();
 	static int minerichtig=0;
-	private static JLabel labMinenRichtig = new JLabel();
+	private static JLabel lab_MinenRichtig = new JLabel();
 
-	//Buttonsausrichtung
+	//Variablen zur Spielfeld-Button-Ausrichtung
 	int top=10;
 	int left=70;
 	int lenght=30;
@@ -83,23 +82,23 @@ public class Test extends JFrame {
 		// Oberflaeche
 		
 		
-		ButtonResetSpielfeld.setBounds(10, 230, 100, 30);
-		ButtonResetSpielfeld.setText("Reset Spiel");
-		ButtonResetSpielfeld.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielReset.setBounds(10, 230, 100, 30);
+		btn_SpielReset.setText("Reset Spiel");
+		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
 
 		// Spielername-Eingabe
-		textfSpielernameEingabe.setBounds(10, 10, 150, 30);
-		cp.add(textfSpielernameEingabe);
+		txtfield_Spielername.setBounds(10, 10, 150, 30);
+		cp.add(txtfield_Spielername);
 
-		ButtonSpielernameOK.setBounds(170, 10, 35, 28);
-		ButtonSpielernameOK.setText("Los");
-		ButtonSpielernameOK.setMargin(new Insets(2, 2, 2, 2));
-		ButtonSpielernameOK.setEnabled(true);
+		btn_Spielstarten.setBounds(170, 10, 35, 28);
+		btn_Spielstarten.setText("Los");
+		btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
+		btn_Spielstarten.setEnabled(true);
 
-		ButtonSpielNeustart.setBounds(120, 230, 100, 30);
-		ButtonSpielNeustart.setText("Neustarten");
-		ButtonSpielNeustart.setMargin(new Insets(2, 2, 2, 2));
-		ButtonSpielNeustart.setEnabled(false);
+		btn_SpielNeustart.setBounds(120, 230, 100, 30);
+		btn_SpielNeustart.setText("Neustarten");
+		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeustart.setEnabled(false);
 
 		// Spielfeld
 		
@@ -154,59 +153,59 @@ public class Test extends JFrame {
 		*/
 		
 		Border border = LineBorder.createGrayLineBorder();
-		labSpielername.setBounds(5, 5, 160, 40);
-		labSpielername.setFont(new Font("Dialog", Font.PLAIN, 35));
-		labSpielername.setBorder(border);
-		labSpielername.setVisible(false);
-		cp.add(labSpielername);
+		lab_Spielername.setBounds(5, 5, 160, 40);
+		lab_Spielername.setFont(new Font("Dialog", Font.PLAIN, 35));
+		lab_Spielername.setBorder(border);
+		lab_Spielername.setVisible(false);
+		cp.add(lab_Spielername);
 		
-	    labSpielModus.setBounds(170, 0, 100, 20);
-	    labSpielModus.setVisible(false);
-	    labSpielModus.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    labSpielModus.setText("Modus: 4x4");
-	    cp.add(labSpielModus);
+	    lab_Spielmodus.setBounds(170, 0, 100, 20);
+	    lab_Spielmodus.setVisible(false);
+	    lab_Spielmodus.setFont(new Font("Dialog", Font.PLAIN, 11));
+	    lab_Spielmodus.setText("Modus: 4x4");
+	    cp.add(lab_Spielmodus);
 
-	    labRestminen.setBounds(170, 14, 100, 20);
-	    labRestminen.setVisible(false);
-	    labRestminen.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    labRestminen.setText("Minen: "+Integer.toString(minen));
-	    cp.add(labRestminen);
+	    lab_Restminen.setBounds(170, 14, 100, 20);
+	    lab_Restminen.setVisible(false);
+	    lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
+	    lab_Restminen.setText("Minen: "+Integer.toString(minen));
+	    cp.add(lab_Restminen);
 	    
-	    labMinenRichtig.setBounds(170, 28, 100, 20);
-	    labMinenRichtig.setVisible(false);
-	    labMinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    labMinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
-	    cp.add(labMinenRichtig);
+	    lab_MinenRichtig.setBounds(170, 28, 100, 20);
+	    lab_MinenRichtig.setVisible(false);
+	    lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
+	    lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
+	    cp.add(lab_MinenRichtig);
 	    
-	    labVersion.setBounds(285, 240, 100, 30);
-	    labVersion.setVisible(true);
-	    labVersion.setText(versiont);
-	    cp.add(labVersion);
+	    lab_Version.setBounds(285, 240, 100, 30);
+	    lab_Version.setVisible(true);
+	    lab_Version.setText(versiont);
+	    cp.add(lab_Version);
 		
 		
-		ButtonSpielNeustart.addActionListener(new ActionListener() {
+		btn_SpielNeustart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				ButtonSpielNeustart_ActionPerformed(evt);
 			}
 		});
 
 		// Methode zum Button-klick-ausfuehren
-		ButtonResetSpielfeld.addActionListener(new ActionListener() {
+		btn_SpielReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				ButtonResetSpielfeld_ActionPerformed();
 			}
 		});
 
-		ButtonSpielernameOK.addActionListener(new ActionListener() {
+		btn_Spielstarten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				ButtonSpielernameOK_ActionPerformed();
+				btn_Spielstarten_ActionPerformed();
 			}
 		});
 
 		// Komponenten erzeugen
-		cp.add(ButtonSpielNeustart);
-		cp.add(ButtonResetSpielfeld);
-		cp.add(ButtonSpielernameOK);
+		cp.add(btn_SpielNeustart);
+		cp.add(btn_SpielReset);
+		cp.add(btn_Spielstarten);
 		// Ende Komponenten
 
 		setVisible(true);
@@ -222,15 +221,13 @@ public class Test extends JFrame {
 		// TODO hier Quelltext einf√ºgen
 		// Spielfeld Oberflaeche zu beginn
 
+		// Spielfeld-Buttons auf Anfangswert
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setText(".");
 		}
 
 		// Spielfeld aktivieren
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setEnabled(true);
-		}
-
+		setSpielfeldAnAus(true);
 		Spielfeldgesperrt = false;
 
 		// Spielfeldgeklickt Array zur¸cksetzen
@@ -238,32 +235,29 @@ public class Test extends JFrame {
 			Spielfeldgeklickt[i] = 0;
 		}
 		minen=3;
-		labRestminen.setText("Minen: "+Integer.toString(minen));
+		lab_Restminen.setText("Minen: "+Integer.toString(minen));
 		minerichtig=0;
-		labMinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
+		lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
 	}
 
-	public void ButtonSpielernameOK_ActionPerformed() {
-
+	public void btn_Spielstarten_ActionPerformed() {
 		// Spielfeld aktivieren
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setEnabled(true);
-		}
-
+		setSpielfeldAnAus(true);
+		
 		// Name einlesen
-		Spielername = textfSpielernameEingabe.getText();
-		textfSpielernameEingabe.setVisible(false);
-		labSpielername.setText(Spielername);
-		labSpielername.setVisible(true);
-		labSpielModus.setVisible(true);
-		labRestminen.setVisible(true);
-		labMinenRichtig.setVisible(true);
+		Spielername = txtfield_Spielername.getText();
+		txtfield_Spielername.setVisible(false);
+		lab_Spielername.setText(Spielername);
+		lab_Spielername.setVisible(true);
+		lab_Spielmodus.setVisible(true);
+		lab_Restminen.setVisible(true);
+		lab_MinenRichtig.setVisible(true);
 
-		ButtonSpielNeustart.setEnabled(true);
+		btn_SpielNeustart.setEnabled(true);
 		Spielfeldgesperrt = false;
 
 		// Button zum Schluss deaktivieren
-		ButtonSpielernameOK.setVisible(false);
+		btn_Spielstarten.setVisible(false);
 
 	} // end of jButton1_ActionPerformed
 
@@ -276,10 +270,8 @@ public class Test extends JFrame {
 		}
 
 		// Spielfeld deaktivieren
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setEnabled(false);
-		}
-
+		setSpielfeldAnAus(false);
+		
 		Spielfeldgesperrt = true;
 		// Spielfeldgeklickt Array zur¸cksetzen
 		for (int i = 0; i < 17; i++) {
@@ -288,63 +280,89 @@ public class Test extends JFrame {
 
 		// Spielername zur¸cksetze, Label weg, Eingabe da
 		Spielername = "none";
-		textfSpielernameEingabe.setVisible(true);
-		textfSpielernameEingabe.setText("");
-		labSpielername.setVisible(false);
-		labSpielModus.setVisible(false);
-		labRestminen.setVisible(false);
-		labMinenRichtig.setVisible(false);
-		ButtonSpielernameOK.setVisible(true);
-		ButtonSpielNeustart.setEnabled(false);
+		txtfield_Spielername.setVisible(true);
+		txtfield_Spielername.setText("");
+		lab_Spielername.setVisible(false);
+		lab_Spielmodus.setVisible(false);
+		lab_Restminen.setVisible(false);
+		lab_MinenRichtig.setVisible(false);
+		btn_Spielstarten.setVisible(true);
+		btn_SpielNeustart.setEnabled(false);
 		minen=3;
-		labRestminen.setText("Minen z‰hler "+Integer.toString(minen));
+		lab_Restminen.setText("Minen z‰hler "+Integer.toString(minen));
 		minerichtig=0;
-		labMinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
+		lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	
 	}
 
-	public static void sieg() {
+	public static void aufSiegpruefen() {
+		// aufSiegpruefen wird nach _jedem_ Mausklick ausgef¸hrt.
+		
+		// Minen-Markiert-Z‰hler und Minen-Richtig-Z‰hler aktualisieren
+		lab_Restminen.setText("Minen z‰hler "+Integer.toString(minen));
+		lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
+		
+		// Sieg-Bedingung pruefen
+		if (minerichtig==mine && minen==0) {
+			// Ausgabe
+			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 
-		   labMinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));	  
-			  if (minerichtig==mine && minen==0) {
-			  		 JOptionPane.showMessageDialog(null, "Spiel gewonnen");
+			  		 /*
+			 		Object[] options = {"Spielfeld anzeigen", "Nochmal", "Neue Runde", "Neues Spiel"};
 
+	                int selected = JOptionPane.showOptionDialog(null,
+	                                                            "Gewonnen!",
+	                                                            "Spielnachricht",
+								    JOptionPane.DEFAULT_OPTION, 
+	                                                            JOptionPane.INFORMATION_MESSAGE, 
+								    null, options, options[0]);
+			  		 
+			  		
+	             // Erzeugung eines neuen JDialogs 
+	                        JDialog meinJDialog = new JDialog();
+	                        meinJDialog.setTitle("Runde beendet");
+	                        meinJDialog.setSize(125,200);
+	                        meinJDialog.setModal(true);
+	                        meinJDialog.add(labMinenRichtig);
+	                        labMinenRichtig.setBounds(10, 10, 50, 50);
+	                       // meinJDialog.add(new JButton("?"));
+	                        //meinJDialog.add(new JLabel("Gewonnen!"));
+	                        //meinJDialog.add(new JLabel("Gewonnen!"));
+	                        meinJDialog.setVisible(true);
+
+	                */
 			// To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der
 			// Sieg-Meldung
 
-			// Hier jetzt: Spiel gewonnen = Spielfeld deaktiviert. Reset und
-			// Neustart kˆnnen ausgew‰hlt werden.
-			for (int i = 0; i < buttons.length; i++) {
-				buttons[i].setEnabled(false);
-			}
+			// Spielfeld deaktivieren
+			setSpielfeldAnAus(false);
 		}
 	}
 
-	public static void mine() {
-
+	public static void mineAufgedeckt() {
+		// Ausgabe
 		JOptionPane.showMessageDialog(null, "Mine! Verloren");
-
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setEnabled(false);
-		}
-		
+		// Spielfeld deaktivieren
+		setSpielfeldAnAus(false);
 	}
 	
-	
-	  public static void setMineMarkiert() {
-		  minen=minen-1;
-		  labRestminen.setText("Minen z‰hler "+Integer.toString(minen));
-	  }
-	  public static void setMarkierteMineFreigeben() {
-		  minen=minen+1;
-		  labRestminen.setText("Minen z‰hler "+Integer.toString(minen));
-	  }
+	// Feld per Rechtsklick markiert > Erniedrige Minenz‰hler um 1 (=-1). Markierung per Rechtsklick aufgehoben > +1.
+	public static void countMinenMarkierung(int i) {
+		minen=minen+i;		  
+	}
 	  
-	  public static void mineRichtig(int i) {
-		  minerichtig=minerichtig+i;
-	  }
+	// Feld - mit Mine - richtig markiert > +1. Falls die Markierung aufgehoben wird > -1.
+	public static void countMineRichtig(int i) {
+	    minerichtig=minerichtig+i;
+	}
 	
+	// Alle Spielfeld-Button deaktivieren (false) oder aktivieren (true)
+	public static void setSpielfeldAnAus(boolean x) {
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].setEnabled(x);
+		}
+	}
 	
-	//Button aus MouseInput heraus deaktivieren
+	//Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
 	public static void setDisabled(int i) {
 		buttons[i].setEnabled(false);
 	}

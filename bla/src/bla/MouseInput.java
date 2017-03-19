@@ -62,10 +62,10 @@ public class MouseInput implements MouseListener {
 	        			test.setText(i,test.a_btnText[i]);
 	        			test.setDisabled(i);
 	        			if (test.Spielfeldgeklickt[i]==2) {
-	        				test.setMarkierteMineFreigeben();
+	        				test.countMinenMarkierung(1);
 	        			}
 	        			if (test.a_btnText[i] == "M") {
-	        				test.mine();
+	        				test.mineAufgedeckt();
 	        			}
 	        			test.setSpielfeldgeklickt(i,5);
 	        		}
@@ -76,24 +76,24 @@ public class MouseInput implements MouseListener {
 	        				test.setText(i, "*");
 	        				if (test.Spielfeldgeklickt[i]!=2) {
 	        					if (test.a_btnText[i]==("M")) {
-	        						test.mineRichtig(1);
+	        						test.countMineRichtig(1);
 	        					}
-	        					test.setMineMarkiert();
+	        					test.countMinenMarkierung(-1);
 	        				}
 	        				test.setSpielfeldgeklickt(i,2);
 	        			}
 	        			else {
 	        				test.setText(i, ".");
 	    					if (test.a_btnText[i]==("M")) {
-	    						test.mineRichtig(-1);
+	    						test.countMineRichtig(-1);
 	    					}
-	        				test.setMarkierteMineFreigeben();
+	        				test.countMinenMarkierung(1);
 	        				test.setSpielfeldgeklickt(i,0);
 	        			}
 	        		}
 	        		
 	        	}
-	        	test.sieg();        	
+	        	test.aufSiegpruefen();        	
 	        } // end-mousePressed       
 
 	@Override

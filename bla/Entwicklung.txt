@@ -75,6 +75,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					GUI: Neue Anordnung von Spielername-Eingabe, Spielername, Spielinfos
 						 > jetzt über dem Spielfeld
 				         Sichtbare Versionsnummer rechts unten eingefügt
+		
+		done		Codeoptimierung																	19.03.2017	A.2.4
+					> div. Variablen, Objektnamen geändert
+					+ Methode: spielfeldAnAus(boolean) um Spielfeld zu aktivieren/deaktivieren
+					+ Methode: countMinenMarkierung(int) hinzugefügt. Ersetzt frühere Methoden
+						- Methode setMinenMarkierungFreigeben()
+						und
+						- Methode setMinenMarkiert 
 
 
 
