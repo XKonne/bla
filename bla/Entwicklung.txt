@@ -82,7 +82,18 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					+ Methode: countMinenMarkierung(int) hinzugefügt. Ersetzt frühere Methoden
 						- Methode setMinenMarkierungFreigeben()
 						und
-						- Methode setMinenMarkiert 
+						- Methode setMinenMarkiert
+		
+		done		+ SpielerPortrait > btn_SpielerProfil (mit Icon)								20.03.2017	A.2.5
+		>To-Do			> Klick öffnet Spielerprofil mit Statistik. (bisher keine)
+					+ btn_SpielSchliessen > Beendet das Programm
+					+ Spielername in btn_Spielstarten
+						 > Eingabe leer: Ein Zufallsname wird generiert
+						 > 1 oder 2 Zeichen: Fehlermeldung erscheint
+						 > 3 oder mehr Zeichen ... Spiel startet wie gewohnt
+				    > Variablen, Objekte in Test.java nach Typ geordnet
+				    > Spielfeld-Buttons-Anordnung kann jetzt durch setzen der Variablen komplett
+				      beeinflusst werden. Der Wert in "spalte" definiert das Layout
 
 
 
