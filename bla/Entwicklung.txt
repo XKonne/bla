@@ -94,6 +94,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 				    > Variablen, Objekte in Test.java nach Typ geordnet
 				    > Spielfeld-Buttons-Anordnung kann jetzt durch setzen der Variablen komplett
 				      beeinflusst werden. Der Wert in "spalte" definiert das Layout
+				      
+		done	    + Neuer Button: btn_SpielNeueRunde hinzugefügt. 								20.03.2017	A.2.6
+		>To-Do	    	> Derzeit noch ohne Funktion > Dauerhaft deaktiviert.
+				    	> Hier kann später dann ein neues Spielfeld generiert werden
+				    + Neuer Button: btn_SpielInformation hinzugefügt.
+				    	> Hier wird das Spiel und seine Regeln erklärt. Derzeit noch rudimentär.
+				    > Reset-Button ist zu Beginn jetzt deaktiviert. Wird erst nach "Spiel starten"
+				      aktiviert.
 
 
 

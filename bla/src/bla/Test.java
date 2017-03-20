@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.5 vom 20.03.2017
+ * @version A.2.6 vom 20.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -36,7 +36,7 @@ public class Test extends JFrame {
 	
 	
 	// String
-	static String versiont="A.2.5";
+	static String versiont="A.2.6";
 	String Spielername="";
 	
 	
@@ -55,6 +55,8 @@ public class Test extends JFrame {
 	private JButton btn_Spielstarten = new JButton();
 	private JButton btn_SpielerProfil = new JButton();
 	private JButton btn_SpielBeenden = new JButton();
+	private JButton btn_SpielInformation = new JButton();
+	private JButton btn_SpielNeueRunde = new JButton();
 	
 	
 	// Labels
@@ -87,7 +89,7 @@ public class Test extends JFrame {
 		// Frame-Initialisierung
 		super();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		int frameWidth = 310;
+		int frameWidth = 375;
 		int frameHeight = 300;
 		setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -110,28 +112,42 @@ public class Test extends JFrame {
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerProfil);
 		
-		btn_SpielReset.setBounds(10, 230, 90, 30);
-		btn_SpielReset.setText("Reset Spiel");
-		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
+
 
 		// Spielername-Eingabe
 		txtfield_Spielername.setBounds(10, 10, 150, 30);
 		cp.add(txtfield_Spielername);
 
-		btn_Spielstarten.setBounds(170, 10, 35, 28);
-		btn_Spielstarten.setText("Los");
+		btn_Spielstarten.setBounds(170, 10, 90, 28);
+		btn_Spielstarten.setText("Spiel starten");
 		btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
 		btn_Spielstarten.setEnabled(true);
+		
+		btn_SpielReset.setBounds(10, 230, 80, 30);
+		btn_SpielReset.setText("Reset");
+		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielReset.setEnabled(false);
+		
+		btn_SpielNeueRunde.setBounds(100, 230, 80, 30);
+		btn_SpielNeueRunde.setText("Neue Runde");
+		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeueRunde.setEnabled(false);
+		cp.add(btn_SpielNeueRunde);
 
-		btn_SpielNeustart.setBounds(110, 230, 90, 30);
-		btn_SpielNeustart.setText("Neustarten");
+		btn_SpielNeustart.setBounds(190, 230, 80, 30);
+		btn_SpielNeustart.setText("Nochmal");
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielNeustart.setEnabled(false);
 
-		btn_SpielBeenden.setBounds(210, 230, 90, 30);
+		btn_SpielBeenden.setBounds(280, 230, 80, 30);
 		btn_SpielBeenden.setText("Beenden");
 		btn_SpielBeenden.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielBeenden);
+		
+		btn_SpielInformation.setBounds(320, 5, 40, 40);
+		btn_SpielInformation.setText("?");
+		btn_SpielInformation.setMargin(new Insets(2, 2, 2, 2));
+		cp.add(btn_SpielInformation);
 		
 		// Spielfeld
 		
@@ -209,7 +225,7 @@ public class Test extends JFrame {
 	    lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(minerichtig));
 	    cp.add(lab_MinenRichtig);
 	    
-	    lab_Version.setBounds(270, 205, 100, 30);
+	    lab_Version.setBounds(330, 205, 100, 30);
 	    lab_Version.setVisible(true);
 	    lab_Version.setText(versiont);
 	    cp.add(lab_Version);
@@ -250,6 +266,14 @@ public class Test extends JFrame {
 		        meinJDialog.add(new JLabel("Hier werden einmal Spieler-Infos stehen :)"));
 		        
 		        meinJDialog.setVisible(true);
+			}
+		});
+		
+		btn_SpielInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+		        // Erzeugung eines neuen JDialogs 
+				JOptionPane.showMessageDialog(null, "Finde (=richtig markiert) alle Minen um zu gewinnen."
+						+ " Ein Linksklick deckt ein Feld auf. Ein Rechtsklick markiert ein Feld. Wird ein Feld mit einer Mine aufgedeckt, so ist das Spiel verloren.");
 			}
 		});
 
@@ -328,6 +352,7 @@ public class Test extends JFrame {
 
 			// Button zum Schluss deaktivieren
 			btn_Spielstarten.setVisible(false);
+			btn_SpielReset.setEnabled(true);
 		}
 
 	} // end of jButton1_ActionPerformed
