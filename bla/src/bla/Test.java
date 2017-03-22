@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.6 vom 20.03.2017
+ * @version A.2.7 vom 22.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -258,14 +258,7 @@ public class Test extends JFrame {
 		
 		btn_SpielerProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-		        // Erzeugung eines neuen JDialogs 
-		        JDialog meinJDialog = new JDialog();
-		        meinJDialog.setTitle("Spielerprofil");
-		        meinJDialog.setBounds(300, 400, 300, 500);
-		        meinJDialog.setModal(true);
-		        meinJDialog.add(new JLabel("Hier werden einmal Spieler-Infos stehen :)"));
-		        
-		        meinJDialog.setVisible(true);
+				Spielerprofil spieler = new Spielerprofil();
 			}
 		});
 		

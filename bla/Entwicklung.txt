@@ -85,7 +85,7 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						- Methode setMinenMarkiert
 		
 		done		+ SpielerPortrait > btn_SpielerProfil (mit Icon)								20.03.2017	A.2.5
-		>To-Do			> Klick öffnet Spielerprofil mit Statistik. (bisher keine)
+		^done			> Klick öffnet Spielerprofil. (Derzeit noch ohne Inhalt)
 					+ btn_SpielSchliessen > Beendet das Programm
 					+ Spielername in btn_Spielstarten
 						 > Eingabe leer: Ein Zufallsname wird generiert
@@ -102,17 +102,20 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 				    	> Hier wird das Spiel und seine Regeln erklärt. Derzeit noch rudimentär.
 				    > Reset-Button ist zu Beginn jetzt deaktiviert. Wird erst nach "Spiel starten"
 				      aktiviert.
+		
+		done		> Spielerprofil (ohne weiteren Inhalt) als neues Fenster als JFrame umgesetzt. 	22.03.2017	A.2.7
+		
+		
+		
+		work		Klasse > Spieler. Ein Spieler als Objekt anlegen.		
 
-
+		To-Do		Spieler-Statistik für Spielerprofil
+						> Statistik: gespielte Runde, Siegesserie, letzten 10 Spiele, Zeit, .............
 
 
 
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen (und maximum!) eingegeben wurden, Tooltipp
 				
-		work		Spiel / Spielerstatistik
-					> gespielte runden
-					> zeit
-					.....
 
 Weiterentwicklungsideen
 
