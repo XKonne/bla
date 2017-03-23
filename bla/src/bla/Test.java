@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.7 vom 22.03.2017
+ * @version A.2.8 vom 23.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -36,8 +36,8 @@ public class Test extends JFrame {
 	
 	
 	// String
-	static String versiont="A.2.6";
-	String Spielername="";
+	static String versiont="A.2.8";
+	//String Spielername="";
 	
 	
 	// Boolean
@@ -310,20 +310,21 @@ public class Test extends JFrame {
 	
 	
 	public void btn_Spielstarten_ActionPerformed() {
-
+		// Spieler-Objekt erstellen
+		new Spieler();
 		// Name einlesen
-		Spielername = txtfield_Spielername.getText();
+		Spieler.setSpielerName(txtfield_Spielername.getText());
 		// Es wurde kein Spielername eingegeben > Zufallsname
-		if (txtfield_Spielername.getText().length() == 0 || Spielername=="") {
-			Spielername="Rand"+Integer.toString(rand.nextInt(99)+1);
+		if (Spieler.getSpielerName().length() == 0 || Spieler.getSpielerName()=="") {
+			Spieler.setSpielerName("Rand"+Integer.toString(rand.nextInt(99)+1));
 			EingabeRichtig=true;
 		}
 		// Spielername hat nur 1 oder 2 Zeichen. Fehlermeldung.
-		if (txtfield_Spielername.getText().length() == 1 || txtfield_Spielername.getText().length() == 2) {
+		if (Spieler.getSpielerName().length() == 1 || Spieler.getSpielerName().length() == 2) {
 			JOptionPane.showMessageDialog(null, "Ein Spielername muss mindestens aus 3 Zeichen bestehen. Lass das Feld leer für einen Zufallsnamen.");
 		}
 		// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet werden.
-		if (txtfield_Spielername.getText().length() >= 3) {
+		if (Spieler.getSpielerName().length() >= 3) {
 			EingabeRichtig=true;
 		}
 		
@@ -333,7 +334,7 @@ public class Test extends JFrame {
 			setSpielfeldAnAus(true);
 			
 			txtfield_Spielername.setVisible(false);
-			lab_Spielername.setText(Spielername);
+			lab_Spielername.setText(Spieler.getSpielerName());
 			lab_Spielername.setVisible(true);
 			lab_Spielmodus.setVisible(true);
 			lab_Restminen.setVisible(true);
@@ -368,7 +369,7 @@ public class Test extends JFrame {
 		}
 
 		// Spielername zurücksetze, Label weg, Eingabe da
-		Spielername = "";
+		Spieler.setSpielerName("");
 		EingabeRichtig=false;
 		btn_SpielerProfil.setVisible(false);
 		txtfield_Spielername.setVisible(true);
