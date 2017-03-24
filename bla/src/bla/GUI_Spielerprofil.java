@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
 
-public class Spielerprofil extends JFrame {
+public class GUI_Spielerprofil extends JFrame {
 	// Variablen
 	
 	
@@ -17,7 +17,7 @@ public class Spielerprofil extends JFrame {
 	
 
 	
-	public Spielerprofil() {
+	public GUI_Spielerprofil() {
 		super();
 		
 		//Spielerprofil-JFrame initialisieren
@@ -53,7 +53,7 @@ public class Spielerprofil extends JFrame {
 	
 	
 	public static void main(String[] args) {	
-		new Spielerprofil();
+		new GUI_Spielerprofil();
 	}
 	
 

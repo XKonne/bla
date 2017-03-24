@@ -12,7 +12,6 @@ public class MouseInput implements MouseListener {
 	int i;
 
 	public MouseInput(int pi) {
-		super();
 		i = pi;
 	}
 
@@ -20,30 +19,6 @@ public class MouseInput implements MouseListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-/* alte test-routine von p0se
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			if (test.Spielfeldgesperrt == false) {
-
-				if (test.a_btnText[i] == "M") {
-					test.mine();
-					test.setSpielfeldgeklickt(i);
-				}
-
-				if (test.Spielfeldgeklickt[i] == 0) {
-					test.setSpielfeldgeklickt(i);
-					test.gewonnen -= 1;
-					test.sieg();
-				}
-				test.setText(i);
-			}
-		}
-
-		if (e.getButton() == MouseEvent.BUTTON3) {
-			if (test.Spielfeldgesperrt == false) {
-				test.setText(i, "*");
-			}
-		}
-*/
 	}
 
 	@Override

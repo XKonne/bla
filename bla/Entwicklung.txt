@@ -1,8 +1,11 @@
-Meilensteine der Programmentwicklung
 
-Status:		done = fertig, fehlerfrei
-			work = es wird dran gearbeitet, unfertig / Teilweise lauffähig 
-			bug = ausführbar, aber fehlerhaft
+
+	CHANGELOG
+
+
+	Status:		done = fertig, fehlerfrei
+				work = es wird dran gearbeitet, unfertig / Teilweise lauffähig 
+				bug = ausführbar, aber fehlerhaft
 
 
 Version	Status  	Meilenstein																		Datum		interne-Version
@@ -109,38 +112,8 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						+setSpielerName(String)
 						+getSpielerName(return String)
 	
-								
-
-		To-Do		Spieler-Statistik für Spielerprofil
-						> Statistik: gespielte Runde, Siegesserie, letzten 10 Spiele, Zeit, .............
-
-
-
-		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen (und maximum!) eingegeben wurden, Tooltipp
-				
-
-Weiterentwicklungsideen
-
-A.2				Spielfeld als Datenstruktur gespeichert
-				Einzelspieler; lokals (Spieler als Objekt)
-				GUI: Rahmen farbig wo Spieler gedrückt
-				Zählen der Minen; Spielende(Textnachricht) bei Minenfeld
-A.3a			Spielfeld dynamisch erstellen; feste größe
-					> Algorithmus > in Excel testen > 100 Zeilen, Summieren > gleichverteilt?
-				Speichern
-A.3b			Spielfeldgröße dynamisch; 2 Größen zu Spielbeginn wählbar
-A.4				2-Spieler-Modus; lokal
-				GUI: Anpassung an 2 Spieler
-				A.5	Fehlerbehebung
-				Optimierung Programmcode
-				GUI: Bilder für Minen u.ä.
-				GUI: Verbesserung Bedienung
-B.1	Spielname?
----
-Spielernamen
-Highscore
-Spielstatistik
-Spielfeldgröße: Normal, Freies Spiel (= Freie Spielfeldgröße; Anzahl Minen frei)
-B.2	Spiel pausieren/unterbrechen = Speichern
-
-
+		done		+ Klasse: Spiel (noch leer)														24.03.2017	A.2.9
+					+ Neuer Ordner "img" für Bilddateien
+					+ Neue TXT "To-Do" alles was noch zu tun ist / Ideensammlung
+		
+		
