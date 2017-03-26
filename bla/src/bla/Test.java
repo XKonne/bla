@@ -20,7 +20,7 @@ import java.util.Random;
 public class Test extends JFrame {
 
 	private Spiel spiel;
-	
+
 	// Variablen
 
 	// String
@@ -45,7 +45,7 @@ public class Test extends JFrame {
 
 	// Container
 	private Container cp = getContentPane();
-	
+
 	// Labels
 	private JLabel lab_Version = new JLabel();
 	private JLabel lab_Spielername = new JLabel();
@@ -74,7 +74,7 @@ public class Test extends JFrame {
 
 		super();
 		this.spiel = spiel;
-		
+
 		// Frame-Initialisierung
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 375;
@@ -87,7 +87,7 @@ public class Test extends JFrame {
 		setTitle("GameApp-Name actually not set");
 		setResizable(false);
 		cp.setLayout(null);
-				
+
 		// Anfang Komponenten
 		// Oberflaeche
 
@@ -96,8 +96,6 @@ public class Test extends JFrame {
 		btn_SpielerProfil.setVisible(false);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerProfil);
-		
-
 
 		// Spielername-Eingabe
 		txt_SpielerName.setBounds(10, 10, 150, 30);
@@ -107,12 +105,12 @@ public class Test extends JFrame {
 		btn_Spielstarten.setText("Spiel starten");
 		btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
 		btn_Spielstarten.setEnabled(true);
-		
+
 		btn_SpielReset.setBounds(10, 230, 80, 30);
 		btn_SpielReset.setText("Reset");
 		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielReset.setEnabled(false);
-		
+
 		btn_SpielNeueRunde.setBounds(100, 230, 80, 30);
 		btn_SpielNeueRunde.setText("Neue Runde");
 		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
@@ -128,48 +126,47 @@ public class Test extends JFrame {
 		btn_SpielBeenden.setText("Beenden");
 		btn_SpielBeenden.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielBeenden);
-		
+
 		btn_SpielInformation.setBounds(320, 5, 40, 40);
 		btn_SpielInformation.setText("?");
 		btn_SpielInformation.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielInformation);
-		
+
 		// Spielfeld
-		
+
 		createSpielfeldButtons();
 		setBoundsSpielfeldButtons();
-		
+
 		Border border = LineBorder.createGrayLineBorder();
 		lab_Spielername.setBounds(55, 5, 160, 40);
 		lab_Spielername.setFont(new Font("Dialog", Font.PLAIN, 35));
 		lab_Spielername.setBorder(border);
 		lab_Spielername.setVisible(false);
 		cp.add(lab_Spielername);
-		
-	    lab_Spielmodus.setBounds(220, 0, 100, 20);
-	    lab_Spielmodus.setVisible(false);
-	    lab_Spielmodus.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    lab_Spielmodus.setText("Modus: 4x4");
-	    cp.add(lab_Spielmodus);
 
-	    lab_Restminen.setBounds(220, 14, 100, 20);
-	    lab_Restminen.setVisible(false);
-	    lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    lab_Restminen.setText("Minen: "+Integer.toString(spiel.getRestMinen()));
-	    cp.add(lab_Restminen);
-	    
-	    lab_MinenRichtig.setBounds(220, 28, 100, 20);
-	    lab_MinenRichtig.setVisible(false);
-	    lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    lab_MinenRichtig.setText("Mine Richtig "+Integer.toString(spiel.getMinenRichtig()));
-	    cp.add(lab_MinenRichtig);
-	    
-	    lab_Version.setBounds(330, 205, 100, 30);
-	    lab_Version.setVisible(true);
-	    lab_Version.setText(versiont);
-	    cp.add(lab_Version);
-		
-		
+		lab_Spielmodus.setBounds(220, 0, 100, 20);
+		lab_Spielmodus.setVisible(false);
+		lab_Spielmodus.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lab_Spielmodus.setText("Modus: 4x4");
+		cp.add(lab_Spielmodus);
+
+		lab_Restminen.setBounds(220, 14, 100, 20);
+		lab_Restminen.setVisible(false);
+		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+		cp.add(lab_Restminen);
+
+		lab_MinenRichtig.setBounds(220, 28, 100, 20);
+		lab_MinenRichtig.setVisible(false);
+		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lab_MinenRichtig.setText("Mine Richtig " + Integer.toString(spiel.getMinenRichtig()));
+		cp.add(lab_MinenRichtig);
+
+		lab_Version.setBounds(330, 205, 100, 30);
+		lab_Version.setVisible(true);
+		lab_Version.setText(versiont);
+		cp.add(lab_Version);
+
 		btn_SpielNeustart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				ButtonSpielNeustart_ActionPerformed(evt);
@@ -188,22 +185,22 @@ public class Test extends JFrame {
 				btn_Spielstarten_ActionPerformed();
 			}
 		});
-		
+
 		btn_SpielBeenden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				dispose();
 			}
 		});
-		
+
 		btn_SpielerProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				GUI_Spielerprofil spieler = new GUI_Spielerprofil();
 			}
 		});
-		
+
 		btn_SpielInformation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-		        // Erzeugung eines neuen JDialogs 
+				// Erzeugung eines neuen JDialogs
 				JOptionPane.showMessageDialog(null, "Finde (=richtig markiert) alle Minen um zu gewinnen."
 						+ " Ein Linksklick deckt ein Feld auf. Ein Rechtsklick markiert ein Feld. Wird ein Feld mit einer Mine aufgedeckt, so ist das Spiel verloren.");
 			}
@@ -219,22 +216,22 @@ public class Test extends JFrame {
 	} // end of public Test
 
 	private void createSpielfeldButtons() {
-		
+
 		// TODO Button-Namen wirklich notwendig?
 		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
 				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
-		
+
 		// Buttons bauen
 		for (int i = 0; i < buttons.length; i++) {
-			
+
 			buttons[i] = new JButton(a_btnNames[i]);
 			buttons[i].setText(".");
 			buttons[i].setMargin(new Insets(2, 2, 2, 2));
 			buttons[i].setEnabled(false);
-			
+
 			MouseInput mouse = new MouseInput(i);
 			buttons[i].addMouseListener(mouse);
-			
+
 			cp.add(buttons[i]);
 		}
 	}
@@ -251,21 +248,20 @@ public class Test extends JFrame {
 		int zeile = 0;
 		int spalte = 4; // Spalte setzt das Layout fest
 		int abstand = 10;
-		
-		for (int i=0; i<buttons.length; i++) {
-			    //x-Wert ergibt sich aus Button-Nr MOD spaltenwert (hier 4), damit 4 Buttons hinereinander liegen
-				buttons[i].setBounds(top+(i%spalte)*lenght+(i%spalte)*abstand,left+zeile*height+zeile*abstand,lenght,height);
-				// Wenn eine Zeile fertig ist, erhöhe Zeilen-Wert (=y-Koordinate)
-				if (i%spalte==spalte-1) {
-					zeile=zeile+1;
-				}
+
+		for (int i = 0; i < buttons.length; i++) {
+			// x-Wert ergibt sich aus Button-Nr MOD spaltenwert (hier 4), damit
+			// 4 Buttons hinereinander liegen
+			buttons[i].setBounds(top + (i % spalte) * lenght + (i % spalte) * abstand,
+					left + zeile * height + zeile * abstand, lenght, height);
+			// Wenn eine Zeile fertig ist, erhöhe Zeilen-Wert (=y-Koordinate)
+			if (i % spalte == spalte - 1) {
+				zeile = zeile + 1;
+			}
 		}
 	}
 
 	// Anfang Methoden
-//	public static void main(String[] args) {
-//		new Test();
-//	}
 
 	public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
 		// TODO hier Quelltext einfÃ¼gen
@@ -416,10 +412,6 @@ public class Test extends JFrame {
 	// Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
 	public static void setDisabled(int i) {
 		buttons[i].setEnabled(false);
-	}
-
-	public static void setText(int i) {
-		buttons[i].setText(a_btnText[i]);
 	}
 
 	public static void setText(int i, String text) {
