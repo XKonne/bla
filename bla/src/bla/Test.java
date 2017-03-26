@@ -22,14 +22,6 @@ public class Test extends JFrame {
 	private Spiel spiel;
 	
 	// Variablen
-	// Variablen zur Spielfeld-Button-Ausrichtung
-	int top = 10;
-	int left = 70;
-	int lenght = 30;
-	int height = 30;
-	int zeile = 0;
-	int spalte = 4; // Spalte setzt das Layout fest
-	int abstand = 10;
 
 	// String
 	static String versiont = "A.2.10";
@@ -158,18 +150,7 @@ public class Test extends JFrame {
 			cp.add(buttons[i]);
 		}
 		
-		
-		
-		
-		//x-y-Wert setzen bei Spielfeld-Buttons
-		for (int i=0; i<buttons.length; i++) {
-			    //x-Wert ergibt sich aus Button-Nr MOD spaltenwert (hier 4), damit 4 Buttons hinereinander liegen
-				buttons[i].setBounds(top+(i%spalte)*lenght+(i%spalte)*abstand,left+zeile*height+zeile*abstand,lenght,height);
-				// Wenn eine Zeile fertig ist, erhöhe Zeilen-Wert (=y-Koordinate)
-				if (i%spalte==spalte-1) {
-					zeile=zeile+1;
-				}
-		}
+		setBoundsSpielfeldButtons();
 		
 		Border border = LineBorder.createGrayLineBorder();
 		lab_Spielername.setBounds(55, 5, 160, 40);
@@ -249,6 +230,29 @@ public class Test extends JFrame {
 
 		setVisible(true);
 	} // end of public Test
+
+	/**
+	 * x-y-Wert setzen bei den Spielfeld-Buttons
+	 */
+	private void setBoundsSpielfeldButtons() {
+
+		int top = 10;
+		int left = 70;
+		int lenght = 30;
+		int height = 30;
+		int zeile = 0;
+		int spalte = 4; // Spalte setzt das Layout fest
+		int abstand = 10;
+		
+		for (int i=0; i<buttons.length; i++) {
+			    //x-Wert ergibt sich aus Button-Nr MOD spaltenwert (hier 4), damit 4 Buttons hinereinander liegen
+				buttons[i].setBounds(top+(i%spalte)*lenght+(i%spalte)*abstand,left+zeile*height+zeile*abstand,lenght,height);
+				// Wenn eine Zeile fertig ist, erhöhe Zeilen-Wert (=y-Koordinate)
+				if (i%spalte==spalte-1) {
+					zeile=zeile+1;
+				}
+		}
+	}
 
 	// Anfang Methoden
 //	public static void main(String[] args) {
