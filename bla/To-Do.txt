@@ -18,6 +18,7 @@
 
 
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen (und maximum!) eingegeben wurden, Tooltipp
+		To-Do		alternativ zum Go-Button soll auch durch die Eingabe von Return/Enter das Spiel starten
 				
 
 Weiterentwicklungsideen

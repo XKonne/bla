@@ -23,7 +23,6 @@ public class Test extends JFrame {
 
 	// Variablen
 	// Integer
-	static int minen = 3;
 	static int mine = 3;
 	static int minerichtig = 0;
 	// Variablen zur Spielfeld-Button-Ausrichtung
@@ -79,7 +78,7 @@ public class Test extends JFrame {
 	static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
 	// Ende Attribute
 
-	public Test() {
+	public Test(Spiel spiel) {
 		// Frame-Initialisierung
 		super();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -188,7 +187,7 @@ public class Test extends JFrame {
 	    lab_Restminen.setBounds(220, 14, 100, 20);
 	    lab_Restminen.setVisible(false);
 	    lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
-	    lab_Restminen.setText("Minen: "+Integer.toString(minen));
+	    lab_Restminen.setText("Minen: "+Integer.toString(spiel.getMinen()));
 	    cp.add(lab_Restminen);
 	    
 	    lab_MinenRichtig.setBounds(220, 28, 100, 20);
@@ -252,9 +251,9 @@ public class Test extends JFrame {
 	} // end of public Test
 
 	// Anfang Methoden
-	public static void main(String[] args) {
-		new Test();
-	}
+//	public static void main(String[] args) {
+//		new Test();
+//	}
 
 	public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
 		// TODO hier Quelltext einf√ºgen
@@ -273,8 +272,8 @@ public class Test extends JFrame {
 		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
 			Spielfeldgeklickt[i] = 0;
 		}
-		minen = 3;
-		lab_Restminen.setText("Minen: " + Integer.toString(minen));
+		Spiel.setMinen(3);
+		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getMinen()));
 		minerichtig = 0;
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(minerichtig));
 	}
@@ -350,8 +349,8 @@ public class Test extends JFrame {
 		lab_MinenRichtig.setVisible(false);
 		btn_Spielstarten.setVisible(true);
 		btn_SpielNeustart.setEnabled(false);
-		minen = 3;
-		lab_Restminen.setText("Minen: " + Integer.toString(minen));
+		Spiel.setMinen(3);
+		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getMinen()));
 		minerichtig = 0;
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(minerichtig));
 	}
@@ -360,11 +359,11 @@ public class Test extends JFrame {
 		// aufSiegpruefen wird nach _jedem_ Mausklick ausgef¸hrt.
 
 		// Minen-Markiert-Z‰hler und Minen-Richtig-Z‰hler aktualisieren
-		lab_Restminen.setText("Minen: " + Integer.toString(minen));
+		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getMinen()));
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(minerichtig));
 
 		// Sieg-Bedingung pruefen
-		if (minerichtig == mine && minen == 0) {
+		if (minerichtig == mine && Spiel.getMinen() == 0) {
 			// Ausgabe
 			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 
@@ -398,7 +397,7 @@ public class Test extends JFrame {
 	// Feld per Rechtsklick markiert > Erniedrige Minenz‰hler um 1 (=-1).
 	// Markierung per Rechtsklick aufgehoben > +1.
 	public static void countMinenMarkierung(int i) {
-		minen = minen + i;
+		Spiel.setMinen(Spiel.getMinen() + i);
 	}
 
 	// Feld - mit Mine - richtig markiert > +1. Falls die Markierung aufgehoben
