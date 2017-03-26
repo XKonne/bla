@@ -43,6 +43,9 @@ public class Test extends JFrame {
 	private JButton btn_SpielInformation = new JButton();
 	private JButton btn_SpielNeueRunde = new JButton();
 
+	// Container
+	private Container cp = getContentPane();
+	
 	// Labels
 	private JLabel lab_Version = new JLabel();
 	private JLabel lab_Spielername = new JLabel();
@@ -83,11 +86,8 @@ public class Test extends JFrame {
 		setLocation(x, y);
 		setTitle("GameApp-Name actually not set");
 		setResizable(false);
-		Container cp = getContentPane();
 		cp.setLayout(null);
-		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
-				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
-		
+				
 		// Anfang Komponenten
 		// Oberflaeche
 
@@ -136,20 +136,7 @@ public class Test extends JFrame {
 		
 		// Spielfeld
 		
-		// Buttons bauen
-		for (int i = 0; i < buttons.length; i++) {
-			
-			buttons[i] = new JButton(a_btnNames[i]);
-			buttons[i].setText(".");
-			buttons[i].setMargin(new Insets(2, 2, 2, 2));
-			buttons[i].setEnabled(false);
-			
-			MouseInput mouse = new MouseInput(i);
-			buttons[i].addMouseListener(mouse);
-			
-			cp.add(buttons[i]);
-		}
-		
+		createSpielfeldButtons();
 		setBoundsSpielfeldButtons();
 		
 		Border border = LineBorder.createGrayLineBorder();
@@ -230,6 +217,27 @@ public class Test extends JFrame {
 
 		setVisible(true);
 	} // end of public Test
+
+	private void createSpielfeldButtons() {
+		
+		// TODO Button-Namen wirklich notwendig?
+		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
+				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
+		
+		// Buttons bauen
+		for (int i = 0; i < buttons.length; i++) {
+			
+			buttons[i] = new JButton(a_btnNames[i]);
+			buttons[i].setText(".");
+			buttons[i].setMargin(new Insets(2, 2, 2, 2));
+			buttons[i].setEnabled(false);
+			
+			MouseInput mouse = new MouseInput(i);
+			buttons[i].addMouseListener(mouse);
+			
+			cp.add(buttons[i]);
+		}
+	}
 
 	/**
 	 * x-y-Wert setzen bei den Spielfeld-Buttons

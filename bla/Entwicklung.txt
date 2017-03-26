@@ -122,7 +122,7 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					+ Um von der Static-Abhängigkeit hin zu privaten Variablen zu kommen, begonnen
 					  beim Umziehen die ganzen Statics zu entfernen. Um auf das richtige Objekt
 					  zugreifen zu können, werden beim Setup die notwendigen Objekte übergeben.
-					  
-		done		> setBounds-Logik in setBoundsSpielfeldButtons() extrahiert und
+					
+					> setBounds-Logik in setBoundsSpielfeldButtons() extrahiert und					
 					  benötigte Variablen in lokale Variablen der Methode umgezogen.
-		
+					> createButtons-Funktion in createSpielfeldButtons() extrahiert.
