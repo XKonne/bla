@@ -115,5 +115,11 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		done		+ Klasse: Spiel (noch leer)														24.03.2017	A.2.9
 					+ Neuer Ordner "img" für Bilddateien
 					+ Neue TXT "To-Do" alles was noch zu tun ist / Ideensammlung
-		
+					
+		done		> Spiel-Logik in Klasse Spiel umgezogen:										26.03.2017	A.2.10
+					+ Getter & Setter für die notwendigen Variablen in Klasse Spiel erstellt
+					> Variablen sprechender umbenannt: z.B. minen->restMinen; mine->minenGesamt
+					+ Um von der Static-Abhängigkeit hin zu privaten Variablen zu kommen, begonnen
+					  beim Umziehen die ganzen Statics zu entfernen. Um auf das richtige Objekt
+					  zugreifen zu können, werden beim Setup die notwendigen Objekte übergeben. 
 		
