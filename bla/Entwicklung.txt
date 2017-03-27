@@ -143,4 +143,5 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						 > Anzeige siehe  "Spielerprofil"
 						 Info: Funktioniert nur solange "Nochmal" nach Sieg/Niederlage gedrückt wird
 						 	   Weil nach Reset > Spiel starten ist ein neues Spieler-Objekt erstellt
-					
+				    > Bug fixed: Nach Sieg/Niederlage-Meldung konnte weiter auf dem Spielfeld gespielt
+								 bzw. geklickt werden.

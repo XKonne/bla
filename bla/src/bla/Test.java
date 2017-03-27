@@ -372,7 +372,7 @@ public class Test extends JFrame {
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
 
 		// Sieg-Bedingung pruefen
-		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0) {
+		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0 && Spielfeldgesperrt==false) {
 			// Ausgabe
 			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 
@@ -383,6 +383,7 @@ public class Test extends JFrame {
 			
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
+			Spielfeldgesperrt = true;
 		}
 	}
 
@@ -396,6 +397,7 @@ public class Test extends JFrame {
 		
 		// Spielfeld deaktivieren
 		setSpielfeldAnAus(false);
+		Spielfeldgesperrt = true;
 	}
 
 	// Alle Spielfeld-Button deaktivieren (false) oder aktivieren (true)
