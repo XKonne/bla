@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.10 vom 24.03.2017
+ * @version A.2.11 vom 27.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -24,7 +24,7 @@ public class Test extends JFrame {
 	// Variablen
 
 	// String
-	static String versiont = "A.2.10";
+	static String versiont = "A.2.11";
 	// String Spielername="";
 
 	// Boolean

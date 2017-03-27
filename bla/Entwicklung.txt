@@ -126,3 +126,15 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					> setBounds-Logik in setBoundsSpielfeldButtons() extrahiert und					
 					  benötigte Variablen in lokale Variablen der Methode umgezogen.
 					> createButtons-Funktion in createSpielfeldButtons() extrahiert.
+					
+		done		> GUI_Spielerprofil																27.03.2017	A.2.11
+						+ Diverse Labels hinzugefügt, die Inhalt aus Spieler beziehen
+					> Spieler: Diverse set/get-Methoden hinzugefügt, für...
+						+ spieleGespielt();
+						+ spieleGewonnen();
+						+ spieleGewonnenProzent();
+						+ minenGefunden(int);
+						+ zeitGesamtStd;		  ! noch ohne Funktion
+						+ zeitSchnellstesSpiel;   ! noch ohne Funktion
+											
+					
