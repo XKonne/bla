@@ -136,5 +136,11 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						+ minenGefunden(int);
 						+ zeitGesamtStd;		  ! noch ohne Funktion
 						+ zeitSchnellstesSpiel;   ! noch ohne Funktion
-											
+						
+		done		> Spieler > Spielerstatistik im Bezug auf										27.03.2017	A.2.12
+						 SpieleGespielt, SpieleGewonnen, SpieleGewonnenProzent, MinenGefunden
+						 implementiert.
+						 > Anzeige siehe  "Spielerprofil"
+						 Info: Funktioniert nur solange "Nochmal" nach Sieg/Niederlage gedrückt wird
+						 	   Weil nach Reset > Spiel starten ist ein neues Spieler-Objekt erstellt
 					

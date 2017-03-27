@@ -1,22 +1,28 @@
 package bla;
 
+import java.lang.*;
+import java.text.*;
+
 public class Spieler {
 	
 	static String spielerName;
-	static int spieleGespielt;
-	static int spieleGewonnen;
-	static int spieleGewonnenProzent;
+	static Double spieleGespielt;
+	static Double spieleGewonnen;
+	static Double spieleGewonnenProzent;
 	static int minenGefunden;
 	static int zeitGesamtStd;
 	static int zeitSchnellstesSpiel;
 	static int profilBild;
-
+	
+	static DecimalFormat f = new DecimalFormat("#0.0");  // erzeugt einen String
+	
+	
 	public Spieler() {
 		super();
 		spielerName="";
-		spieleGespielt=0;
-		spieleGewonnen=0;
-		spieleGewonnenProzent=0;
+		spieleGespielt=0.0;
+		spieleGewonnen=0.0;
+		spieleGewonnenProzent=0.0;
 		minenGefunden=0;
 		zeitGesamtStd=0;
 		zeitSchnellstesSpiel=0;
@@ -39,10 +45,12 @@ public class Spieler {
 	//SpieleGespielt
 	public static void setSpieleGespielt() {
 		spieleGespielt=spieleGespielt+1;
+		setSpieleGewonnenProzent();
 	}
 	
 	public static Integer getSpieleGespielt() {
-		return spieleGespielt;
+		int ret=spieleGespielt.intValue();
+		return ret;
 	}
 	
 	//SpieleGewonnen
@@ -51,16 +59,22 @@ public class Spieler {
 	}
 	
 	public static Integer getSpieleGewonnen() {
-		return spieleGewonnen;
+		int ret=spieleGewonnen.intValue();
+		return ret;
 	}
 	
 	//SpieleGewonnenProzent
 	public static void setSpieleGewonnenProzent() {
-		spieleGewonnenProzent=spieleGewonnen/spieleGespielt*100;
+		spieleGewonnenProzent=(spieleGewonnen)/spieleGespielt*100;
 	}
 	
-	public static Integer getSpieleGewonnenProzent() {
-		return spieleGewonnenProzent;
+	public static String getSpieleGewonnenProzent() {
+		//Keine Spiele gespielt, Profil öffnen, abfangen, dass nicht durch 0 geteilt wird
+		if (spieleGespielt != 0) {
+		//immer wenn der spieleGewonnenProzent-Wert abgefragt wird, wird er vorher neu berechnet
+		setSpieleGewonnenProzent();
+		}
+		return f.format(spieleGewonnenProzent);
 	}
 	
 	//MinenGefunden

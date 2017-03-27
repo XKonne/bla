@@ -65,7 +65,7 @@ public class GUI_Spielerprofil extends JFrame {
 		cp.add(lab_SpieleGewonnen);
 		
 		lab_SpieleGewonnenProzent.setBounds(10, 120, 200, 20);
-		lab_SpieleGewonnenProzent.setText("Spiele gewonnen in %: "+Integer.toString(Spieler.getSpieleGewonnenProzent())+ "%");
+		lab_SpieleGewonnenProzent.setText("Spiele gewonnen in %: "+Spieler.getSpieleGewonnenProzent()+ "%");
 		cp.add(lab_SpieleGewonnenProzent);
 		
 		lab_MinenGefunden.setBounds(10, 150, 200, 20);

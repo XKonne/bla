@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.11 vom 27.03.2017
+ * @version A.2.12 vom 27.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -24,7 +24,7 @@ public class Test extends JFrame {
 	// Variablen
 
 	// String
-	static String versiont = "A.2.11";
+	static String versiont = "A.2.12";
 	// String Spielername="";
 
 	// Boolean
@@ -162,7 +162,7 @@ public class Test extends JFrame {
 		lab_MinenRichtig.setText("Mine Richtig " + Integer.toString(spiel.getMinenRichtig()));
 		cp.add(lab_MinenRichtig);
 
-		lab_Version.setBounds(330, 205, 100, 30);
+		lab_Version.setBounds(328, 205, 100, 30);
 		lab_Version.setVisible(true);
 		lab_Version.setText(versiont);
 		cp.add(lab_Version);
@@ -284,11 +284,13 @@ public class Test extends JFrame {
 		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
 		spiel.setMinenRichtig(0);
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+		
+		
 	}
 
 	public void btn_Spielstarten_ActionPerformed() {
 		// Spieler-Objekt erstellen
-		new Spieler();
+		Spieler eins = new Spieler();
 		// Name einlesen
 		Spieler.setSpielerName(txt_SpielerName.getText());
 		// Es wurde kein Spielername eingegeben > Zufallsname
@@ -346,7 +348,6 @@ public class Test extends JFrame {
 		}
 
 		// Spielername zurücksetze, Label weg, Eingabe da
-		Spieler.setSpielerName("");
 		EingabeRichtig = false;
 		btn_SpielerProfil.setVisible(false);
 		txt_SpielerName.setVisible(true);
@@ -375,29 +376,24 @@ public class Test extends JFrame {
 			// Ausgabe
 			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
 
-			/*
-			 * Neue Ausgabe / FUNKTIONIERT NOCH NICHT
-			 * 
-			 * 
-			 * Object[] options = {"Spielfeld anzeigen", "Nochmal",
-			 * "Neue Runde", "Neues Spiel"};
-			 * 
-			 * int selected = JOptionPane.showOptionDialog(null, "Gewonnen!",
-			 * "Spielnachricht", JOptionPane.DEFAULT_OPTION,
-			 * JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-			 */
-
-			// To-Do: Auswahl reset oder nochmal spielen (=neustarten) in der
-			// Sieg-Meldung
-
+			// Spieler-Statistik
+			Spieler.setSpieleGespielt();
+			Spieler.setSpieleGewonnen();
+			Spieler.setMinenGefunden(spiel.getMinenRichtig());
+			
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
 		}
 	}
 
-	public static void mineAufgedeckt() {
+	public void mineAufgedeckt() {
 		// Ausgabe
 		JOptionPane.showMessageDialog(null, "Mine! Verloren");
+		
+		// Spieler-Statistik
+		Spieler.setSpieleGespielt();
+		Spieler.setMinenGefunden(spiel.getMinenRichtig());
+		
 		// Spielfeld deaktivieren
 		setSpielfeldAnAus(false);
 	}

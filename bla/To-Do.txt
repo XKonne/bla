@@ -9,7 +9,7 @@
 	
 	Spieler-Attribute (aus Spieler.class) in Datei-Speichern und Datei-Einlesen
 	
-	...
+	Nach Reset erstellten Zufallsspieler-Objekt wieder löschen, außer er soll gespeichert werden (abfrage bei Exit)
 								
 
 		To-Do		Spieler-Statistik für Spielerprofil
