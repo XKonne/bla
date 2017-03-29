@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.12 vom 27.03.2017
+ * @version A.2.13 vom 29.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -24,12 +24,15 @@ public class Test extends JFrame {
 	// Variablen
 
 	// String
-	static String versiont = "A.2.12";
+	static String versiont = "A.2.13";
 	// String Spielername="";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
 	static boolean EingabeRichtig = false;
+	
+	// Long
+	static long zeittmp;
 
 	// Zufallszahlen
 	Random rand = new Random();
@@ -105,11 +108,13 @@ public class Test extends JFrame {
 		btn_Spielstarten.setText("Spiel starten");
 		btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
 		btn_Spielstarten.setEnabled(true);
+		cp.add(btn_SpielNeustart);
 
 		btn_SpielReset.setBounds(10, 230, 80, 30);
 		btn_SpielReset.setText("Reset");
 		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielReset.setEnabled(false);
+		cp.add(btn_SpielReset);
 
 		btn_SpielNeueRunde.setBounds(100, 230, 80, 30);
 		btn_SpielNeueRunde.setText("Neue Runde");
@@ -121,6 +126,7 @@ public class Test extends JFrame {
 		btn_SpielNeustart.setText("Nochmal");
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielNeustart.setEnabled(false);
+		cp.add(btn_Spielstarten);
 
 		btn_SpielBeenden.setBounds(280, 230, 80, 30);
 		btn_SpielBeenden.setText("Beenden");
@@ -162,7 +168,7 @@ public class Test extends JFrame {
 		lab_MinenRichtig.setText("Mine Richtig " + Integer.toString(spiel.getMinenRichtig()));
 		cp.add(lab_MinenRichtig);
 
-		lab_Version.setBounds(328, 205, 100, 30);
+		lab_Version.setBounds(325, 205, 100, 30);
 		lab_Version.setVisible(true);
 		lab_Version.setText(versiont);
 		cp.add(lab_Version);
@@ -206,10 +212,6 @@ public class Test extends JFrame {
 			}
 		});
 
-		// Komponenten erzeugen
-		cp.add(btn_SpielNeustart);
-		cp.add(btn_SpielReset);
-		cp.add(btn_Spielstarten);
 		// Ende Komponenten
 
 		setVisible(true);
@@ -285,6 +287,8 @@ public class Test extends JFrame {
 		spiel.setMinenRichtig(0);
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
 		
+		//Zeiterfassung starten
+		zeittmp = Spiel.zeitmessungStart();
 		
 	}
 
@@ -326,6 +330,8 @@ public class Test extends JFrame {
 			// Button zum Schluss deaktivieren
 			btn_Spielstarten.setVisible(false);
 			btn_SpielReset.setEnabled(true);
+			
+			zeittmp = Spiel.zeitmessungStart();
 		}
 
 	} // end of jButton1_ActionPerformed
@@ -364,7 +370,8 @@ public class Test extends JFrame {
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
 	}
 
-	public void aufSiegpruefen() {
+	public void aufSiegpruefen(boolean mineGetroffen) {
+		boolean winlose=false;
 		// aufSiegpruefen wird nach _jedem_ Mausklick ausgeführt.
 
 		// Minen-Markiert-Zähler und Minen-Richtig-Zähler aktualisieren
@@ -373,13 +380,32 @@ public class Test extends JFrame {
 
 		// Sieg-Bedingung pruefen
 		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0 && Spielfeldgesperrt==false) {
+			//sieg
+			winlose=true;
+			//zeitmesser stoppen und Wert in zeittmp speichern
+			zeittmp=Spiel.zeitmessungEnde(zeittmp);
+			
 			// Ausgabe
-			JOptionPane.showMessageDialog(null, "Spiel gewonnen");
+			JOptionPane.showMessageDialog(null, "Spiel gewonnen! Spielzeit: "+zeittmp/1000+" Sekunden.");
 
-			// Spieler-Statistik
-			Spieler.setSpieleGespielt();
-			Spieler.setSpieleGewonnen();
-			Spieler.setMinenGefunden(spiel.getMinenRichtig());
+			// Spieler Stats
+			Spieler.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+			
+			// Spielfeld deaktivieren
+			setSpielfeldAnAus(false);
+			Spielfeldgesperrt = true;
+
+		}
+		//mine aufgedeckt
+		if (mineGetroffen==true) {
+			winlose=false;
+			//zeitmesser stoppen und Wert in zeittmp speichern
+			zeittmp=Spiel.zeitmessungEnde(zeittmp);
+			// Ausgabe
+			JOptionPane.showMessageDialog(null, "Mine! Spiel Verloren. Spielzeit: "+zeittmp/1000+" Sekunden.");
+		
+			// Spieler Stats
+			Spieler.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
 			
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
@@ -387,18 +413,22 @@ public class Test extends JFrame {
 		}
 	}
 
-	public void mineAufgedeckt() {
-		// Ausgabe
-		JOptionPane.showMessageDialog(null, "Mine! Verloren");
-		
-		// Spieler-Statistik
-		Spieler.setSpieleGespielt();
-		Spieler.setMinenGefunden(spiel.getMinenRichtig());
-		
-		// Spielfeld deaktivieren
-		setSpielfeldAnAus(false);
-		Spielfeldgesperrt = true;
-	}
+// Mine gefunden in aufSiegpruefen integriert
+	
+//	public void mineAufgedeckt() {
+//		//niederlage
+//		boolean winlose=false;
+//		//zeitmesser stoppen und Wert in zeittmp speichern
+//		zeittmp=Spiel.zeitmessungEnde(zeittmp);
+//		Spieler.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+//		
+//		// Ausgabe
+//		JOptionPane.showMessageDialog(null, "Mine! Spiel Verloren. Spielzeit: "+zeittmp/1000+" Sekunden.");
+//				
+//		// Spielfeld deaktivieren
+//		setSpielfeldAnAus(false);
+//		Spielfeldgesperrt = true;
+//	}
 
 	// Alle Spielfeld-Button deaktivieren (false) oder aktivieren (true)
 	public static void setSpielfeldAnAus(boolean x) {

@@ -39,7 +39,8 @@ public class MouseInput implements MouseListener {
 					spiel.countMinenMarkierung(1);
 				}
 				if (test.a_btnText[i] == "M") {
-					test.mineAufgedeckt();
+//					test.mineAufgedeckt();
+					test.aufSiegpruefen(true);
 				}
 				test.setSpielfeldgeklickt(i, 5);
 			}
@@ -66,7 +67,7 @@ public class MouseInput implements MouseListener {
 			}
 
 		}
-		test.aufSiegpruefen();
+		test.aufSiegpruefen(false);
 	} // end-mousePressed
 
 	@Override

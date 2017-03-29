@@ -145,3 +145,25 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						 	   Weil nach Reset > Spiel starten ist ein neues Spieler-Objekt erstellt
 				    > Bug fixed: Nach Sieg/Niederlage-Meldung konnte weiter auf dem Spielfeld gespielt
 								 bzw. geklickt werden.
+		
+		done		> Spieler: Methoden zur Zeiterfassung implementiert								29.03.2017	A.2.13
+						+setZeitGesamt(long)
+						+getZeitGesamt()
+						+setZeitSchnellstesSpiel(long)
+						+getZeitSchnellstesSpiel
+						+setZeitLetztesSpiel(long)
+						+getZeitLetztesSpiel()
+						+setSpielHistorie(boolean)
+						+getSpielHistorie(int)
+						+set/get SpieleHistorie()
+						+set/get SpielerSiegesserie
+						+spielerAktualisieren(long, int, boolean)
+							> Ruft alle notwendigen Mehtoden aus Spieler auf, um die Spieler-Stats zu aktualisieren
+					> Test: Alle Spieler-Stats/Profilwerte werden mit spielerAktualisieren(long, int, boolean)
+							aufgerufen
+						  * Zeit für die aktuelle Runde wird bei Sieg- bzw. Niederlagen-Meldung angezeigt.
+					> GUI_Spielerprofil: Ausgabe der GesamtZeit, Schnellstes Spiel hinzugefügt
+						+ label: Siegesserie, ZeitLetztesSpiel, Spielverlauf der letzten 5 Spiele
+	
+	
+	

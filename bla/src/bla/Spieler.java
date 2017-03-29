@@ -3,6 +3,8 @@ package bla;
 import java.lang.*;
 import java.text.*;
 
+import javax.swing.JOptionPane;
+
 public class Spieler {
 	
 	static String spielerName;
@@ -10,12 +12,20 @@ public class Spieler {
 	static Double spieleGewonnen;
 	static Double spieleGewonnenProzent;
 	static int minenGefunden;
-	static int zeitGesamtStd;
-	static int zeitSchnellstesSpiel;
+	static long zeitGesamt;
+	static long zeitLetztesSpiel;
+	static long zeitSchnellstesSpiel;
 	static int profilBild;
+	static int spielHistorieZaehler;
+	static int spielerSiegesserie;
 	
 	static DecimalFormat f = new DecimalFormat("#0.0");  // erzeugt einen String
 	
+	//Arrays
+	static String[] spielHistorie = {"-0", "-1", "-2", "-3", "-4", "tmp"};
+	
+	//Liste
+
 	
 	public Spieler() {
 		super();
@@ -24,9 +34,12 @@ public class Spieler {
 		spieleGewonnen=0.0;
 		spieleGewonnenProzent=0.0;
 		minenGefunden=0;
-		zeitGesamtStd=0;
+		zeitGesamt=0;
+		zeitLetztesSpiel=0;
 		zeitSchnellstesSpiel=0;
 		profilBild=0;
+		spielHistorieZaehler=0;
+		spielerSiegesserie=0;
 	}
 
 //	public static void main(String[] args) {
@@ -54,8 +67,10 @@ public class Spieler {
 	}
 	
 	//SpieleGewonnen
-	public static void setSpieleGewonnen() {
+	public static void setSpieleGewonnen(boolean x) {
+		if (x==true) {
 		spieleGewonnen=spieleGewonnen+1;
+		}
 	}
 	
 	public static Integer getSpieleGewonnen() {
@@ -87,23 +102,99 @@ public class Spieler {
 	}
 	
 	//ZeitGesamt
-	public static void setZeitGesamt() {
-		//to-do
+	public static void setZeitGesamt(long x) {
+		zeitGesamt=zeitGesamt+x;
 	}
 	
-	public static Integer getZeitGesamt() {
-		//to-do return spielerName;
-		return minenGefunden;
+	public static long getZeitGesamt() {
+		return zeitGesamt;
 	}
 	
 	//ZeitSchnellstesSpiel
-	public static void setZeitSchnellstesSpiel() {
-		//to-do spielerName=name;
+	public static void setZeitSchnellstesSpiel(long x, boolean y) {
+		// nur Siege werden als schnellstes Spiel gewertet
+		if (y == true) {
+			// noch kein schnellstes Spiel absolviert
+			if (zeitSchnellstesSpiel == 0) {
+				zeitSchnellstesSpiel=x;
+			}
+			// vergleich ob aktuelle spielzeit schneller war, als altes schnellstes spiel
+			else {
+				if (x < zeitSchnellstesSpiel) {
+					zeitSchnellstesSpiel=x;
+				}
+			}
+		}
 	}
 	
-	public static Integer getZeitSchnellstesSpiel() {
-		//to-do return spielerName;
-		return minenGefunden; 
+	public static long getZeitSchnellstesSpiel() {
+		return zeitSchnellstesSpiel; 
+	}
+	
+	//Zeit Letztes Spiel
+	public static void setZeitLetztesSpiel(long x) {
+		zeitLetztesSpiel=x;
+	}
+	
+	public static long getZeitLetztesSpiel() {
+		return zeitLetztesSpiel; 
+	}
+	
+	//Notiert Sieg-Niederlage der letzten 5 Spiele
+	public static void setSpielHistorie(boolean x) {
+		if (x == true) {
+			spielHistorie[0]="Gewonnen";
+			//spielHistorieZaehler=spielHistorieZaehler+1;
+		}
+		else {
+			spielHistorie[0]="Verloren";
+			//spielHistorieZaehler=spielHistorieZaehler+1;	
+		}
+	}
+	
+	public static String getSpielHistorie(int x) {
+		return spielHistorie[x]; 
+	}
+	
+	//Siegesserie
+	public static void setSpielerSiegesserie(boolean x) {
+		if (x == true) {
+			spielerSiegesserie=spielerSiegesserie+1;
+		}
+		else {
+			spielerSiegesserie=0;
+		}
+	}
+	
+	public static Integer getSpielerSiegesserie() {
+		return spielerSiegesserie;
+	}
+	
+	public static void kopieren() {
+		spielHistorie[4]=spielHistorie[3];
+		spielHistorie[3]=spielHistorie[2];
+		spielHistorie[2]=spielHistorie[1];
+		spielHistorie[1]=spielHistorie[0];
+	}
+	
+	
+	
+	// Setzt ggf. ZeitSchnellstesSpiel, setzt ZeitLetztesSpiel und aktualisiert ZeitGesamt
+	public static void spielerAktualisieren(long x, int y, boolean z) {
+		setSpieleGespielt();
+		
+		setMinenGefunden(y);
+		
+		setSpieleGewonnen(z);
+		setSpielerSiegesserie(z);
+		setSpielHistorie(z);
+		
+		setZeitSchnellstesSpiel(x, z);
+		setZeitLetztesSpiel(x);
+		setZeitGesamt(x);
+
+		kopieren();
+		setSpielHistorie(z);
 	}
 	
 
