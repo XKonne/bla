@@ -62,16 +62,15 @@ public class Spiel {
 	public void setRestMinen(int minen) {
 		restMinen = minen;
 	}
-	
-	public static long zeitmessungStart() {
-	    long spielZeitStart = System.currentTimeMillis();
-	    return spielZeitStart;
-	}
-	
+
 	public static long zeitmessungEnde(long x) {
-	    long spielZeit = System.currentTimeMillis() - x;
-	    return spielZeit;
+		long spielZeit = System.currentTimeMillis() - x;
+		return spielZeit;
 	}
-	
+
+	public static long zeitmessungStart() {
+		long spielZeitStart = System.currentTimeMillis();
+		return spielZeitStart;
+	}
 
 }

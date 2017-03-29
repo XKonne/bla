@@ -7,13 +7,12 @@ import javax.swing.JButton;
 
 public class MouseInput implements MouseListener {
 
+	int buttonnummer;
 	private static Spiel spiel;
 	private static Test test;
 
-	int i;
-
-	public MouseInput(int pi) {
-		i = pi;
+	public MouseInput(int i_buttonnummer) {
+		buttonnummer = i_buttonnummer;
 	}
 
 	@Override
@@ -32,37 +31,37 @@ public class MouseInput implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 
 		if (test.Spielfeldgesperrt == false) {
-			if (e.getButton() == MouseEvent.BUTTON1 && test.Spielfeldgeklickt[i] != 5) {
-				test.setText(i, test.a_btnText[i]);
-				test.setDisabled(i);
-				if (test.Spielfeldgeklickt[i] == 2) {
+			if (e.getButton() == MouseEvent.BUTTON1 && test.Spielfeldgeklickt[buttonnummer] != 5) {
+				test.setText(buttonnummer, test.a_btnText[buttonnummer]);
+				test.setDisabled(buttonnummer);
+				if (test.Spielfeldgeklickt[buttonnummer] == 2) {
 					spiel.countMinenMarkierung(1);
 				}
-				if (test.a_btnText[i] == "M") {
+				if (test.a_btnText[buttonnummer] == "M") {
 //					test.mineAufgedeckt();
 					test.aufSiegpruefen(true);
 				}
-				test.setSpielfeldgeklickt(i, 5);
+				test.setSpielfeldgeklickt(buttonnummer, 5);
 			}
 
-			if (e.getButton() == MouseEvent.BUTTON3 && test.Spielfeldgeklickt[i] != 5) {
+			if (e.getButton() == MouseEvent.BUTTON3 && test.Spielfeldgeklickt[buttonnummer] != 5) {
 
-				if (test.Spielfeldgeklickt[i] == 0) {
-					test.setText(i, "*");
-					if (test.Spielfeldgeklickt[i] != 2) {
-						if (test.a_btnText[i] == ("M")) {
+				if (test.Spielfeldgeklickt[buttonnummer] == 0) {
+					test.setText(buttonnummer, "*");
+					if (test.Spielfeldgeklickt[buttonnummer] != 2) {
+						if (test.a_btnText[buttonnummer] == ("M")) {
 							spiel.countMineRichtig(1);
 						}
 						spiel.countMinenMarkierung(-1);
 					}
-					test.setSpielfeldgeklickt(i, 2);
+					test.setSpielfeldgeklickt(buttonnummer, 2);
 				} else {
-					test.setText(i, ".");
-					if (test.a_btnText[i] == ("M")) {
+					test.setText(buttonnummer, ".");
+					if (test.a_btnText[buttonnummer] == ("M")) {
 						spiel.countMineRichtig(-1);
 					}
 					spiel.countMinenMarkierung(1);
-					test.setSpielfeldgeklickt(i, 0);
+					test.setSpielfeldgeklickt(buttonnummer, 0);
 				}
 			}
 
