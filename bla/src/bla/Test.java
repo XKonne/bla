@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class Test extends JFrame {
 
-	private Spiel spiel;
+	private static Spiel spiel;
 
 	// Variablen
 
@@ -76,33 +76,43 @@ public class Test extends JFrame {
 	public Test(Spiel spiel) {
 
 		super();
-		this.spiel = spiel;
+		Test.spiel = spiel;
 
-		// Frame-Initialisierung
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		int frameWidth = 375;
-		int frameHeight = 300;
-		setSize(frameWidth, frameHeight);
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (d.width - getSize().width) / 2;
-		int y = (d.height - getSize().height) / 2;
-		setLocation(x, y);
-		setTitle("GameApp-Name actually not set");
-		setResizable(false);
-		cp.setLayout(null);
+		setupGUI();
 
-		// Anfang Komponenten
-		// Oberflaeche
+	}
+
+	private void createSpielfeldButtons() {
+
+		// TODO Button-Namen wirklich notwendig?
+		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
+				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
+
+		// Buttons bauen
+		for (int i = 0; i < buttons.length; i++) {
+
+			buttons[i] = new JButton(a_btnNames[i]);
+			buttons[i].setText(".");
+			buttons[i].setMargin(new Insets(2, 2, 2, 2));
+			buttons[i].setEnabled(false);
+
+			MouseInput mouse = new MouseInput(i);
+			buttons[i].addMouseListener(mouse);
+
+			cp.add(buttons[i]);
+
+		}
+
+		setBoundsSpielfeldButtons();
+	}
+
+	private void createStartScreenButtons() {
 
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
 		btn_SpielerProfil.setBounds(10, 5, 40, 40);
 		btn_SpielerProfil.setVisible(false);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerProfil);
-
-		// Spielername-Eingabe
-		txt_SpielerName.setBounds(10, 10, 150, 30);
-		cp.add(txt_SpielerName);
 
 		btn_Spielstarten.setBounds(170, 10, 90, 28);
 		btn_Spielstarten.setText("Spiel starten");
@@ -138,12 +148,12 @@ public class Test extends JFrame {
 		btn_SpielInformation.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielInformation);
 
-		// Spielfeld
+	}
 
-		createSpielfeldButtons();
-		setBoundsSpielfeldButtons();
+	private void createStartScreenLabels() {
 
 		Border border = LineBorder.createGrayLineBorder();
+
 		lab_Spielername.setBounds(55, 5, 160, 40);
 		lab_Spielername.setFont(new Font("Dialog", Font.PLAIN, 35));
 		lab_Spielername.setBorder(border);
@@ -173,69 +183,6 @@ public class Test extends JFrame {
 		lab_Version.setText(versiont);
 		cp.add(lab_Version);
 
-		btn_SpielNeustart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ButtonSpielNeustart_ActionPerformed(evt);
-			}
-		});
-
-		// Methode zum Button-klick-ausfuehren
-		btn_SpielReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ButtonResetSpielfeld_ActionPerformed();
-			}
-		});
-
-		btn_Spielstarten.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btn_Spielstarten_ActionPerformed();
-			}
-		});
-
-		btn_SpielBeenden.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				dispose();
-			}
-		});
-
-		btn_SpielerProfil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				GUI_Spielerprofil spieler = new GUI_Spielerprofil();
-			}
-		});
-
-		btn_SpielInformation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// Erzeugung eines neuen JDialogs
-				JOptionPane.showMessageDialog(null, "Finde (=richtig markiert) alle Minen um zu gewinnen."
-						+ " Ein Linksklick deckt ein Feld auf. Ein Rechtsklick markiert ein Feld. Wird ein Feld mit einer Mine aufgedeckt, so ist das Spiel verloren.");
-			}
-		});
-
-		// Ende Komponenten
-
-		setVisible(true);
-	} // end of public Test
-
-	private void createSpielfeldButtons() {
-
-		// TODO Button-Namen wirklich notwendig?
-		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
-				"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16" };
-
-		// Buttons bauen
-		for (int i = 0; i < buttons.length; i++) {
-
-			buttons[i] = new JButton(a_btnNames[i]);
-			buttons[i].setText(".");
-			buttons[i].setMargin(new Insets(2, 2, 2, 2));
-			buttons[i].setEnabled(false);
-
-			MouseInput mouse = new MouseInput(i);
-			buttons[i].addMouseListener(mouse);
-
-			cp.add(buttons[i]);
-		}
 	}
 
 	/**
@@ -432,6 +379,23 @@ public class Test extends JFrame {
 	// Spielfeldgesperrt = true;
 	// }
 
+	private void initialiseFrame() {
+
+		// Frame-Initialisierung
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		int frameWidth = 375;
+		int frameHeight = 300;
+		setSize(frameWidth, frameHeight);
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (d.width - getSize().width) / 2;
+		int y = (d.height - getSize().height) / 2;
+		setLocation(x, y);
+		setTitle("GameApp-Name actually not set");
+		setResizable(false);
+		cp.setLayout(null);
+
+	}
+
 	// Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
 	public static void setDisabled(int i) {
 		buttons[i].setEnabled(false);
@@ -450,6 +414,63 @@ public class Test extends JFrame {
 
 	public static void setText(int i, String text) {
 		buttons[i].setText(text);
+	}
+
+	private void setupGUI() {
+
+		initialiseFrame();
+
+		// Spielername-Eingabe
+		txt_SpielerName.setBounds(10, 10, 150, 30);
+		cp.add(txt_SpielerName);
+
+		createStartScreenButtons();
+		createSpielfeldButtons();
+		createStartScreenLabels();
+
+		btn_SpielNeustart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				ButtonSpielNeustart_ActionPerformed(evt);
+			}
+		});
+
+		// Methode zum Button-klick-ausfuehren
+		btn_SpielReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				ButtonResetSpielfeld_ActionPerformed();
+			}
+		});
+
+		btn_Spielstarten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				btn_Spielstarten_ActionPerformed();
+			}
+		});
+
+		btn_SpielBeenden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				dispose();
+			}
+		});
+
+		btn_SpielerProfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				GUI_Spielerprofil spieler = new GUI_Spielerprofil();
+			}
+		});
+
+		btn_SpielInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// Erzeugung eines neuen JDialogs
+				JOptionPane.showMessageDialog(null, "Finde (=richtig markiert) alle Minen um zu gewinnen."
+						+ " Ein Linksklick deckt ein Feld auf. Ein Rechtsklick markiert ein Feld. Wird ein Feld mit einer Mine aufgedeckt, so ist das Spiel verloren.");
+			}
+		});
+
+		// Ende Komponenten
+
+		setVisible(true);
+
 	}
 
 	// Ende Methoden

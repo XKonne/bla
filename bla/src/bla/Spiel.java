@@ -6,16 +6,16 @@ public class Spiel {
 	private int minenRichtig = 0;
 	private int restMinen = 3;
 
+	private static Spiel spiel;
+	private static Test test;
+
 	public Spiel() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public static void main(String[] args) {
 
-		Spiel spiel = new Spiel();
-		Test test = new Test(spiel);
-		MouseInput.setupMouseInput(spiel, test);
-
+		setupSpiel();
 	}
 
 	/**
@@ -61,6 +61,14 @@ public class Spiel {
 
 	public void setRestMinen(int minen) {
 		restMinen = minen;
+	}
+
+	private static void setupSpiel() {
+
+		spiel = new Spiel();
+		test = new Test(spiel);
+		MouseInput.setupMouseInput(spiel, test);
+
 	}
 
 	public static long zeitmessungEnde(long x) {
