@@ -164,6 +164,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						  * Zeit für die aktuelle Runde wird bei Sieg- bzw. Niederlagen-Meldung angezeigt.
 					> GUI_Spielerprofil: Ausgabe der GesamtZeit, Schnellstes Spiel hinzugefügt
 						+ label: Siegesserie, ZeitLetztesSpiel, Spielverlauf der letzten 5 Spiele
+		
+		done		> Spieler: Methoden non-static gemacht. 										31.03.2017	A.2.14
+							   GUI_Spielerprofil dementsprechend angepasst.
+					           Unnötiger/Alter Code entfernt. Parameter umbenannt.
+					           > SchnellstesSpiel zu SchnellsterSieg umbenannt
+					> GUI_Spielerprofil: + btn_SpielerprofilAktualisieren: Aktualisiert im geöffneten Frame die Spielerdaten
+																		   indem setLabelText() aufgerufen wird.
+										 + setLabelText(): Setzt alle Labeltexte (neu)
 	
 	
 	

@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.13 vom 29.03.2017
+ * @version A.2.14 vom 31.03.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -22,9 +22,10 @@ public class Test extends JFrame {
 	private static Spiel spiel;
 
 	// Variablen
+	Spieler spielerEins = new Spieler();
 
 	// String
-	static String versiont = "A.2.13";
+	static String versiont = "A.2.14";
 	// String Spielername="";
 
 	// Boolean
@@ -232,7 +233,7 @@ public class Test extends JFrame {
 			JOptionPane.showMessageDialog(null, "Spiel gewonnen! Spielzeit: " + zeittmp / 1000 + " Sekunden.");
 
 			// Spieler Stats
-			Spieler.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+			spielerEins.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
 
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
@@ -248,7 +249,7 @@ public class Test extends JFrame {
 			JOptionPane.showMessageDialog(null, "Mine! Spiel Verloren. Spielzeit: " + zeittmp / 1000 + " Sekunden.");
 
 			// Spieler Stats
-			Spieler.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+			spielerEins.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
 
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
@@ -258,21 +259,21 @@ public class Test extends JFrame {
 
 	public void btn_Spielstarten_ActionPerformed() {
 		// Spieler-Objekt erstellen
-		Spieler eins = new Spieler();
+		
 		// Name einlesen
-		Spieler.setSpielerName(txt_SpielerName.getText());
+		spielerEins.setSpielerName(txt_SpielerName.getText());
 		// Es wurde kein Spielername eingegeben > Zufallsname
-		if (Spieler.getSpielerName().length() == 0 || Spieler.getSpielerName() == "") {
-			Spieler.setSpielerName("Rand" + Integer.toString(rand.nextInt(99) + 1));
+		if (spielerEins.getSpielerName().length() == 0 || spielerEins.getSpielerName() == "") {
+			spielerEins.setSpielerName("Rand" + Integer.toString(rand.nextInt(99) + 1));
 			EingabeRichtig = true;
 		}
 		// Spielername hat nur 1 oder 2 Zeichen. Fehlermeldung.
-		if (Spieler.getSpielerName().length() == 1 || Spieler.getSpielerName().length() == 2) {
+		if (spielerEins.getSpielerName().length() == 1 || spielerEins.getSpielerName().length() == 2) {
 			JOptionPane.showMessageDialog(null,
 					"Ein Spielername muss mindestens aus 3 Zeichen bestehen. Lass das Feld leer für einen Zufallsnamen.");
 		}
 		// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet werden.
-		if (Spieler.getSpielerName().length() >= 3) {
+		if (spielerEins.getSpielerName().length() >= 3) {
 			EingabeRichtig = true;
 		}
 
@@ -281,7 +282,7 @@ public class Test extends JFrame {
 			setSpielfeldAnAus(true);
 
 			txt_SpielerName.setVisible(false);
-			lab_Spielername.setText(Spieler.getSpielerName());
+			lab_Spielername.setText(spielerEins.getSpielerName());
 			lab_Spielername.setVisible(true);
 			lab_Spielmodus.setVisible(true);
 			lab_Restminen.setVisible(true);
@@ -455,7 +456,7 @@ public class Test extends JFrame {
 
 		btn_SpielerProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				GUI_Spielerprofil spieler = new GUI_Spielerprofil();
+				GUI_Spielerprofil spieler = new GUI_Spielerprofil(spielerEins);		
 			}
 		});
 

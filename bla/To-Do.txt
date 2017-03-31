@@ -11,9 +11,7 @@
 	
 	Nach Reset erstellten Zufallsspieler-Objekt wieder löschen, außer er soll gespeichert werden (abfrage bei Exit)
 								
-
-		To-Do		Spieler-Statistik für Spielerprofil
-						> Statistik: gespielte Runde, Siegesserie, letzten 10 Spiele, Zeit, .............
+	Kommentare für Funktion von Methoden, Parameterbeschreibung (Eclipse)
 
 
 
