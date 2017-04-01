@@ -386,7 +386,8 @@ public class Test extends JFrame {
 	private void initialiseFrame() {
 
 		// Frame-Initialisierung
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		//setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		int frameWidth = 375;
 		int frameHeight = 320;
 		setSize(frameWidth, frameHeight);
@@ -406,6 +407,12 @@ public class Test extends JFrame {
 		JMenu men_ueber = new JMenu("Über");
 		
 		// Untermenü + Linksklick-Methode
+		JMenuItem men_spiel_neu = new JMenuItem("Neues Spiel");
+		men_spiel_neu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				GUI_Start neu = new GUI_Start();		
+			}
+		});
 		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
 		men_spiel_beenden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -426,6 +433,7 @@ public class Test extends JFrame {
 		menueLeiste.add(men_spiel);
 		menueLeiste.add(men_ueber);
 		//Untermenü-Punkte hinzufügen
+		men_spiel.add(men_spiel_neu);
 		men_spiel.add(men_spiel_beenden);
 		men_ueber.add(men_ueber_version);
 		//MenueLeiste dem JFrame zuordnen

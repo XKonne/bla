@@ -178,5 +178,11 @@ A.1		done		GUI: 3x3 groﬂes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						  +Beenden: Schlieﬂt das Programm
 						+‹ber
 						  +Version: Gibt eine Meldung mit der aktuellen Versionsnummer
+						  
+		
+		-------
+		working		+Class: GUI_Start: Neuer Frame, der zum Spielauswahl genutzt wird				02.04.2017	A.3.xx
+					+Menubar
+					+4 Buttons mit Icons zur Spielauswahl: noch ohne Funktion
 	
 	

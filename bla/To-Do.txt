@@ -13,7 +13,7 @@
 								
 	Kommentare für Funktion von Methoden, Parameterbeschreibung (Eclipse)
 
-
+	Klasse schreiben, die die Menübar erstellt und auf einem Frame hinzufügt. (Test, Start)
 
 		To-Do		Go-Button soll erst klickbar sein, wenn mind. 3 Zeichen (und maximum!) eingegeben wurden, Tooltipp
 		To-Do		alternativ zum Go-Button soll auch durch die Eingabe von Return/Enter das Spiel starten

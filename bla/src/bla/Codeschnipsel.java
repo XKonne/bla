@@ -9,6 +9,9 @@ public class Codeschnipsel {
 
 }
 
+// action listener kürzer gestalten durch objekt-übergabe
+// http://blog.mynotiz.de/programmieren/java-jmenubar-beispiel-tutorial-235/
+
 
 // Ausführliche video tutorial wie ein dame spiel programmiert wird
 // http://www.java-tutorial.org/video-tutorial-dame3.html
