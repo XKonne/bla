@@ -172,6 +172,11 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					> GUI_Spielerprofil: + btn_SpielerprofilAktualisieren: Aktualisiert im geöffneten Frame die Spielerdaten
 																		   indem setLabelText() aufgerufen wird.
 										 + setLabelText(): Setzt alle Labeltexte (neu)
-	
+		
+		done		+Menüleiste im "Spiel-Frame" (Test) hinzugefügt.								01.04.2017	A.2.15
+						+Spiel
+						  +Beenden: Schließt das Programm
+						+Über
+						  +Version: Gibt eine Meldung mit der aktuellen Versionsnummer
 	
 	

@@ -12,20 +12,24 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.2.14 vom 31.03.2017
+ * @version A.2.15 vom 01.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
 
+
 public class Test extends JFrame {
+	
 
 	private static Spiel spiel;
-
+	
 	// Variablen
 	Spieler spielerEins = new Spieler();
 
+
+	
 	// String
-	static String versiont = "A.2.14";
+	static String versiont = "A.2.15";
 	// String Spielername="";
 
 	// Boolean
@@ -71,8 +75,8 @@ public class Test extends JFrame {
 	// 5 6 7 8 <=> 1 2 3 2
 	// 9 10 11 12 <=> 1 M M 1
 	// 13 14 15 16 <=> 1 2 2 1
-	static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
-	// Ende Attribute
+    static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
+    // Ende Attribute
 
 	public Test(Spiel spiel) {
 
@@ -80,7 +84,6 @@ public class Test extends JFrame {
 		Test.spiel = spiel;
 
 		setupGUI();
-
 	}
 
 	private void createSpielfeldButtons() {
@@ -385,7 +388,7 @@ public class Test extends JFrame {
 		// Frame-Initialisierung
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 375;
-		int frameHeight = 300;
+		int frameHeight = 320;
 		setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
@@ -394,7 +397,39 @@ public class Test extends JFrame {
 		setTitle("GameApp-Name actually not set");
 		setResizable(false);
 		cp.setLayout(null);
-
+		
+	    // Menüleiste
+		JMenuBar menueLeiste = new JMenuBar();
+		
+		// Menüleiste Elemente
+		JMenu men_spiel = new JMenu("Spiel");
+		JMenu men_ueber = new JMenu("Über");
+		
+		// Untermenü + Linksklick-Methode
+		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
+		men_spiel_beenden.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				dispose();		
+			}
+		});
+		JMenuItem men_ueber_version = new JMenuItem("Version");
+		men_ueber_version.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				JOptionPane.showMessageDialog(null, "Version: "+versiont);
+			}
+		});
+		
+		//Menüleiste
+		//Menüleiste hinzufügen
+		cp.add(menueLeiste);
+		//Hauptmenü-Punkte hinzufügen
+		menueLeiste.add(men_spiel);
+		menueLeiste.add(men_ueber);
+		//Untermenü-Punkte hinzufügen
+		men_spiel.add(men_spiel_beenden);
+		men_ueber.add(men_ueber_version);
+		//MenueLeiste dem JFrame zuordnen
+		setJMenuBar(menueLeiste);
 	}
 
 	// Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
@@ -420,6 +455,7 @@ public class Test extends JFrame {
 	private void setupGUI() {
 
 		initialiseFrame();
+
 
 		// Spielername-Eingabe
 		txt_SpielerName.setBounds(10, 10, 150, 30);
@@ -472,6 +508,8 @@ public class Test extends JFrame {
 
 		setVisible(true);
 
+	
+	
 	}
 
 	// Ende Methoden
