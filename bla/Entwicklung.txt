@@ -173,16 +173,36 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 																		   indem setLabelText() aufgerufen wird.
 										 + setLabelText(): Setzt alle Labeltexte (neu)
 		
-		done		+Menüleiste im "Spiel-Frame" (Test) hinzugefügt.								01.04.2017	A.2.15
+		done		+ Menüleiste im "Spiel-Frame" (Test) hinzugefügt.								01.04.2017	A.2.15
 						+Spiel
 						  +Beenden: Schließt das Programm
 						+Über
 						  +Version: Gibt eine Meldung mit der aktuellen Versionsnummer
 						  
+=== A.3.0 ===========================================================================================================
 		
-		-------
-		working		+Class: GUI_Start: Neuer Frame, der zum Spielauswahl genutzt wird				02.04.2017	A.3.xx
-					+Menubar
-					+4 Buttons mit Icons zur Spielauswahl: noch ohne Funktion
+		done		Geänderter Programmstart:														02.04.2017	A.3.1
+						main-Methode ist immer noch in Spiel. Diese ruft zunächst GUI_Start auf.
+						Dort wird nun ein Spieler erstellt und der Spielmodus gewählt.
+						Danach wird spiel.setupSpiel() wie gehabt ausgeführt
+					
+							
+					+ Class: GUI_Start: Neuer Frame, der zum Spielauswahl genutzt wird
+					+ Menüleiste
+					+ btn_Spielmodus: Leicht, Mittel, Schwer, Benutzer
+					+ GUI_Start: btn_SpielerAnlegen, txt_SpielerName, lab_SpielerName, btn_SpielerProfil
+						> SpielerName-Eingabe jetzt in GUI_Start
+					- Test: btn_Beenden entfernt, da Funktion in "X" bzw. Menüleiste: Spiel > Beenden implementiert wurde
+					- Text: btn_Spielstarten, txt_SpielerName nach GUI_Start verschoben
+					> Test: btn_SpielReset deaktiviert, da er noch nicht an die neue Spielstruktur angepasst ist
+						  
+		done		> Schließen bzw. Beenden des Programms
+					   Im Spielfeld (Test) und GUI_Start bewirkt das Schließen per "X", dass alle Fenster geschlossen werden
+					   Dies gilt ebenso, wenn über die Menüleiste: Spiel > Beenden ausgewählt wird.
+					      Anmerkung: "X" bzw. "Profil Schließen" in GUI_Spielerprofil bewirkt nur, dass dieser eine Frame (/Fenster) geschlossen wird
+					+Spiel.setSpielModus(int spalte, int zeile, int minen, String Modus)
+						Setzt die Werte die für das Spielfeld benötigt werden.
+						Aufruf erfolgt in GUI_Start nach Klicken des entsprechenden Spiel-Modus
+	
 	
 	

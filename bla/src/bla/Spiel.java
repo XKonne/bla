@@ -1,21 +1,39 @@
 package bla;
 
+import javax.swing.JOptionPane;
+
 public class Spiel {
+	static Spieler spieler;
 
 	private int minenGesamt = 3;
 	private int minenRichtig = 0;
 	private int restMinen = 3;
-
+	
+	static int anzahlSpalten = 0;
+	static int anzahlZeilen = 0;
+	static int anzahlMinen = 0;
+	static String spielModus = "noModus";
+	
 	private static Spiel spiel;
 	private static Test test;
 
 	public Spiel() {
 
 	}
+	
+	// Spielfeld-Daten
+	public static void setSpielModus(int spalte, int zeile, int minen, String modus, Spieler spieler) {
+		anzahlSpalten = spalte;
+		anzahlZeilen = zeile;
+		anzahlMinen = minen;
+		spielModus = modus;
+		JOptionPane.showMessageDialog(null, "Spalten: "+anzahlSpalten+"/ Zeilen: "+anzahlSpalten+" / Minen: "+anzahlMinen+" Modus: "+spielModus);
+		
+		setupSpiel(spieler);
+	}
 
 	public static void main(String[] args) {
-
-		setupSpiel();
+		GUI_Start neu = new GUI_Start();
 	}
 
 	/**
@@ -63,10 +81,10 @@ public class Spiel {
 		restMinen = minen;
 	}
 
-	private static void setupSpiel() {
+	private static void setupSpiel(Spieler spieler) {
 
 		spiel = new Spiel();
-		test = new Test(spiel);
+		test = new Test(spiel, spieler);
 		MouseInput.setupMouseInput(spiel, test);
 
 	}
