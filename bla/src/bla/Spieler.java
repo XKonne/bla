@@ -28,7 +28,7 @@ public class Spieler {
 
 	public Spieler() {
 		super();
-		//Init Spieler mit Standardwerten
+		// Init Spieler mit Standardwerten
 		spielerName = "";
 		spieleGespielt = 0.0;
 		spieleGewonnen = 0.0;
@@ -39,6 +39,39 @@ public class Spieler {
 		zeitSchnellsterSieg = 0;
 		profilBild = 0;
 		spielerSiegesserie = 0;
+	}
+
+	public void calculateSpieleGewonnenProzent() {
+		spieleGewonnenProzent = (spieleGewonnen) / spieleGespielt * 100;
+	}
+
+	public void erhoeheMinenGefunden(int minen) {
+		minenGefunden = minenGefunden + minen;
+	}
+
+	public void erhoeheSpieleGespielt() {
+		spieleGespielt = spieleGespielt + 1;
+		calculateSpieleGewonnenProzent();
+	}
+
+	public void erhoeheSpieleGewonnen(boolean sieg) {
+		if (sieg == true) {
+			spieleGewonnen = spieleGewonnen + 1;
+		}
+	}
+
+	public void erhoeheSpielerSiegesserie(boolean sieg) {
+		// falls Sieg, dann erhöhe Siegesserie um 1
+		if (sieg == true) {
+			spielerSiegesserie = spielerSiegesserie + 1;
+			// letztes Spiel war Niederlage => Zähler auf 0 setzen
+		} else {
+			spielerSiegesserie = 0;
+		}
+	}
+
+	public void erhoeheZeitGesamt(long zeitSpiel) {
+		zeitGesamt = zeitGesamt + zeitSpiel;
 	}
 
 	public Integer getMinenGefunden() {
@@ -59,7 +92,7 @@ public class Spieler {
 		if (spieleGespielt != 0) {
 			// immer wenn der spieleGewonnenProzent-Wert abgefragt wird, wird er
 			// vorher neu berechnet
-			setSpieleGewonnenProzent();
+			calculateSpieleGewonnenProzent();
 		}
 		return f.format(spieleGewonnenProzent);
 	}
@@ -88,44 +121,31 @@ public class Spieler {
 		return zeitSchnellsterSieg;
 	}
 
-	public void setMinenGefunden(int minen) {
-		minenGefunden = minenGefunden + minen;
+	public void setMinenGefunden(Integer minenGefunden) {
+		this.minenGefunden = minenGefunden;
 	}
 
-	public void setSpieleGespielt() {
-		spieleGespielt = spieleGespielt + 1;
-		setSpieleGewonnenProzent();
+	public void setSpieleGespielt(Integer spieleGespielt) {
+		this.spieleGespielt = spieleGespielt.doubleValue();
 	}
 
-	public void setSpieleGewonnen(boolean sieg) {
-		if (sieg == true) {
-			spieleGewonnen = spieleGewonnen + 1;
-		}
-	}
-
-	public void setSpieleGewonnenProzent() {
-		spieleGewonnenProzent = (spieleGewonnen) / spieleGespielt * 100;
+	public void setSpieleGewonnen(Integer spieleGewonnen) {
+		this.spieleGewonnen = spieleGewonnen.doubleValue();
 	}
 
 	public void setSpielerName(String name) {
-		spielerName = name;
+		this.spielerName = name;
 	}
 
-	public void setSpielerSiegesserie(boolean sieg) {
-		//falls Sieg, dann erhöhe Siegesserie um 1
-		if (sieg == true) {
-			spielerSiegesserie = spielerSiegesserie + 1;
-		//letztes Spiel war Niederlage => Zähler auf 0 setzen
-		} else {
-			spielerSiegesserie = 0;
-		}
+	public void setSpielerSiegesserie(Integer spielerSiegesserie) {
+		this.spielerSiegesserie = spielerSiegesserie;
 	}
 
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
 	public void setSpielHistorie(boolean sieg) {
 		// Einträge um 1 nach "unten" verschieben
-		for (int i=4; i>0; i--) {
-			spielHistorie[i]=spielHistorie[i-1];
+		for (int i = 4; i > 0; i--) {
+			spielHistorie[i] = spielHistorie[i - 1];
 		}
 		// Oberstes Element neu setzen
 		if (sieg == true) {
@@ -135,15 +155,21 @@ public class Spieler {
 		}
 	}
 
-	public void setZeitGesamt(long zeitSpiel) {
-		zeitGesamt = zeitGesamt + zeitSpiel;
+	public void setZeitGesamt(long zeitGesamt) {
+		this.zeitGesamt = zeitGesamt;
 	}
 
 	public void setZeitLetztesSpiel(long zeitSpiel) {
-		zeitLetztesSpiel = zeitSpiel;
+		this.zeitLetztesSpiel = zeitSpiel;
 	}
 
-	public void setZeitSchnellsterSiegl(long zeitSpiel, boolean sieg) {
+	public void setZeitSchnellsterSieg(long zeitSpiel) {
+
+		this.zeitSchnellsterSieg = zeitSpiel;
+
+	}
+
+	public void setZeitSchnellsterSieg(long zeitSpiel, boolean sieg) {
 		// nur Siege werden als schnellstes Spiel gewertet
 		if (sieg == true) {
 			// noch kein schnellstes Spiel absolviert
@@ -163,16 +189,16 @@ public class Spieler {
 	// Setzt ggf. ZeitSchnellstesSpiel, setzt ZeitLetztesSpiel und aktualisiert
 	// ZeitGesamt
 	public void spielerAktualisieren(long spielZeit, int minenRichtig, boolean siegNiederlage) {
-		setSpieleGespielt();
+		erhoeheSpieleGespielt();
 
-		setMinenGefunden(minenRichtig);
+		erhoeheMinenGefunden(minenRichtig);
 
-		setSpieleGewonnen(siegNiederlage);
-		setSpielerSiegesserie(siegNiederlage);
+		erhoeheSpieleGewonnen(siegNiederlage);
+		erhoeheSpielerSiegesserie(siegNiederlage);
 
-		setZeitSchnellsterSiegl(spielZeit, siegNiederlage);
+		setZeitSchnellsterSieg(spielZeit, siegNiederlage);
 		setZeitLetztesSpiel(spielZeit);
-		setZeitGesamt(spielZeit);
+		erhoeheZeitGesamt(spielZeit);
 
 		setSpielHistorie(siegNiederlage);
 	}

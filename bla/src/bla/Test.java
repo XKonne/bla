@@ -12,25 +12,21 @@ import java.util.Random;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.0 vom 02.04.2017
+ * @version A.3.2 vom 02.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
 
-
 public class Test extends JFrame {
-	
 
 	private static Spiel spiel;
-	
+
 	// Variablen
-//	Spieler spielerEins = new Spieler();
+	// Spieler spielerEins = new Spieler();
 	static Spieler spielerT;
 
-
-	
 	// String
-	static String versiont = "A.3.0";
+	static String versiont = "A.3.2";
 	// String Spielername="";
 
 	// Boolean
@@ -41,16 +37,17 @@ public class Test extends JFrame {
 	static long zeittmp;
 
 	// Zufallszahlen
-//	Random rand = new Random();
+	// Random rand = new Random();
 
 	// Buttons
-//	private JButton btn_SpielBeenden = new JButton();         wird eventuell noch mal gebraucht
+	// private JButton btn_SpielBeenden = new JButton(); wird eventuell noch mal
+	// gebraucht
 	private JButton btn_SpielerProfil = new JButton();
 	private JButton btn_SpielInformation = new JButton();
 	private JButton btn_SpielNeustart = new JButton();
 	private JButton btn_SpielNeueRunde = new JButton();
 	private JButton btn_SpielReset = new JButton();
-//	private JButton btn_Spielstarten = new JButton();
+	// private JButton btn_Spielstarten = new JButton();
 
 	// Container
 	private Container cp = getContentPane();
@@ -63,7 +60,7 @@ public class Test extends JFrame {
 	private static JLabel lab_Restminen = new JLabel();
 
 	// TextField
-//	private JTextField txt_SpielerName = new JTextField();
+	// private JTextField txt_SpielerName = new JTextField();
 
 	// Arrays
 	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
@@ -76,14 +73,14 @@ public class Test extends JFrame {
 	// 5 6 7 8 <=> 1 2 3 2
 	// 9 10 11 12 <=> 1 M M 1
 	// 13 14 15 16 <=> 1 2 2 1
-    static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
-    // Ende Attribute
+	static String a_btnText[] = { "-", "-", "1", "M", "1", "2", "3", "2", "1", "M", "M", "1", "1", "2", "2", "1" };
+	// Ende Attribute
 
 	public Test(Spiel spiel, Spieler spieler) {
 
 		super();
 		Test.spiel = spiel;
-		spielerT=spieler;
+		spielerT = spieler;
 		setupGUI();
 		spielStart();
 	}
@@ -93,7 +90,7 @@ public class Test extends JFrame {
 			// Spielfeld aktivieren
 			setSpielfeldAnAus(true);
 
-//			txt_SpielerName.setVisible(false);
+			// txt_SpielerName.setVisible(false);
 			lab_Spielername.setText(spielerT.getSpielerName());
 			lab_Spielername.setVisible(true);
 			lab_Spielmodus.setVisible(true);
@@ -105,7 +102,7 @@ public class Test extends JFrame {
 			btn_SpielerProfil.setVisible(true);
 
 			// Button zum Schluss deaktivieren
-//			btn_Spielstarten.setVisible(false);
+			// btn_Spielstarten.setVisible(false);
 			btn_SpielReset.setEnabled(false);
 
 			zeittmp = Spiel.zeitmessungStart();
@@ -144,11 +141,11 @@ public class Test extends JFrame {
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerProfil);
 
-//		btn_Spielstarten.setBounds(170, 10, 90, 28);
-//		btn_Spielstarten.setText("Spiel starten");
-//		btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
-//		btn_Spielstarten.setEnabled(true);
-//		cp.add(btn_Spielstarten);
+		// btn_Spielstarten.setBounds(170, 10, 90, 28);
+		// btn_Spielstarten.setText("Spiel starten");
+		// btn_Spielstarten.setMargin(new Insets(2, 2, 2, 2));
+		// btn_Spielstarten.setEnabled(true);
+		// cp.add(btn_Spielstarten);
 
 		btn_SpielReset.setBounds(10, 230, 80, 30);
 		btn_SpielReset.setText("Reset");
@@ -168,10 +165,10 @@ public class Test extends JFrame {
 		btn_SpielNeustart.setEnabled(false);
 		cp.add(btn_SpielNeustart);
 
-//		btn_SpielBeenden.setBounds(280, 230, 80, 30);
-//		btn_SpielBeenden.setText("Beenden");
-//		btn_SpielBeenden.setMargin(new Insets(2, 2, 2, 2));
-//		cp.add(btn_SpielBeenden);
+		// btn_SpielBeenden.setBounds(280, 230, 80, 30);
+		// btn_SpielBeenden.setText("Beenden");
+		// btn_SpielBeenden.setMargin(new Insets(2, 2, 2, 2));
+		// cp.add(btn_SpielBeenden);
 
 		btn_SpielInformation.setBounds(320, 5, 40, 40);
 		btn_SpielInformation.setText("?");
@@ -288,29 +285,34 @@ public class Test extends JFrame {
 
 	public void btn_Spielstarten_ActionPerformed() {
 		// Spieler-Objekt erstellen
-		
-//		// Name einlesen
-//		spielerEins.setSpielerName(txt_SpielerName.getText());
-//		// Es wurde kein Spielername eingegeben > Zufallsname
-//		if (spielerEins.getSpielerName().length() == 0 || spielerEins.getSpielerName() == "") {
-//			spielerEins.setSpielerName("Rand" + Integer.toString(rand.nextInt(99) + 1));
-//			EingabeRichtig = true;
-//		}
-//		// Spielername hat nur 1 oder 2 Zeichen. Fehlermeldung.
-//		if (spielerEins.getSpielerName().length() == 1 || spielerEins.getSpielerName().length() == 2) {
-//			JOptionPane.showMessageDialog(null,
-//					"Ein Spielername muss mindestens aus 3 Zeichen bestehen. Lass das Feld leer für einen Zufallsnamen.");
-//		}
-//		// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet werden.
-//		if (spielerEins.getSpielerName().length() >= 3) {
-//			EingabeRichtig = true;
-//		}
+
+		// // Name einlesen
+		// spielerEins.setSpielerName(txt_SpielerName.getText());
+		// // Es wurde kein Spielername eingegeben > Zufallsname
+		// if (spielerEins.getSpielerName().length() == 0 ||
+		// spielerEins.getSpielerName() == "") {
+		// spielerEins.setSpielerName("Rand" + Integer.toString(rand.nextInt(99)
+		// + 1));
+		// EingabeRichtig = true;
+		// }
+		// // Spielername hat nur 1 oder 2 Zeichen. Fehlermeldung.
+		// if (spielerEins.getSpielerName().length() == 1 ||
+		// spielerEins.getSpielerName().length() == 2) {
+		// JOptionPane.showMessageDialog(null,
+		// "Ein Spielername muss mindestens aus 3 Zeichen bestehen. Lass das
+		// Feld leer für einen Zufallsnamen.");
+		// }
+		// // Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet
+		// werden.
+		// if (spielerEins.getSpielerName().length() >= 3) {
+		// EingabeRichtig = true;
+		// }
 
 		if (GUI_Start.SpielerAngelegt() == true) {
 			// Spielfeld aktivieren
 			setSpielfeldAnAus(true);
 
-//			txt_SpielerName.setVisible(false);
+			// txt_SpielerName.setVisible(false);
 			lab_Spielername.setText(spielerT.getSpielerName());
 			lab_Spielername.setVisible(true);
 			lab_Spielmodus.setVisible(true);
@@ -322,7 +324,7 @@ public class Test extends JFrame {
 			btn_SpielerProfil.setVisible(true);
 
 			// Button zum Schluss deaktivieren
-//			btn_Spielstarten.setVisible(false);
+			// btn_Spielstarten.setVisible(false);
 			btn_SpielReset.setEnabled(true);
 
 			zeittmp = Spiel.zeitmessungStart();
@@ -348,15 +350,15 @@ public class Test extends JFrame {
 		}
 
 		// Spielername zurücksetze, Label weg, Eingabe da
-//		EingabeRichtig = false;
+		// EingabeRichtig = false;
 		btn_SpielerProfil.setVisible(false);
-//		txt_SpielerName.setVisible(true);
-//		txt_SpielerName.setText("");
+		// txt_SpielerName.setVisible(true);
+		// txt_SpielerName.setText("");
 		lab_Spielername.setVisible(false);
 		lab_Spielmodus.setVisible(false);
 		lab_Restminen.setVisible(false);
 		lab_MinenRichtig.setVisible(false);
-//		btn_Spielstarten.setVisible(true);
+		// btn_Spielstarten.setVisible(true);
 		btn_SpielNeustart.setEnabled(false);
 		spiel.setRestMinen(3);
 		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
@@ -412,7 +414,7 @@ public class Test extends JFrame {
 	private void initialiseFrame() {
 
 		// Frame-Initialisierung
-		//setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		// setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		int frameWidth = 375;
 		int frameHeight = 320;
@@ -424,46 +426,46 @@ public class Test extends JFrame {
 		setTitle("GameApp-Name actually not set");
 		setResizable(false);
 		cp.setLayout(null);
-		
-	    // Menüleiste
+
+		//  Menüleiste
 		JMenuBar menueLeiste = new JMenuBar();
-		
-		// Menüleiste Elemente
+
+		//  Menüleiste Elemente
 		JMenu men_spiel = new JMenu("Spiel");
 		JMenu men_ueber = new JMenu("Über");
-		
+
 		// Untermenü + Linksklick-Methode
 		JMenuItem men_spiel_neu = new JMenuItem("Neues Spiel");
 		men_spiel_neu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				dispose();
-				GUI_Start neu = new GUI_Start();		
+				GUI_Start neu = new GUI_Start();
 			}
 		});
 		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
 		men_spiel_beenden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				setDefaultCloseOperation(EXIT_ON_CLOSE);	
+				setDefaultCloseOperation(EXIT_ON_CLOSE);
 			}
 		});
 		JMenuItem men_ueber_version = new JMenuItem("Version");
 		men_ueber_version.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				JOptionPane.showMessageDialog(null, "Version: "+versiont);
+				JOptionPane.showMessageDialog(null, "Version: " + versiont);
 			}
 		});
-		
-		//Menüleiste
-		//Menüleiste hinzufügen
+
+		// Menüleiste
+		// Menüleiste hinzufügen
 		cp.add(menueLeiste);
-		//Hauptmenü-Punkte hinzufügen
+		// Hauptmenü-Punkte hinzufügen
 		menueLeiste.add(men_spiel);
 		menueLeiste.add(men_ueber);
-		//Untermenü-Punkte hinzufügen
+		// Untermenü-Punkte hinzufügen
 		men_spiel.add(men_spiel_neu);
 		men_spiel.add(men_spiel_beenden);
 		men_ueber.add(men_ueber_version);
-		//MenueLeiste dem JFrame zuordnen
+		// MenueLeiste dem JFrame zuordnen
 		setJMenuBar(menueLeiste);
 	}
 
@@ -491,10 +493,9 @@ public class Test extends JFrame {
 
 		initialiseFrame();
 
-
 		// Spielername-Eingabe
-//		txt_SpielerName.setBounds(10, 10, 150, 30);
-//		cp.add(txt_SpielerName);
+		// txt_SpielerName.setBounds(10, 10, 150, 30);
+		// cp.add(txt_SpielerName);
 
 		createStartScreenButtons();
 		createSpielfeldButtons();
@@ -513,21 +514,21 @@ public class Test extends JFrame {
 			}
 		});
 
-//		btn_Spielstarten.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent evt) {
-//				btn_Spielstarten_ActionPerformed();
-//			}
-//		});
+		// btn_Spielstarten.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent evt) {
+		// btn_Spielstarten_ActionPerformed();
+		// }
+		// });
 
-//		btn_SpielBeenden.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent evt) {
-//				dispose();
-//			}
-//		});
+		// btn_SpielBeenden.addActionListener(new ActionListener() {
+		// public void actionPerformed(ActionEvent evt) {
+		// dispose();
+		// }
+		// });
 
 		btn_SpielerProfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);		
+				GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
 			}
 		});
 
@@ -540,11 +541,9 @@ public class Test extends JFrame {
 		});
 
 		// Ende Komponenten
-		//frame spielfeld
+		// frame spielfeld
 		setVisible(true);
 
-	
-	
 	}
 
 	// Ende Methoden

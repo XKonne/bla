@@ -200,9 +200,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					   Im Spielfeld (Test) und GUI_Start bewirkt das Schließen per "X", dass alle Fenster geschlossen werden
 					   Dies gilt ebenso, wenn über die Menüleiste: Spiel > Beenden ausgewählt wird.
 					      Anmerkung: "X" bzw. "Profil Schließen" in GUI_Spielerprofil bewirkt nur, dass dieser eine Frame (/Fenster) geschlossen wird
-					+Spiel.setSpielModus(int spalte, int zeile, int minen, String Modus)
+					+ Spiel.setSpielModus(int spalte, int zeile, int minen, String Modus)
 						Setzt die Werte die für das Spielfeld benötigt werden.
 						Aufruf erfolgt in GUI_Start nach Klicken des entsprechenden Spiel-Modus
 	
-	
+		done		+ Klasse DataIO erstellt:														02.04.2017	A.3.2
+						Die Methode .loadFile() lädt die Stats des eingegebenen Spielernamens.
+						Bisher nur in der Spiel.setupSpiel(Spieler) aufgerufen.
+					> Methodennamen und deren Aufrufe angepasst.
+						
+						
 	

@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
 public class GUI_Spielerprofil extends JFrame {
-	 // Variablen
+	// Variablen
 	static Spieler spieler;
 	// Buttons
 	private JButton btn_SpielerprofilSchliessen = new JButton();
@@ -30,7 +30,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 	public GUI_Spielerprofil(Spieler spieler) {
 		super();
-		GUI_Spielerprofil.spieler=spieler;
+		GUI_Spielerprofil.spieler = spieler;
 
 		// Spielerprofil-JFrame initialisieren
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -53,7 +53,7 @@ public class GUI_Spielerprofil extends JFrame {
 		btn_SpielerprofilSchliessen.setText("Profil schließen");
 		btn_SpielerprofilSchliessen.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerprofilSchliessen);
-		
+
 		btn_SpielerprofilAktualisieren.setBounds(10, 430, 100, 30);
 		btn_SpielerprofilAktualisieren.setText("Aktualisieren");
 		btn_SpielerprofilAktualisieren.setMargin(new Insets(2, 2, 2, 2));
@@ -72,7 +72,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpieleGespielt.setBounds(10, 60, 230, 20);
 		cp.add(lab_SpieleGespielt);
-		
+
 		lab_SpieleGewonnen.setBounds(10, 90, 230, 20);
 		cp.add(lab_SpieleGewonnen);
 
@@ -99,7 +99,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpielHistorie.setBounds(90, 300, 200, 80);
 		cp.add(lab_SpielHistorie);
-		
+
 		// Alle Label erstellt und hinzugefügt > Label-Text setzen
 		setLabelText();
 
@@ -115,9 +115,9 @@ public class GUI_Spielerprofil extends JFrame {
 			}
 		});
 	} // end-GUI_Spielerprofil (init)
-	
+
 	// Klassenmethoden
-	
+
 	public void setLabelText() {
 		// Reihenfolge wie in der Anzeige
 		lab_SpieleGespielt.setText("Spiele gespielt: " + Integer.toString(spieler.getSpieleGespielt()));
@@ -134,5 +134,4 @@ public class GUI_Spielerprofil extends JFrame {
 				+ spieler.getSpielHistorie(3) + "<br>" + "5: " + spieler.getSpielHistorie(4) + "</html>");
 	}
 
-	
 }
