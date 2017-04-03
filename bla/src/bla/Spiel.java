@@ -5,14 +5,15 @@ import javax.swing.JOptionPane;
 public class Spiel {
 	static Spieler spieler;
 
-	private int minenGesamt = 3;
+	private static int minenGesamt = 3;
 	private int minenRichtig = 0;
-	private int restMinen = 3;
+	private static int restMinen = 3;
 
 	static int anzahlSpalten = 0;
 	static int anzahlZeilen = 0;
 	static int anzahlMinen = 0;
 	static String spielModus = "noModus";
+	static String spielModusT="";
 
 	private static Spiel spiel;
 	private static Test test;
@@ -29,7 +30,6 @@ public class Spiel {
 		spielModus = modus;
 		JOptionPane.showMessageDialog(null, "Spalten: " + anzahlSpalten + "/ Zeilen: " + anzahlSpalten + " / Minen: "
 				+ anzahlMinen + " Modus: " + spielModus);
-
 		setupSpiel(spieler);
 	}
 
@@ -66,24 +66,43 @@ public class Spiel {
 		return minenRichtig;
 	}
 
+	public static String getSpielModus() {
+		if (spielModus == "Leicht") {
+			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
+		}
+		if (spielModus == "Mittel") {
+			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
+		}
+		if (spielModus == "Schwer") {
+			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
+		}
+		if (spielModus == "Benutzer") {
+			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
+		}
+		return spielModusT;
+	}
+	
 	public int getRestMinen() {
 		return restMinen;
 	}
 
-	public void setMinenGesamt(int minenGesamt) {
-		this.minenGesamt = minenGesamt;
+	public static void setMinenGesamt(int gesamtMinen) {
+		minenGesamt = gesamtMinen;
 	}
 
 	public void setMinenRichtig(int minenRichtig) {
 		this.minenRichtig = minenRichtig;
 	}
 
-	public void setRestMinen(int minen) {
+	public static void setRestMinen(int minen) {
 		restMinen = minen;
 	}
 
 	private static void setupSpiel(Spieler spieler) {
 
+		setMinenGesamt(anzahlMinen);
+		setRestMinen(anzahlMinen);
+		
 		spiel = new Spiel();
 		test = new Test(spiel, spieler);
 		DataIO data = new DataIO(spieler);

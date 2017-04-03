@@ -67,7 +67,6 @@ public class GUI_Spielerprofil extends JFrame {
 		// Labels - in der Reihenfolge der Anzeige
 		lab_SpielerName.setBounds(60, 10, 180, 40);
 		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
-		lab_SpielerName.setText(spieler.getSpielerName());
 		cp.add(lab_SpielerName);
 
 		lab_SpieleGespielt.setBounds(10, 60, 230, 20);
@@ -120,6 +119,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 	public void setLabelText() {
 		// Reihenfolge wie in der Anzeige
+		lab_SpielerName.setText(spieler.getSpielerName());
 		lab_SpieleGespielt.setText("Spiele gespielt: " + Integer.toString(spieler.getSpieleGespielt()));
 		lab_SpieleGewonnen.setText("Spiele gewonnen: " + Integer.toString(spieler.getSpieleGewonnen()));
 		lab_SpieleSiegesserie.setText("Aktuelle Siegesserie: " + spieler.getSpielerSiegesserie());

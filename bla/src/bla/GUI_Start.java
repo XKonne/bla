@@ -162,7 +162,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 			// do nothing
 		}
 		if (object.getSource() == men_spiel_beenden) {
-			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			System.exit(0);
 		}
 		if (object.getSource() == men_ueber_anleitung) {
 			// do nothing
