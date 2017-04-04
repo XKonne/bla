@@ -9,21 +9,20 @@ import javax.swing.border.LineBorder;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.3 vom 02.04.2017
+ * @version A.3.4 vom 04.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
 
-public class Test extends JFrame {
+public class Test extends JFrame implements ActionListener {
 
 	private static Spiel spiel;
 
 	// Variablen
 	static Spieler spielerT;
 
-
 	// String
-	static String versiont = "A.3.3";
+	static String versiont = "A.3.4";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
@@ -32,24 +31,28 @@ public class Test extends JFrame {
 	// Long
 	static long zeittmp;
 
-	// Buttons
-	// private JButton btn_SpielBeenden = new JButton(); wird eventuell noch mal
-	// gebraucht
+	// Buttons - Spielfeld
 	private JButton btn_SpielerProfil = new JButton();
-	private JButton btn_SpielAnleitung = new JButton();
+	private JButton btn_SpielNeustart = new JButton();
+
+	// Buttons - SpielEnde
+	private JButton btn_SpielZurueck = new JButton();
 	private JButton btn_SpielNochmal = new JButton();
 	private JButton btn_SpielNeueRunde = new JButton();
-	private JButton btn_SpielReset = new JButton();
-
+	private JButton btn_SpielNeues = new JButton();
+	
 	// Container
 	private Container cp = getContentPane();
 
-	// Labels
+	// Labels - Spielfeld
 	private JLabel lab_SpielerName = new JLabel();
 	private JLabel lab_SpielModus = new JLabel();
 	private JLabel lab_Version = new JLabel();
 	private static JLabel lab_MinenRichtig = new JLabel();
 	private static JLabel lab_Restminen = new JLabel();
+	
+	// Labels - Spielende
+	private JLabel lab_SpielEndeInformation = new JLabel();
 
 	// Arrays
 	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
@@ -92,21 +95,24 @@ public class Test extends JFrame {
 		if (GUI_Start.SpielerAngelegt() == true) {
 			// Spielfeld aktivieren
 			setSpielfeldAnAus(true);
-
-			lab_SpielerName.setText(spielerT.getSpielerName());
-			lab_SpielerName.setVisible(true);
-			lab_SpielModus.setVisible(true);
-			lab_Restminen.setVisible(true);
-			lab_MinenRichtig.setVisible(true);
-
-			btn_SpielNochmal.setEnabled(true);
 			Spielfeldgesperrt = false;
+
 			btn_SpielerProfil.setVisible(true);
 
-			// Button zum Schluss deaktivieren
-			btn_SpielReset.setEnabled(false);
-
 			zeittmp = Spiel.zeitmessungStart();
+			
+			// Spielfeldgeklickt Array initialisieren
+			for (int i = 0; i < Spielfeldgeklickt.length; i++) {
+				Spielfeldgeklickt[i] = 0;
+			}
+			
+			// Labels Text setzen
+			lab_SpielerName.setText(spielerT.getSpielerName());
+			spiel.setRestMinen(spiel.getMinenGesamt());
+			lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+			spiel.setMinenRichtig(0);
+			lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
 		}
 	}
 
@@ -147,31 +153,16 @@ public class Test extends JFrame {
 		btn_SpielerProfil.setVisible(false);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerProfil);
+		btn_SpielerProfil.addActionListener(this);
 
-		btn_SpielReset.setBounds(10, 340, 80, 30);
-		btn_SpielReset.setText("Reset");
-		btn_SpielReset.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielReset.setEnabled(false);
-		cp.add(btn_SpielReset);
-
-		btn_SpielNeueRunde.setBounds(100, 340, 80, 30);
-		btn_SpielNeueRunde.setText("Neue Runde");
-		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielNeueRunde.setEnabled(false);
-		cp.add(btn_SpielNeueRunde);
-
-		btn_SpielNochmal.setBounds(190, 340, 80, 30);
-		btn_SpielNochmal.setText("Nochmal");
-		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielNochmal.setEnabled(false);
-		cp.add(btn_SpielNochmal);
-
-		btn_SpielAnleitung.setBounds(340, 5, 40, 40);
-		btn_SpielAnleitung.setText("?");
-		btn_SpielAnleitung.setMargin(new Insets(2, 2, 2, 2));
-		cp.add(btn_SpielAnleitung);
-
+		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
+		btn_SpielNeustart.setToolTipText("Startet die Runde neu.");
+		btn_SpielNeustart.setBounds(340, 5, 40, 40);
+		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
+		cp.add(btn_SpielNeustart);
+		btn_SpielNeustart.addActionListener(this);
 	}
+	
 
 	private void createStartScreenLabels() {
 
@@ -180,28 +171,26 @@ public class Test extends JFrame {
 		lab_SpielerName.setBounds(55, 5, 160, 40);
 		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
 		lab_SpielerName.setBorder(border);
-		lab_SpielerName.setVisible(false);
+		lab_SpielerName.setVisible(true);
 		cp.add(lab_SpielerName);
 
 		lab_SpielModus.setBounds(220, 0, 120, 20);
 		lab_SpielModus.setVisible(false);
 		lab_SpielModus.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
+		lab_SpielModus.setVisible(true);
 		cp.add(lab_SpielModus);
 
 		lab_Restminen.setBounds(220, 14, 100, 20);
-		lab_Restminen.setVisible(false);
+		lab_Restminen.setVisible(true);
 		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
 		cp.add(lab_Restminen);
 
 		lab_MinenRichtig.setBounds(220, 28, 100, 20);
-		lab_MinenRichtig.setVisible(false);
+		lab_MinenRichtig.setVisible(true);
 		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lab_MinenRichtig.setText("Mine Richtig " + Integer.toString(spiel.getMinenRichtig()));
 		cp.add(lab_MinenRichtig);
 
-		lab_Version.setBounds(325, 340, 100, 30);
+		lab_Version.setBounds(12, 47, 100, 20);
 		lab_Version.setVisible(true);
 		lab_Version.setText(versiont);
 		cp.add(lab_Version);
@@ -242,34 +231,37 @@ public class Test extends JFrame {
 		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
 
-		// Sieg-Bedingung pruefen
+		// Sieg
 		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0
 				&& Spielfeldgesperrt == false) {
-			// sieg
+			// Variable für Spielhistorie
 			winlose = true;
+			
 			// zeitmesser stoppen und Wert in zeittmp speichern
 			zeittmp = Spiel.zeitmessungEnde(zeittmp);
 
 			// Ausgabe
-			JOptionPane.showMessageDialog(null, "Spiel gewonnen! Spielzeit: " + zeittmp / 1000 + " Sekunden.");
+			GUI_SpielEnde(mineGetroffen);
 
-			// Spieler Stats
+			// Spieler Stats aktualsieren
 			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
 
 			// Spielfeld deaktivieren
 			setSpielfeldAnAus(false);
 			Spielfeldgesperrt = true;
-
 		}
-		// mine aufgedeckt
+		
+		// Niederlage (=Mine aufgedeckt)
 		if (mineGetroffen == true) {
+			
 			winlose = false;
 			// zeitmesser stoppen und Wert in zeittmp speichern
 			zeittmp = Spiel.zeitmessungEnde(zeittmp);
+			
 			// Ausgabe
-			JOptionPane.showMessageDialog(null, "Mine! Spiel Verloren. Spielzeit: " + zeittmp / 1000 + " Sekunden.");
+			GUI_SpielEnde(mineGetroffen);
 
-			// Spieler Stats
+			// Spieler Stats aktualisieren
 			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
 
 			// Spielfeld deaktivieren
@@ -278,74 +270,44 @@ public class Test extends JFrame {
 		}
 	}
 
-	public void ButtonResetSpielfeld_ActionPerformed() { //aktuell deaktiviert
-
-		// TODO hier Quelltext einfÃ¼gen
-		// Spielfeld Oberflaeche zu beginn
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setText(".");
-		}
-
-		// Spielfeld deaktivieren
-		setSpielfeldAnAus(false);
-
-		Spielfeldgesperrt = true;
-		// Spielfeldgeklickt Array zurücksetzen
-		for (int i = 0; i < 17; i++) {
-			Spielfeldgeklickt[i] = 0;
-		}
-
-		// Spielername zurücksetze, Label weg, Eingabe da
-		// EingabeRichtig = false;
-		btn_SpielerProfil.setVisible(false);
-		// txt_SpielerName.setVisible(true);
-		// txt_SpielerName.setText("");
-		lab_SpielerName.setVisible(false);
-		lab_SpielModus.setVisible(false);
-		lab_Restminen.setVisible(false);
-		lab_MinenRichtig.setVisible(false);
-		// btn_Spielstarten.setVisible(true);
-		btn_SpielNochmal.setEnabled(false);
-		spiel.setRestMinen(3);
-		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-		spiel.setMinenRichtig(0);
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-	}
-
-	public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
-		// TODO hier Quelltext einfÃ¼gen
-		// Spielfeld Oberflaeche zu beginn
-
-		// Spielfeld-Buttons auf Anfangswert
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setText(".");
-		}
-
-		// Spielfeld aktivieren
-		setSpielfeldAnAus(true);
-		Spielfeldgesperrt = false;
-
-		// Spielfeldgeklickt Array zurücksetzen
-		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-			Spielfeldgeklickt[i] = 0;
-		}
-		//Zurücksetzen der Minen
-		spiel.setRestMinen(spiel.getMinenGesamt());
-		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-		spiel.setMinenRichtig(0);
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-
-		// Zeiterfassung starten
-		zeittmp = Spiel.zeitmessungStart();
-	}
+//	public void ButtonResetSpielfeld_ActionPerformed() { //braucht man vllt nochmal
+//		// Spielfeld Oberflaeche zu beginn
+//		for (int i = 0; i < buttons.length; i++) {
+//			buttons[i].setText(".");
+//		}
+//
+//		// Spielfeld deaktivieren
+//		setSpielfeldAnAus(false);
+//
+//		Spielfeldgesperrt = true;
+//		// Spielfeldgeklickt Array zurücksetzen
+//		for (int i = 0; i < 17; i++) {
+//			Spielfeldgeklickt[i] = 0;
+//		}
+//
+//		// Spielername zurücksetze, Label weg, Eingabe da
+//		// EingabeRichtig = false;
+//		btn_SpielerProfil.setVisible(false);
+//		// txt_SpielerName.setVisible(true);
+//		// txt_SpielerName.setText("");
+//		lab_SpielerName.setVisible(false);
+//		lab_SpielModus.setVisible(false);
+//		lab_Restminen.setVisible(false);
+//		lab_MinenRichtig.setVisible(false);
+//		// btn_Spielstarten.setVisible(true);
+//		btn_SpielNochmal.setEnabled(false);
+//		spiel.setRestMinen(3);
+//		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+//		spiel.setMinenRichtig(0);
+//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+//	}
 
 	private void initialiseFrame() {
-
+	
 		// Frame-Initialisierung
-		// setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		int frameWidth = 390;
-		int frameHeight = 430;
+		int frameHeight = 395;
 		setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
@@ -425,37 +387,137 @@ public class Test extends JFrame {
 		createSpielfeldButtons();
 		createStartScreenLabels();
 
-		btn_SpielNochmal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ButtonSpielNeustart_ActionPerformed(evt);
-			}
-		});
-
-		// Methode zum Button-klick-ausfuehren
-		btn_SpielReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ButtonResetSpielfeld_ActionPerformed();
-			}
-		});
-
-		btn_SpielerProfil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
-			}
-		});
-
-		btn_SpielAnleitung.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// Erzeugung eines neuen JDialogs
-				JOptionPane.showMessageDialog(null, "Finde (=richtig markiert) alle Minen um zu gewinnen."
-						+ " Ein Linksklick deckt ein Feld auf. Ein Rechtsklick markiert ein Feld. Wird ein Feld mit einer Mine aufgedeckt, so ist das Spiel verloren.");
-			}
-		});
-
-		// Ende Komponenten
 		// frame spielfeld
 		setVisible(true);
+		
 
 	} // Ende Methoden
+	
+	public void GUI_SpielEnde(boolean mineGetroffen) {
+		{
+		// Lokale Variablen
+		String siegNiederlage="";
+			
+		// Frame-Initialisierung
+		JFrame spielEnde = new JFrame();
+		spielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		spielEnde.setSize(380, 170);
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (d.width - getSize().width) / 2;
+		int y = (d.height - getSize().height) / 2;
+		spielEnde.setLocation(x, y);
+		spielEnde.setTitle("Spielende");
+		spielEnde.setResizable(false);
+		Container cp2 = spielEnde.getContentPane();
+		//Container cp2 = getContentPane();
+		cp2.setLayout(null);
+		
+		// Frame-Elemente
+		// Buttons
+		btn_SpielZurueck.setBounds(10, 100, 80, 30);
+		btn_SpielZurueck.setText("Zurück");
+		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
+		cp2.add(btn_SpielZurueck);
+		
+		btn_SpielNochmal.setBounds(100, 100, 80, 30);
+		btn_SpielNochmal.setText("Nochmal");
+		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
+		cp2.add(btn_SpielNochmal);
+		
+		btn_SpielNeueRunde.setBounds(190, 100, 80, 30);
+		btn_SpielNeueRunde.setText("Neue Runde");
+		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeueRunde.setEnabled(false);
+		cp2.add(btn_SpielNeueRunde);
+		
+		btn_SpielNeues.setBounds(280, 100, 80, 30);
+		btn_SpielNeues.setText("Neues Spiel");
+		btn_SpielNeues.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeues.setEnabled(false);
+		cp2.add(btn_SpielNeues);
+		
+		// Button Linksklick Methoden
+		btn_SpielZurueck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// Schließe GUI_SpielEnde und zeige Spielfeld nochmal an
+				spielEnde.dispose();
+			}
+		});
+		
+		btn_SpielNochmal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// Schließe GUI_SpielEnde und starte die Runde noch einmal
+				spielNochmal();
+				spielEnde.dispose();
+			}
+		});
+		
+		btn_SpielNeueRunde.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				//TODO
+				spielEnde.dispose();
+			}
+		});
+		
+		btn_SpielNeues.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				//TODO
+				spielEnde.dispose();
+			}
+		});
+		
+		// Ausgabetext Sieg oder Niederlage
+		if (mineGetroffen==false) {
+			siegNiederlage = "Sieg";
+		}
+		else {
+			siegNiederlage = "Niederlage";
+		}
+		
+		// Labels
+		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
+		lab_SpielEndeInformation.setVisible(true);
+		lab_SpielEndeInformation.setText("<HTML><font size=14><i>"+siegNiederlage+"!</i></font><br>Spieldauer: "+zeittmp / 1000+" Sekunden. </HTML>");
+		cp2.add(lab_SpielEndeInformation);
+		
+		spielEnde.setVisible(true);
+	}
+	}
+	// Spielfeld-Buttons Linksklick
+	public void actionPerformed(ActionEvent object) {
+		
+		// Linksklick Menüleiste
+		if (object.getSource() == btn_SpielNeustart) {
+			spielNochmal();
+		}
+		if (object.getSource() == btn_SpielerProfil) {
+			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
+		}
+			
+	}
+	
+	private void spielNochmal() {
+		// Spielfeld-Buttons auf Anfangswert
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].setText(".");
+		}
+
+		// Spielfeld aktivieren
+		setSpielfeldAnAus(true);
+		Spielfeldgesperrt = false;
+
+		// Spielfeldgeklickt Array zurücksetzen
+		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
+			Spielfeldgeklickt[i] = 0;
+		}
+		//Zurücksetzen der Minen
+		spiel.setRestMinen(spiel.getMinenGesamt());
+		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+		spiel.setMinenRichtig(0);
+		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+
+		// Zeiterfassung starten
+		zeittmp = Spiel.zeitmessungStart();
+	}
 
 } // end of class Test

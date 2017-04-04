@@ -209,7 +209,7 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						Bisher nur in der Spiel.setupSpiel(Spieler) aufgerufen.
 					> Methodennamen und deren Aufrufe angepasst.
 					
-		done		> Test: Code optimiert und alten Code entfernt.									03.04.2017	A3.3		
+		done		> Test: Code optimiert und alten Code entfernt.									03.04.2017	A.3.3		
 					> Im Spielfenster (Test) wird nun der gewählte Spielmodus angezeigt, d.h.		
 					  (Spalten x Zeilen - Schwierigkeitsgrad) sowie die Minenanzahl.
 				    + Spiel.getSpielModus(): Erzeugt für die Anzeige in Test den String mit dem gewählten Spielparametern.
@@ -221,6 +221,17 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					     Das muss vereinheitlicht werden. Aber das Spiel läuft korrekt.
 					Bug: Spielerprofil zeigt bei Spielhistorie den alten Verlauf eines vorherigen Spielers an, wenn ein neuer Spieler angelegt wurde
 					Fixed: Spiel kann nun wie vorgesehen über (Menüleiste) Spiel > Beenden geschlossen werden.
+		
+		done		> Test: Die Sieg/Niederlage-Meldung überarbeitet								04.04.2017	A.3.4
+						Die Sieg-Niederlage-Meldung ist nun kein Dialog-Fenster mehr, sondern ein Frame, der über GUI_SpielEnde()
+						in Test aufgerufen wird.
+						Dementsprechend sind die Buttons ("Nochmal", "Neue Runde", "Reset") vom Spielfeld in GUI_SpielEnde verschoben worden.
+						Button-Erklärung: Zurück: Schließt GUI_SpielEnde, um noch einmal das Spielfeld anzusehen
+										  Nochmal: Wiederholt die aktuelle Runde
+		TO-DO							  Neue Runde: Generiert ein neue Spielrunde mit gewähltem Modus 	!!! (deaktiviert)
+		TO-DO							  Neues Spiel: Ruft GUI_Start aus, um einen neuen Modus zu wählen	!!! (deaktiviert)
+					> Test: -btn_SpielAnleitung
+							+btn_SpielNeustarten: Startet die aktuelle Runde neu.
 						
 						
 	

@@ -28,8 +28,8 @@ public class Spiel {
 		anzahlZeilen = zeile;
 		anzahlMinen = minen;
 		spielModus = modus;
-		JOptionPane.showMessageDialog(null, "Spalten: " + anzahlSpalten + "/ Zeilen: " + anzahlSpalten + " / Minen: "
-				+ anzahlMinen + " Modus: " + spielModus);
+//		JOptionPane.showMessageDialog(null, "Spalten: " + anzahlSpalten + "/ Zeilen: " + anzahlSpalten + " / Minen: "
+//				+ anzahlMinen + " Modus: " + spielModus);
 		setupSpiel(spieler);
 	}
 
