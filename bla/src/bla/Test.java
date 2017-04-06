@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.4 vom 04.04.2017
+ * @version A.3.5 vom 06.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -22,7 +22,7 @@ public class Test extends JFrame implements ActionListener {
 	static Spieler spielerT;
 
 	// String
-	static String versiont = "A.3.4";
+	static String versiont = "A.3.5";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;

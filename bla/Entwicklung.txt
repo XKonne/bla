@@ -232,6 +232,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		TO-DO							  Neues Spiel: Ruft GUI_Start aus, um einen neuen Modus zu wählen	!!! (deaktiviert)
 					> Test: -btn_SpielAnleitung
 							+btn_SpielNeustarten: Startet die aktuelle Runde neu.
+							
+		done		> GUI_Start: +GUI_modusBenutzer()												06.04.2017	A.3.5
+									> Öffnet einen neuen Frame, wenn ein benutzerdefiniertes Spiel erzeugt werden soll.
+									  Hier können die Spalten- und Zeilenanzahl gewählt werden. Die Minenanzahl bewegt
+									  sich im Bereich [10,...,maxMinen=(spalten*zeilen)*0.2]
+									+ btn_SpielZurueck: Schließt GUI_modusBenuter
+									+ btn_SpielStarten: Startet ein Spiel mit den eingestellten Werten
+									+ btn_SpielZufall: Erzeugt Zufallswerte für ein Spiel und zeigt diese an.
 						
 						
 	
