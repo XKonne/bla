@@ -22,7 +22,7 @@ public class Test extends JFrame implements ActionListener {
 	static Spieler spielerT;
 
 	// String
-	static String versiont = "A.3.6";
+	static String versiont = "A.3.6x";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
