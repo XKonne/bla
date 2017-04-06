@@ -247,6 +247,6 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 	    TO-DO					   ! Auswahl aus der Liste funktioniert nicht
 	    TO-DO					   ! Spieler für Liste aus data.txt auslesen implementieren
 	    TO-DO					   ! Falls "Als Gast spielen" gewählt wird, soll ein Zufallsname generiert werden
-	    TO-DO					   ! Gewählter Spielername soll gespeichert werden implementieren
+	    TO-DO					   ! Gewählter Spielername soll gespeichert werden implementieren...
 						
 	
