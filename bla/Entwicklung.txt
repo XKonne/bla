@@ -241,5 +241,12 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 									+ btn_SpielStarten: Startet ein Spiel mit den eingestellten Werten
 									+ btn_SpielZufall: Erzeugt Zufallswerte für ein Spiel und zeigt diese an.
 						
+		done		> GUI_Start: +GUI_SpielerWahl()													06.04.2017	A.3.6
+								   > Öffnet zum Programmstart einen neuen Frame, bei dem ein existierender Spieler ausgewählt
+								     oder ein neuer Spieler angelegt werden kann.
+	    TO-DO					   ! Auswahl aus der Liste funktioniert nicht
+	    TO-DO					   ! Spieler für Liste aus data.txt auslesen implementieren
+	    TO-DO					   ! Falls "Als Gast spielen" gewählt wird, soll ein Zufallsname generiert werden
+	    TO-DO					   ! Gewählter Spielername soll gespeichert werden implementieren
 						
 	

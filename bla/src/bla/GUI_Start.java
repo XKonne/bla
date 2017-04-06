@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 
@@ -21,10 +22,15 @@ public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte
 	Spieler spielerEins = new Spieler();
 	
+	String interessen[] = { "Als Gast spielen", "Konne", "p0sE" };
+	
     // Frames
 	JFrame gui_Start = new JFrame();
 	JFrame gui_ModusBenutzer = new JFrame();
+	JFrame gui_SpielerWahl = new JFrame();
+
 	Double maxMinen;
+	
 	// Varialblen
 	static boolean EingabeRichtig = false;
 
@@ -33,14 +39,22 @@ public class GUI_Start extends JFrame implements ActionListener {
 	private JButton btn_ModusMittel = new JButton();
 	private JButton btn_ModusSchwer = new JButton();
 	private JButton btn_ModusBenutzer = new JButton();
-
-	private JButton btn_SpielerAnlegen = new JButton();
 	private JButton btn_SpielerProfil = new JButton();
 	
 	// Buttons - GUI_ModusBenuzrt
 	private JButton btn_SpielZurueck = new JButton();
 	private JButton btn_SpielStarten = new JButton();
 	private JButton btn_SpielZufall = new JButton();
+	
+	// Buttons - GUI_SpielerWahl
+	private JButton btn_spw_NeuerSpieler = new JButton();
+	private JButton btn_spw_Weiter = new JButton();
+	
+	// List
+	private JList lis_Spieler = new JList();
+	
+	// Checkbos
+	 private JCheckBox chb_SpielerMerken = new JCheckBox();
 
 	// Labels
 	private JLabel lab_SpielerName = new JLabel();
@@ -53,6 +67,10 @@ public class GUI_Start extends JFrame implements ActionListener {
 	private JLabel lab_mb_Zeilen = new JLabel();
 	private JLabel lab_mb_Minen = new JLabel();
 	private JLabel lab_mb_Felder = new JLabel();
+	
+	// Labels - GUI_SpielerWahl
+	private JLabel lab_spw_Spielerliste = new JLabel();
+	private JLabel lab_spw_NeuerSpieler = new JLabel();
 
 	// Textfelder
 	private JTextField txt_SpielerName = new JTextField();
@@ -84,7 +102,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 	JMenuItem men_ueber_version = new JMenuItem("Über 'Seawolf'");
 
 	public GUI_Start() {
-		// TODO Auto-generated constructor stub
 		// JFrame fenster = new JFrame("Ihr JFrame");
 		gui_Start.setSize(585, 280);
 		gui_Start.setLocationRelativeTo(null);
@@ -129,13 +146,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 		gui_Start.setJMenuBar(menueLeiste);
 
 		// GUI Elemente
-		btn_SpielerAnlegen.setBounds(435, 10, 125, 28);
-		btn_SpielerAnlegen.setText("Spieler Anlegen");
-		btn_SpielerAnlegen.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielerAnlegen.setEnabled(true);
-		panel.add(btn_SpielerAnlegen);
-		btn_SpielerAnlegen.addActionListener(this);
-
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
 		btn_SpielerProfil.setBounds(350, 5, 40, 40);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
@@ -144,10 +154,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 		panel.add(btn_SpielerProfil);
 		btn_SpielerProfil.addActionListener(this);
 
-		// Textfelder
-		txt_SpielerName.setBounds(275, 10, 150, 30);
-		txt_SpielerName.setVisible(true);
-		panel.add(txt_SpielerName);
+
 
 		Border border = LineBorder.createGrayLineBorder();
 		lab_SpielerName.setBounds(400, 5, 160, 40);
@@ -186,8 +193,70 @@ public class GUI_Start extends JFrame implements ActionListener {
 		btn_ModusBenutzer.addActionListener(this);
 
 		panel.repaint();
+		GUI_SpielerWahl();
 	}
 	
+	public void GUI_SpielerWahl() {
+		{
+			// Lokale Variablen
+			txt_SpielerName.setText(""); 
+			
+			// Frame-Initialisierung
+			gui_SpielerWahl.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			gui_SpielerWahl.setSize(310, 240);
+			Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+			int x = (d.width - getSize().width) / 2;
+			int y = (d.height - getSize().height) / 2;
+			gui_SpielerWahl.setLocation(x, y);
+			gui_SpielerWahl.setTitle("Spieler");
+			gui_SpielerWahl.setResizable(false);
+			Container cp3 = gui_SpielerWahl.getContentPane();
+			cp3.setLayout(null);
+			gui_SpielerWahl.setVisible(true);
+			
+			// Textfelder
+			txt_SpielerName.setBounds(140, 30, 150, 30);
+			txt_SpielerName.setVisible(true);
+			cp3.add(txt_SpielerName);
+			
+			// Labels
+			lab_spw_Spielerliste.setBounds(10, 10, 100, 20);
+			lab_spw_Spielerliste.setText("Spielerliste");
+			cp3.add(lab_spw_Spielerliste);
+			
+			lab_spw_NeuerSpieler.setBounds(140, 10, 100, 20);
+			lab_spw_NeuerSpieler.setText("Neuer Spieler");
+			cp3.add(lab_spw_NeuerSpieler);
+			
+			// JList
+	        JList lis_Spieler = new JList(interessen);
+		    lis_Spieler.setBounds(10, 30, 120, 145);
+		    lis_Spieler.setSelectedIndex(0);
+		    lis_Spieler.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		    cp3.add(lis_Spieler);
+		    
+		    // Butons
+			btn_spw_Weiter.setBounds(140, 150, 90, 25);
+			btn_spw_Weiter.setText("Auswählen");
+			btn_spw_Weiter.setMargin(new Insets(2, 2, 2, 2));
+			cp3.add(btn_spw_Weiter);
+			btn_spw_Weiter.addActionListener(this);
+			
+			btn_spw_NeuerSpieler.setBounds(200, 65, 90, 25);
+			btn_spw_NeuerSpieler.setText("Anlegen");
+			btn_spw_NeuerSpieler.setMargin(new Insets(2, 2, 2, 2));
+			cp3.add(btn_spw_NeuerSpieler);
+			btn_spw_NeuerSpieler.addActionListener(this);
+			
+			// Checkbos
+		    chb_SpielerMerken.setBounds(10, 180, 300, 20);
+		    chb_SpielerMerken.setText("Ausgewählten Spieler speichern.");
+		    chb_SpielerMerken.setOpaque(false);
+		    chb_SpielerMerken.setEnabled(false);
+		    cp3.add(chb_SpielerMerken);
+		    
+		}
+		}
 	
 	public void GUI_ModusBenutzer() {
 		{
@@ -352,39 +421,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 		}
 
 		// Linksklick Buttons
-		if (object.getSource() == btn_SpielerAnlegen) {
-
-			// Name einlesen
-			spielerEins.setSpielerName(txt_SpielerName.getText());
-			// Es wurde kein Spielername eingegeben > Zufallsname
-			if (spielerEins.getSpielerName().length() == 0 || spielerEins.getSpielerName() == "") {
-				spielerEins.setSpielerName("Gast" + Integer.toString(rand.nextInt(99) + 1));
-				EingabeRichtig = true;
-			}
-			// Spielername hat nur 1 oder 2 Zeichen. Fehlermeldung.
-			if (spielerEins.getSpielerName().length() == 1 || spielerEins.getSpielerName().length() == 2) {
-				JOptionPane.showMessageDialog(null,
-						"Ein Spielername muss mindestens aus 3 Zeichen bestehen. Lass das Feld leer für einen Zufallsnamen.");
-			}
-			// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet
-			// werden.
-			if (spielerEins.getSpielerName().length() >= 3) {
-				EingabeRichtig = true;
-			}
-
-			txt_SpielerName.setVisible(false);
-			lab_SpielerName.setVisible(true);
-			lab_SpielerName.setText(spielerEins.getSpielerName());
-			btn_SpielerProfil.setEnabled(true);
-			btn_SpielerProfil.setVisible(true);
-
-			btn_ModusLeicht.setEnabled(true);
-			btn_ModusMittel.setEnabled(true);
-			btn_ModusSchwer.setEnabled(true);
-			btn_ModusBenutzer.setEnabled(true);
-
-			btn_SpielerAnlegen.setVisible(false);
-		}
 		if (object.getSource() == btn_SpielerProfil) {
 			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerEins);
 		}
@@ -405,7 +441,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 			GUI_ModusBenutzer();
 		}
 		
-		// GUI_modusBenutzer
+		// GUI_ModusBenutzer
 		if (object.getSource() == btn_SpielZurueck) {
 			gui_ModusBenutzer.dispose();
 		}
@@ -426,6 +462,55 @@ public class GUI_Start extends JFrame implements ActionListener {
 			lab_mb_SpaltenZahl.setText(Integer.toString(sb_mb_spalten.getValue()));
 			lab_mb_ZeilenZahl.setText(Integer.toString(sb_mb_zeilen.getValue()));
 			lab_mb_MinenZahl.setText(Integer.toString(sb_mb_minen.getValue()));		
+		}
+		
+		// GUI_SpielerWahl
+		if (object.getSource() == btn_spw_Weiter) {
+			lab_SpielerName.setText(interessen[lis_Spieler.getSelectedIndex()+2]);
+			spielerEins.setSpielerName(interessen[1]);
+			lab_SpielerName.setVisible(true);
+			btn_SpielerProfil.setEnabled(true);
+			btn_SpielerProfil.setVisible(true);
+
+			btn_ModusLeicht.setEnabled(true);
+			btn_ModusMittel.setEnabled(true);
+			btn_ModusSchwer.setEnabled(true);
+			btn_ModusBenutzer.setEnabled(true);
+			
+			EingabeRichtig = true;
+			SpielerAngelegt();
+			
+			gui_SpielerWahl.dispose();
+		}
+		if (object.getSource() == btn_spw_NeuerSpieler) {
+			// Name einlesen
+			spielerEins.setSpielerName(txt_SpielerName.getText());
+			// Es wurde kein Spielername eingegeben > Zufallsname
+			if (spielerEins.getSpielerName().length() == 0 || spielerEins.getSpielerName().length() == 1 || spielerEins.getSpielerName().length() == 2 || spielerEins.getSpielerName().length() > 8) {
+				JOptionPane.showMessageDialog(null,
+						"Ein Spielername darf aus mindestens aus 3 und maximal 8 Zeichen bestehen.");
+				EingabeRichtig = false;
+			}
+			// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet werden.
+			if (spielerEins.getSpielerName().length() >= 3 && spielerEins.getSpielerName().length() < 8 ) {
+				EingabeRichtig = true;
+			}
+
+			if (EingabeRichtig == true) {
+				lab_SpielerName.setVisible(true);
+				lab_SpielerName.setText(spielerEins.getSpielerName());
+				btn_SpielerProfil.setEnabled(true);
+				btn_SpielerProfil.setVisible(true);
+
+				btn_ModusLeicht.setEnabled(true);
+				btn_ModusMittel.setEnabled(true);
+				btn_ModusSchwer.setEnabled(true);
+				btn_ModusBenutzer.setEnabled(true);
+				
+				SpielerAngelegt();
+				
+				gui_SpielerWahl.dispose();
+			}
 		}
 	}
 

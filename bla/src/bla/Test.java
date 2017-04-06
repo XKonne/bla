@@ -9,7 +9,7 @@ import javax.swing.border.LineBorder;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.5 vom 06.04.2017
+ * @version A.3.6 vom 06.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -22,7 +22,7 @@ public class Test extends JFrame implements ActionListener {
 	static Spieler spielerT;
 
 	// String
-	static String versiont = "A.3.5";
+	static String versiont = "A.3.6";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
@@ -113,6 +113,8 @@ public class Test extends JFrame implements ActionListener {
 			spiel.setMinenRichtig(0);
 			lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
 			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
+			
+			repaint();
 		}
 	}
 
@@ -389,6 +391,7 @@ public class Test extends JFrame implements ActionListener {
 
 		// frame spielfeld
 		setVisible(true);
+		repaint();
 		
 
 	} // Ende Methoden
