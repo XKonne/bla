@@ -17,6 +17,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.Arrays;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import javax.swing.*;
 
@@ -24,7 +26,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte
 	Spieler spielerEins = new Spieler();
 	
-	String interessen[] = { "Als Gast spielen", "Konne", "p0sE" };
+	String arr_SpielerListe[] = new String[8];
 	
     // Frames
 	JFrame gui_Start = new JFrame();
@@ -35,6 +37,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 	
 	// Varialblen
 	static boolean EingabeRichtig = false;
+	int spielerIndex=-2;
 
 	// Buttons
 	private JButton btn_ModusLeicht = new JButton();
@@ -203,6 +206,8 @@ public class GUI_Start extends JFrame implements ActionListener {
 			// Lokale Variablen
 			txt_SpielerName.setText(""); 
 			
+			loadSpielerListe();
+			
 			// Frame-Initialisierung
 			gui_SpielerWahl.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			gui_SpielerWahl.setSize(310, 240);
@@ -231,11 +236,17 @@ public class GUI_Start extends JFrame implements ActionListener {
 			cp3.add(lab_spw_NeuerSpieler);
 			
 			// JList
-	        JList lis_Spieler = new JList(interessen);
+	        JList lis_Spieler = new JList(arr_SpielerListe);
 		    lis_Spieler.setBounds(10, 30, 120, 145);
-		    lis_Spieler.setSelectedIndex(0);
 		    lis_Spieler.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		    cp3.add(lis_Spieler);
+		    
+		    ListSelectionListener listSelectionListener = new ListSelectionListener() {
+		        public void valueChanged(ListSelectionEvent listSelectionEvent) {
+		         spielerIndex=lis_Spieler.getSelectedIndex();
+		        }
+		      };
+		      lis_Spieler.addListSelectionListener(listSelectionListener);
 		    
 		    // Butons
 			btn_spw_Weiter.setBounds(140, 150, 90, 25);
@@ -468,8 +479,8 @@ public class GUI_Start extends JFrame implements ActionListener {
 		
 		// GUI_SpielerWahl
 		if (object.getSource() == btn_spw_Weiter) {
-			lab_SpielerName.setText(interessen[lis_Spieler.getSelectedIndex()+2]);
-			spielerEins.setSpielerName(interessen[1]);
+			lab_SpielerName.setText(arr_SpielerListe[spielerIndex]);
+			spielerEins.setSpielerName(arr_SpielerListe[spielerIndex]);
 			lab_SpielerName.setVisible(true);
 			btn_SpielerProfil.setEnabled(true);
 			btn_SpielerProfil.setVisible(true);
@@ -518,6 +529,16 @@ public class GUI_Start extends JFrame implements ActionListener {
 
 	public static Boolean SpielerAngelegt() {
 		return EingabeRichtig;
+	}
+	
+	public void loadSpielerListe() {
+		DataIO data = new DataIO();
+		
+		data.createSpielerList();
+		
+		for (int i=0; i<data.returnLengthSpielerListe(); i++) {
+			arr_SpielerListe[i]=data.getSpielerListe(i);
+		}	
 	}
 	
 }

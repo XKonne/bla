@@ -4,15 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class DataIO {
 
 	static String dataFilename = "data.txt";
 	Spieler spieler;
+		
+	String SpielerListe[] = new String[8];
+	int indexSpieler=0;
 
 	public DataIO(Spieler spieler) {
 		this.spieler = spieler;
+	}
+	
+	public DataIO() {
 	}
 
 	/**
@@ -90,6 +99,38 @@ public class DataIO {
 		}
 
 		return spielerGefunden;
+	}
+	
+	public void createSpielerList() {
+		
+		String data;
+		
+		try {
+			Scanner sc = new Scanner(new File(dataFilename));
+			while (sc.hasNext()) {
+				data = sc.nextLine();
+				
+				String[] dataArray = data.split("\\|");
+				SpielerListe[indexSpieler]=dataArray[0];
+				indexSpieler=indexSpieler+1;
+				
+				
+			}
+			sc.close();
+			indexSpieler=0;
+			
+		} catch (FileNotFoundException e) {
+			createFile();
+		}
+		
+	}
+	
+	public String getSpielerListe(int i) {
+		return SpielerListe[i];
+	}
+	
+	public Integer returnLengthSpielerListe() {
+		return SpielerListe.length;
 	}
 
 }
