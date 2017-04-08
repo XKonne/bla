@@ -67,19 +67,7 @@ public class Spiel {
 	}
 
 	public static String getSpielModus() {
-		if (spielModus == "Leicht") {
-			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
-		}
-		if (spielModus == "Mittel") {
-			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
-		}
-		if (spielModus == "Schwer") {
-			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
-		}
-		if (spielModus == "Benutzer") {
-			spielModusT = Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
-		}
-		return spielModusT;
+		return Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
 	}
 	
 	public int getRestMinen() {

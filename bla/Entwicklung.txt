@@ -253,5 +253,10 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 	    																 in der Auswahlliste auf GUI_SpielerWahl anzuzeigen
 
 	    TO-DO					   ! Gewählter Spielername soll gespeichert werden implementieren...
+	    
+	    done		+Class > GUI_SpielerAuswahl														08.04.2017  A.3.7
+	    			+Class > GUI_SpielModusBenutzer
+	    			   > Vormals in GUI_Start gewesen und nun in eigene Dateien ausgelagert
+	    			+GUI_Start.aktiviereGUI_Start(): Wenn ein Spieler erstellt/gewählt wurde, aktiviere GUI für Spielmoduswahl
 						
 	

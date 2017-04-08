@@ -11,20 +11,22 @@ import javax.swing.border.LineBorder;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.6 vom 06.04.2017
+ * @version A.3.7 vom 08.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
 
 public class Test extends JFrame implements ActionListener {
 
+	// Objekte
 	private static Spiel spiel;
+	static Spieler spielerT;
+	
+	// Frame-Container
 
 	// Variablen
-	static Spieler spielerT;
-
 	// String
-	static String versiont = "A.3.6x";
+	static String versiont = "A.3.7";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
@@ -33,7 +35,8 @@ public class Test extends JFrame implements ActionListener {
 	// Long
 	static long zeittmp;
 
-	// Buttons - Spielfeld
+	// GUI-Elemente
+	// Buttons
 	private JButton btn_SpielerProfil = new JButton();
 	private JButton btn_SpielNeustart = new JButton();
 
@@ -66,7 +69,7 @@ public class Test extends JFrame implements ActionListener {
 									   0, 0, 0, 0, 0, 0, 0, 0,
 									   0, 0, 0, 0, 0, 0, 0, 0,
 									   0, 0, 0, 0, 0, 0, 0, 0,
-									   0, 0, 0, 0, 0, 0, 0, 0, 0 }; // i=1..65
+									   0, 0, 0, 0, 0, 0, 0, 0 }; // i=1..65
 	static JButton[] buttons = new JButton[64];
 	// MFeld = Minenfeld Testspielfeld 4x4
 	// 4x4-Raster
@@ -122,20 +125,10 @@ public class Test extends JFrame implements ActionListener {
 
 	private void createSpielfeldButtons() {
 
-		// TODO Button-Namen wirklich notwendig?
-		String a_btnNames[] = { "MFeld1", "MFeld2", "MFeld3", "MFeld4", "MFeld5", "MFeld6", "MFeld7", "MFeld8",
-								"MFeld9", "MFeld10", "MFeld11", "MFeld12", "MFeld13", "MFeld14", "MFeld15", "MFeld16",
-								"MFeld17", "MFeld18", "MFeld19", "MFeld20", "MFeld21", "MFeld22", "MFeld23", "MFeld24",
-								"MFeld25", "MFeld26", "MFeld27", "MFeld28", "MFeld29", "MFeld30", "MFeld31", "MFeld32",
-								"MFeld33", "MFeld34", "MFeld35", "MFeld36", "MFeld37", "MFeld38", "MFeld39", "MFeld40",
-								"MFeld41", "MFeld42", "MFeld43", "MFeld44", "MFeld45", "MFeld46", "MFeld47", "MFeld48",
-								"MFeld49", "MFeld50", "MFeld51", "MFeld52", "MFeld53", "MFeld54", "MFeld55", "MFeld56",
-								"MFeld57", "MFeld58", "MFeld59", "MFeld60", "MFeld61", "MFeld62", "MFeld63", "MFeld64" };
-
 		// Buttons bauen
 		for (int i = 0; i < buttons.length; i++) {
 
-			buttons[i] = new JButton(a_btnNames[i]);
+			buttons[i] = new JButton("");
 			buttons[i].setText(".");
 			buttons[i].setMargin(new Insets(2, 2, 2, 2));
 			buttons[i].setEnabled(false);

@@ -10,8 +10,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
 public class GUI_Spielerprofil extends JFrame {
-	// Variablen
+	// Objekte
 	static Spieler spieler;
+	
+	// Frame-Container
+	
+	// Variablen
+	
+	// GUI-Elemente
 	// Buttons
 	private JButton btn_SpielerprofilSchliessen = new JButton();
 	private JButton btn_SpielerprofilAktualisieren = new JButton();
@@ -29,6 +35,8 @@ public class GUI_Spielerprofil extends JFrame {
 	private JLabel lab_ZeitGesamt = new JLabel();
 	private JLabel lab_ZeitLetztesSpiel = new JLabel();
 	private JLabel lab_ZeitSchnellstesSpiel = new JLabel();
+	
+	
 
 	public GUI_Spielerprofil(Spieler spieler) {
 		super();

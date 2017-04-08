@@ -24,73 +24,29 @@ import javax.swing.*;
 
 public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte
-	Spieler spielerEins = new Spieler();
-	
-	String arr_SpielerListe[] = new String[8];
-	
-    // Frames
+	static Spieler spielerEins = new Spieler();
+		
+	// Frame-Container
 	JFrame gui_Start = new JFrame();
-	JFrame gui_ModusBenutzer = new JFrame();
 	JFrame gui_SpielerWahl = new JFrame();
-
-	Double maxMinen;
 	
 	// Varialblen
 	static boolean EingabeRichtig = false;
-	int spielerIndex=-2;
 
 	// Buttons
-	private JButton btn_ModusLeicht = new JButton();
-	private JButton btn_ModusMittel = new JButton();
-	private JButton btn_ModusSchwer = new JButton();
-	private JButton btn_ModusBenutzer = new JButton();
-	private JButton btn_SpielerProfil = new JButton();
-	
-	// Buttons - GUI_ModusBenuzrt
-	private JButton btn_SpielZurueck = new JButton();
-	private JButton btn_SpielStarten = new JButton();
-	private JButton btn_SpielZufall = new JButton();
-	
-	// Buttons - GUI_SpielerWahl
-	private JButton btn_spw_NeuerSpieler = new JButton();
-	private JButton btn_spw_Weiter = new JButton();
-	
-	// List
-	private JList lis_Spieler = new JList();
-	
-	// Checkbos
-	 private JCheckBox chb_SpielerMerken = new JCheckBox();
-
+	private static JButton btn_ModusLeicht = new JButton();
+	private static JButton btn_ModusMittel = new JButton();
+	private static JButton btn_ModusSchwer = new JButton();
+	private static JButton btn_ModusBenutzer = new JButton();
+	private static JButton btn_SpielerProfil = new JButton();
+		
 	// Labels
-	private JLabel lab_SpielerName = new JLabel();
+	private static JLabel lab_SpielerName = new JLabel();
 	
-	// Labels - GUI_ModusBenutzer
-	private JLabel lab_mb_SpaltenZahl = new JLabel();
-	private JLabel lab_mb_ZeilenZahl = new JLabel();
-	private JLabel lab_mb_MinenZahl = new JLabel();
-	private JLabel lab_mb_Spalten = new JLabel();
-	private JLabel lab_mb_Zeilen = new JLabel();
-	private JLabel lab_mb_Minen = new JLabel();
-	private JLabel lab_mb_Felder = new JLabel();
-	
-	// Labels - GUI_SpielerWahl
-	private JLabel lab_spw_Spielerliste = new JLabel();
-	private JLabel lab_spw_NeuerSpieler = new JLabel();
-
-	// Textfelder
-	private JTextField txt_SpielerName = new JTextField();
 
 	// Zufallszahlen
 	Random rand = new Random();
-	Random randSpalte = new Random();
-	Random randZeile = new Random();
-	Random randMine = new Random();
 
-	// Scrollbar - GUI_ModusBenutzer
-	private JScrollBar sb_mb_spalten = new JScrollBar();
-	private JScrollBar sb_mb_zeilen = new JScrollBar();
-	private JScrollBar sb_mb_minen = new JScrollBar();
-	
 	//  Menüleiste
 	JMenuBar menueLeiste = new JMenuBar();
 
@@ -107,7 +63,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 	JMenuItem men_ueber_version = new JMenuItem("Über 'Seawolf'");
 
 	public GUI_Start() {
-		// JFrame fenster = new JFrame("Ihr JFrame");
 		gui_Start.setSize(585, 280);
 		gui_Start.setLocationRelativeTo(null);
 		gui_Start.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -198,226 +153,9 @@ public class GUI_Start extends JFrame implements ActionListener {
 		btn_ModusBenutzer.addActionListener(this);
 
 		panel.repaint();
-		GUI_SpielerWahl();
+		GUI_SpielerAuswahl frame = new GUI_SpielerAuswahl(gui_Start, spielerEins);
 	}
 	
-	public void GUI_SpielerWahl() {
-		{
-			// Lokale Variablen
-			txt_SpielerName.setText(""); 
-			
-			loadSpielerListe();
-			
-			// Frame-Initialisierung
-			gui_SpielerWahl.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			gui_SpielerWahl.setSize(310, 240);
-			Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-			int x = (d.width - getSize().width) / 2;
-			int y = (d.height - getSize().height) / 2;
-			gui_SpielerWahl.setLocation(x, y);
-			gui_SpielerWahl.setTitle("Spieler");
-			gui_SpielerWahl.setResizable(false);
-			Container cp3 = gui_SpielerWahl.getContentPane();
-			cp3.setLayout(null);
-			gui_SpielerWahl.setVisible(true);
-			
-			// Textfelder
-			txt_SpielerName.setBounds(140, 30, 150, 30);
-			txt_SpielerName.setVisible(true);
-			cp3.add(txt_SpielerName);
-			
-			// Labels
-			lab_spw_Spielerliste.setBounds(10, 10, 100, 20);
-			lab_spw_Spielerliste.setText("Spielerliste");
-			cp3.add(lab_spw_Spielerliste);
-			
-			lab_spw_NeuerSpieler.setBounds(140, 10, 100, 20);
-			lab_spw_NeuerSpieler.setText("Neuer Spieler");
-			cp3.add(lab_spw_NeuerSpieler);
-			
-			// JList
-	        JList lis_Spieler = new JList(arr_SpielerListe);
-		    lis_Spieler.setBounds(10, 30, 120, 145);
-		    lis_Spieler.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		    cp3.add(lis_Spieler);
-		    
-		    ListSelectionListener listSelectionListener = new ListSelectionListener() {
-		        public void valueChanged(ListSelectionEvent listSelectionEvent) {
-		         spielerIndex=lis_Spieler.getSelectedIndex();
-		        }
-		      };
-		      lis_Spieler.addListSelectionListener(listSelectionListener);
-		    
-		    // Butons
-			btn_spw_Weiter.setBounds(140, 150, 90, 25);
-			btn_spw_Weiter.setText("Auswählen");
-			btn_spw_Weiter.setMargin(new Insets(2, 2, 2, 2));
-			cp3.add(btn_spw_Weiter);
-			btn_spw_Weiter.addActionListener(this);
-			
-			btn_spw_NeuerSpieler.setBounds(200, 65, 90, 25);
-			btn_spw_NeuerSpieler.setText("Anlegen");
-			btn_spw_NeuerSpieler.setMargin(new Insets(2, 2, 2, 2));
-			cp3.add(btn_spw_NeuerSpieler);
-			btn_spw_NeuerSpieler.addActionListener(this);
-			
-			// Checkbos
-		    chb_SpielerMerken.setBounds(10, 180, 300, 20);
-		    chb_SpielerMerken.setText("Ausgewählten Spieler speichern.");
-		    chb_SpielerMerken.setOpaque(false);
-		    chb_SpielerMerken.setEnabled(false);
-		    cp3.add(chb_SpielerMerken);
-		    
-		}
-		}
-	
-	public void GUI_ModusBenutzer() {
-		{
-		// Lokale Variablen
-			
-			
-		// Frame-Initialisierung
-		gui_ModusBenutzer.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		gui_ModusBenutzer.setSize(347, 190);
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (d.width - getSize().width) / 2;
-		int y = (d.height - getSize().height) / 2;
-		gui_ModusBenutzer.setLocation(x, y);
-		gui_ModusBenutzer.setTitle("Benutzerdefinierter Spielmodus");
-		gui_ModusBenutzer.setResizable(false);
-		Container cp2 = gui_ModusBenutzer.getContentPane();
-		cp2.setLayout(null);
-		
-		// Frame-Elemente
-		// Scrollbar
-	    sb_mb_spalten.setBounds(60, 10, 240, 20);
-	    sb_mb_spalten.setOrientation(Scrollbar.HORIZONTAL);
-	    sb_mb_spalten.setBlockIncrement(1);
-	    sb_mb_spalten.setUnitIncrement(1);
-	    sb_mb_spalten.setMinimum(8);
-	    sb_mb_spalten.setMaximum(30+10);
-	    sb_mb_spalten.setValue(8);
-	    cp2.add(sb_mb_spalten);
-	    
-	    sb_mb_spalten.addAdjustmentListener(new AdjustmentListener() {
-	          @Override
-	          public void adjustmentValueChanged(AdjustmentEvent e) {
-	        	  lab_mb_SpaltenZahl.setText(Integer.toString(sb_mb_spalten.getValue()));
-	      		  lab_mb_Felder.setText("Felder: "+sb_mb_spalten.getValue()*sb_mb_zeilen.getValue());
-	      	   maxMinen = (sb_mb_spalten.getValue()*sb_mb_zeilen.getValue())*0.2;
-	      	   sb_mb_minen.setMaximum(maxMinen.intValue());
-	             }
-	       });
-		
-	    sb_mb_zeilen.setBounds(60, 40, 240, 20);
-	    sb_mb_zeilen.setOrientation(Scrollbar.HORIZONTAL);
-	    sb_mb_zeilen.setBlockIncrement(1);
-	    sb_mb_zeilen.setUnitIncrement(1);
-	    sb_mb_zeilen.setMinimum(8);
-	    sb_mb_zeilen.setMaximum(24+10);
-	    sb_mb_zeilen.setValue(8);
-	    cp2.add(sb_mb_zeilen);
-	    
-	    sb_mb_zeilen.addAdjustmentListener(new AdjustmentListener() {
-	          @Override
-	          public void adjustmentValueChanged(AdjustmentEvent e) {
-	        	  lab_mb_ZeilenZahl.setText(Integer.toString(sb_mb_zeilen.getValue()));
-	      		  lab_mb_Felder.setText("Felder: "+sb_mb_spalten.getValue()*sb_mb_zeilen.getValue());
-	      	    maxMinen = (sb_mb_spalten.getValue()*sb_mb_zeilen.getValue())*0.2;
-	      	    sb_mb_minen.setMaximum(maxMinen.intValue());
-	             }
-	       });
-
-	    maxMinen = (sb_mb_spalten.getValue()*sb_mb_zeilen.getValue())*0.2;
-	    
-	    sb_mb_minen.setBounds(60, 80, 240, 20);
-	    sb_mb_minen.setOrientation(Scrollbar.HORIZONTAL);
-	    sb_mb_minen.setMinimum(10);
-	    sb_mb_minen.setMaximum(99);
-	    sb_mb_minen.setValue(10);
-	    //sb_mb_minen.setVisibleAmount(100);
-	    cp2.add(sb_mb_minen);
-	    
-	    sb_mb_minen.addAdjustmentListener(new AdjustmentListener() {
-	          @Override
-	          public void adjustmentValueChanged(AdjustmentEvent e) {
-	        	  lab_mb_MinenZahl.setText(Integer.toString(sb_mb_minen.getValue()));
-	             }
-	       });
-	    
-	    // Labels
-		lab_mb_Spalten.setBounds(10, 10, 50, 20);
-		lab_mb_Spalten.setText("Spalten: ");
-		cp2.add(lab_mb_Spalten);
-	    
-		lab_mb_Zeilen.setBounds(10, 40, 50, 20);
-		lab_mb_Zeilen.setText("Zeilen: ");
-		cp2.add(lab_mb_Zeilen);
-				
-		lab_mb_Minen.setBounds(10, 80, 50, 20);
-		lab_mb_Minen.setText("Minen: ");
-		cp2.add(lab_mb_Minen);
-		
-		lab_mb_Felder.setBounds(269, 60, 70, 20);
-		lab_mb_Felder.setText("Felder: "+sb_mb_spalten.getValue()*sb_mb_zeilen.getValue());
-		cp2.add(lab_mb_Felder);
-				
-		lab_mb_SpaltenZahl.setBounds(310, 10, 20, 20);
-		lab_mb_SpaltenZahl.setText(Integer.toString(sb_mb_spalten.getValue()));
-		cp2.add(lab_mb_SpaltenZahl);
-	    
-		lab_mb_ZeilenZahl.setBounds(310, 40, 20, 20);
-		lab_mb_ZeilenZahl.setText(Integer.toString(sb_mb_zeilen.getValue()));
-		cp2.add(lab_mb_ZeilenZahl);
-				
-		lab_mb_MinenZahl.setBounds(310, 80, 40, 20);
-		lab_mb_MinenZahl.setText(Integer.toString(sb_mb_minen.getValue()));
-		cp2.add(lab_mb_MinenZahl);
-	    
-	    // Buttons
-		btn_SpielZurueck.setBounds(10, 120, 90, 30);
-		btn_SpielZurueck.setText("Zurück");
-		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
-		cp2.add(btn_SpielZurueck);
-		btn_SpielZurueck.addActionListener(this);
-		
-		btn_SpielStarten.setBounds(110, 120, 90, 30);
-		btn_SpielStarten.setText("Spiel starten");
-		btn_SpielStarten.setMargin(new Insets(2, 2, 2, 2));
-		cp2.add(btn_SpielStarten);
-		btn_SpielStarten.addActionListener(this);
-		
-		btn_SpielZufall.setBounds(242, 120, 90, 30);
-		btn_SpielZufall.setText("Zufallswerte");
-		btn_SpielZufall.setMargin(new Insets(2, 2, 2, 2));
-		cp2.add(btn_SpielZufall);
-		btn_SpielZufall.addActionListener(this);
-		
-		// Button Linksklick Methoden
-		btn_SpielZurueck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// Schließe GUI_SpielEnde und zeige Spielfeld nochmal an
-				gui_ModusBenutzer.dispose();
-			}
-		});
-		
-		btn_SpielStarten.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-
-			}
-		});
-		
-		btn_SpielZufall.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-
-			}
-		});
-						
-		gui_ModusBenutzer.setVisible(true);
-	}
-	}
-	
-
 	public void actionPerformed(ActionEvent object) {
 		// Linksklick Menüleiste
 		if (object.getSource() == men_spiel_neu) {
@@ -451,79 +189,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 			gui_Start.dispose();
 		}
 		if (object.getSource() == btn_ModusBenutzer) {
-			GUI_ModusBenutzer();
-		}
-		
-		// GUI_ModusBenutzer
-		if (object.getSource() == btn_SpielZurueck) {
-			gui_ModusBenutzer.dispose();
-		}
-		if (object.getSource() == btn_SpielStarten) {
-			Spiel.setSpielModus(sb_mb_spalten.getValue(), sb_mb_zeilen.getValue(), sb_mb_minen.getValue(), "Benutzer", spielerEins);
-			gui_ModusBenutzer.dispose();
-			gui_Start.dispose();
-		}
-		if (object.getSource() == btn_SpielZufall) {
-			int spaltenZufall = randSpalte.nextInt(30);
-			int zeilenZufall = randZeile.nextInt(24);
-			int minenZufall = randMine.nextInt(99);
-			
-			sb_mb_spalten.setValue(spaltenZufall);
-			sb_mb_zeilen.setValue(zeilenZufall);
-			sb_mb_minen.setValue(minenZufall);
-			
-			lab_mb_SpaltenZahl.setText(Integer.toString(sb_mb_spalten.getValue()));
-			lab_mb_ZeilenZahl.setText(Integer.toString(sb_mb_zeilen.getValue()));
-			lab_mb_MinenZahl.setText(Integer.toString(sb_mb_minen.getValue()));		
-		}
-		
-		// GUI_SpielerWahl
-		if (object.getSource() == btn_spw_Weiter) {
-			lab_SpielerName.setText(arr_SpielerListe[spielerIndex]);
-			spielerEins.setSpielerName(arr_SpielerListe[spielerIndex]);
-			lab_SpielerName.setVisible(true);
-			btn_SpielerProfil.setEnabled(true);
-			btn_SpielerProfil.setVisible(true);
-
-			btn_ModusLeicht.setEnabled(true);
-			btn_ModusMittel.setEnabled(true);
-			btn_ModusSchwer.setEnabled(true);
-			btn_ModusBenutzer.setEnabled(true);
-			
-			EingabeRichtig = true;
-			SpielerAngelegt();
-			
-			gui_SpielerWahl.dispose();
-		}
-		if (object.getSource() == btn_spw_NeuerSpieler) {
-			// Name einlesen
-			spielerEins.setSpielerName(txt_SpielerName.getText());
-			// Es wurde kein Spielername eingegeben > Zufallsname
-			if (spielerEins.getSpielerName().length() == 0 || spielerEins.getSpielerName().length() == 1 || spielerEins.getSpielerName().length() == 2 || spielerEins.getSpielerName().length() > 8) {
-				JOptionPane.showMessageDialog(null,
-						"Ein Spielername darf aus mindestens aus 3 und maximal 8 Zeichen bestehen.");
-				EingabeRichtig = false;
-			}
-			// Spielername hat 3 oder mehr Zeichen. Das Spiel kann gestartet werden.
-			if (spielerEins.getSpielerName().length() >= 3 && spielerEins.getSpielerName().length() < 8 ) {
-				EingabeRichtig = true;
-			}
-
-			if (EingabeRichtig == true) {
-				lab_SpielerName.setVisible(true);
-				lab_SpielerName.setText(spielerEins.getSpielerName());
-				btn_SpielerProfil.setEnabled(true);
-				btn_SpielerProfil.setVisible(true);
-
-				btn_ModusLeicht.setEnabled(true);
-				btn_ModusMittel.setEnabled(true);
-				btn_ModusSchwer.setEnabled(true);
-				btn_ModusBenutzer.setEnabled(true);
-				
-				SpielerAngelegt();
-				
-				gui_SpielerWahl.dispose();
-			}
+			GUI_SpielModusBenutzer frame = new GUI_SpielModusBenutzer(gui_Start, spielerEins);
 		}
 	}
 
@@ -531,14 +197,18 @@ public class GUI_Start extends JFrame implements ActionListener {
 		return EingabeRichtig;
 	}
 	
-	public void loadSpielerListe() {
-		DataIO data = new DataIO();
+	public static void aktiviereGUI_Start() {
+		lab_SpielerName.setVisible(true);
+		lab_SpielerName.setText(spielerEins.getSpielerName());
+		btn_SpielerProfil.setEnabled(true);
+		btn_SpielerProfil.setVisible(true);
+
+		btn_ModusLeicht.setEnabled(true);
+		btn_ModusMittel.setEnabled(true);
+		btn_ModusSchwer.setEnabled(true);
+		btn_ModusBenutzer.setEnabled(true);
 		
-		data.createSpielerList();
-		
-		for (int i=0; i<data.returnLengthSpielerListe(); i++) {
-			arr_SpielerListe[i]=data.getSpielerListe(i);
-		}	
+		EingabeRichtig = true;
 	}
-	
+
 }
