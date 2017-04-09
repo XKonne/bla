@@ -1,7 +1,5 @@
 package bla;
 
-//test
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,11 +7,12 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
-public class GUI_Spielerprofil extends JFrame {
+public class GUI_Spielerprofil extends JFrame implements ActionListener {
 	// Objekte
 	static Spieler spieler;
 	
 	// Frame-Container
+	Container cp = getContentPane();
 	
 	// Variablen
 	
@@ -39,41 +38,37 @@ public class GUI_Spielerprofil extends JFrame {
 	
 
 	public GUI_Spielerprofil(Spieler spieler) {
+		
 		super();
 		GUI_Spielerprofil.spieler = spieler;
 
-		// Spielerprofil-JFrame initialisieren
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		int frameWidth = 250;
-		int frameHeight = 500;
-		setSize(frameWidth, frameHeight);
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (d.width - getSize().width) / 2;
-		int y = (d.height - getSize().height) / 2;
-		setLocation(x - 150, y);
-		setTitle("Spielerprofil");
-		setResizable(false);
-		Container cp = getContentPane();
-		cp.setLayout(null);
-		setVisible(true);
+		setupGUI();
+		
+		setLabelText();
+	}
 
-		// GUI Elemente
-		// Buttons
-		btn_SpielerprofilSchliessen.setBounds(135, 430, 100, 30);
-		btn_SpielerprofilSchliessen.setText("Profil schlieﬂen");
-		btn_SpielerprofilSchliessen.setMargin(new Insets(2, 2, 2, 2));
-		cp.add(btn_SpielerprofilSchliessen);
+	private void setupGUI() {
+		
+		initFrame();
+		createButtons();
+		createLabels();
+	}
+	
+	public void actionPerformed(ActionEvent object) {
+		if (object.getSource() == btn_SpielerprofilSchliessen) {
+			dispose();
+		}
+		if (object.getSource() == btn_SpielerprofilAktualisieren) {
+			setLabelText();
+		}
+	}
 
-		btn_SpielerprofilAktualisieren.setBounds(10, 430, 100, 30);
-		btn_SpielerprofilAktualisieren.setText("Aktualisieren");
-		btn_SpielerprofilAktualisieren.setMargin(new Insets(2, 2, 2, 2));
-		cp.add(btn_SpielerprofilAktualisieren);
-
-		// Profilbild
+	private void createLabels() {
+		
 		lab_profilBild.setBounds(10, 10, 40, 40);
 		lab_profilBild.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
 		cp.add(lab_profilBild);
-
+		
 		// Labels - in der Reihenfolge der Anzeige
 		lab_SpielerName.setBounds(60, 10, 180, 40);
 		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
@@ -108,26 +103,42 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpielHistorie.setBounds(90, 300, 200, 80);
 		cp.add(lab_SpielHistorie);
+	}
 
-		// Alle Label erstellt und hinzugef¸gt > Label-Text setzen
-		setLabelText();
+	private void createButtons() {
+		
+		btn_SpielerprofilSchliessen.setBounds(135, 430, 100, 30);
+		btn_SpielerprofilSchliessen.setText("Profil schlieﬂen");
+		btn_SpielerprofilSchliessen.setMargin(new Insets(2, 2, 2, 2));
+		cp.add(btn_SpielerprofilSchliessen);
+		btn_SpielerprofilSchliessen.addActionListener(this);
 
-		// Button-Linksklick Methoden
-		btn_SpielerprofilSchliessen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				dispose();
-			}
-		});
-		btn_SpielerprofilAktualisieren.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				setLabelText();
-			}
-		});
-	} // end-GUI_Spielerprofil (init)
+		btn_SpielerprofilAktualisieren.setBounds(10, 430, 100, 30);
+		btn_SpielerprofilAktualisieren.setText("Aktualisieren");
+		btn_SpielerprofilAktualisieren.setMargin(new Insets(2, 2, 2, 2));
+		cp.add(btn_SpielerprofilAktualisieren);
+		btn_SpielerprofilAktualisieren.addActionListener(this);
+	}
 
-	// Klassenmethoden
+	private void initFrame() {
+		
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		int frameWidth = 250;
+		int frameHeight = 500;
+		setSize(frameWidth, frameHeight);
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (d.width - getSize().width) / 2;
+		int y = (d.height - getSize().height) / 2;
+		setLocation(x - 250, y);
+		setTitle("Spielerprofil");
+		setResizable(false);
+		
+		cp.setLayout(null);
+		setVisible(true);
+	}
 
 	public void setLabelText() {
+		
 		// Reihenfolge wie in der Anzeige
 		lab_SpielerName.setText(spieler.getSpielerName());
 		lab_SpieleGespielt.setText("Spiele gespielt: " + Integer.toString(spieler.getSpieleGespielt()));

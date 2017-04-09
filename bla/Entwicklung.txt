@@ -252,11 +252,21 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 	    								GUI_Start: + loadSpielerListe(): Läd die Spielernamen via DataIO aus data.txt, um sie
 	    																 in der Auswahlliste auf GUI_SpielerWahl anzuzeigen
 
-	    TO-DO					   ! Gewählter Spielername soll gespeichert werden implementieren...
-	    
-	    done		+Class > GUI_SpielerAuswahl														08.04.2017  A.3.7
+
+	    done		+Class > GUI_SpielerAuswahl													 08/09.04.2017  A.3.7/b
 	    			+Class > GUI_SpielModusBenutzer
 	    			   > Vormals in GUI_Start gewesen und nun in eigene Dateien ausgelagert
 	    			+GUI_Start.aktiviereGUI_Start(): Wenn ein Spieler erstellt/gewählt wurde, aktiviere GUI für Spielmoduswahl
+	    			
+	    			Falls bei GUI_SpielerAuswahl Checkbox gesetzt, wird die GUI_SpielerAuswahl bei einem neuen Spiel (innerhalb
+	    			einer Spielinstanz) nicht neu angezeigt.
+	    			+GUI_Start.setSpielerAuswahlAnzeigen(Boolean anAus): Steuert oben genanntes Feature.
+	    			>GUI_Start: Methoden ausgelagert
+	    			>(GUI_)Test: Methoden ausgelagert
+	    			
+	    			In allen Class-Dateien refactored, Code aufgeräumt, umbenannt, 
+	    			Variablen/Attribute/Methoden auf "private" gesetzt, falls möglich
+	    			
+	    			Das Spielerprofil wird früher geladen, d.h. es ist schon ab GUI_Start einsehbar
 						
 	

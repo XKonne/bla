@@ -3,7 +3,7 @@ package bla;
 import javax.swing.JOptionPane;
 
 public class Spiel {
-	static Spieler spieler;
+	private static Spieler spieler;
 
 	private static int minenGesamt = 3;
 	private int minenRichtig = 0;
@@ -93,8 +93,6 @@ public class Spiel {
 		
 		spiel = new Spiel();
 		test = new Test(spiel, spieler);
-		DataIO data = new DataIO(spieler);
-		data.loadData();
 		MouseInput.setupMouseInput(spiel, test);
 
 	}

@@ -7,18 +7,18 @@ import javax.swing.JOptionPane;
 
 public class Spieler {
 
-	Double spieleGespielt;
-	Double spieleGewonnen;
-	Double spieleGewonnenProzent;
-	int minenGefunden;
-	int profilBild;
-	int spielerSiegesserie;
-	long zeitGesamt;
-	long zeitLetztesSpiel;
-	long zeitSchnellsterSieg;
-	String spielerName;
+	private Double spieleGespielt;
+	private Double spieleGewonnen;
+	private Double spieleGewonnenProzent;
+	private int minenGefunden;
+	private int profilBild;
+	private int spielerSiegesserie;
+	private long zeitGesamt;
+	private long zeitLetztesSpiel;
+	private long zeitSchnellsterSieg;
+	private String spielerName;
 
-	static DecimalFormat f = new DecimalFormat("#0.0"); // erzeugt einen String
+	private static DecimalFormat f = new DecimalFormat("#0.0"); // erzeugt einen String
 
 	// Arrays
 	// Spielhistorie der letzten 5 Spiele mit Sieg-Niederlage als Eintrag
@@ -142,7 +142,7 @@ public class Spieler {
 	}
 
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
-	public void setSpielHistorie(boolean sieg) {
+	private void setSpielHistorie(boolean sieg) {
 		// Einträge um 1 nach "unten" verschieben
 		for (int i = 4; i > 0; i--) {
 			spielHistorie[i] = spielHistorie[i - 1];

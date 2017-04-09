@@ -13,18 +13,18 @@ import java.awt.event.*;
 
 public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	// Objekte
-	Spieler spielerA;
-	JFrame guiStart;
+	private Spieler spielerA;
+	private JFrame guiStart;
 	
 	// Frame-Container
-	JFrame gui_SpielerAuswahl = new JFrame();
-	Container cp3 = gui_SpielerAuswahl.getContentPane();
+	private JFrame gui_SpielerAuswahl = new JFrame();
+	private Container cp3 = gui_SpielerAuswahl.getContentPane();
 	
 	// Variablen
 	// Boolean
-	static boolean EingabeRichtig = false;
+	private static boolean EingabeRichtig = false;
 	// Integer
-	int spielerIndex=-2;
+	private int spielerIndex=0;
 	
 	// Arrays
 	String arr_SpielerListe[] = new String[8];
@@ -35,7 +35,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	private JButton btn_SpielerAusgewaehlt = new JButton();
 	
 	// Checkbox
-	 private JCheckBox chb_SpielerMerken = new JCheckBox();
+	private JCheckBox chb_SpielerMerken = new JCheckBox();
 	
 	// Labels
 	private JLabel lab_Spielerliste = new JLabel();
@@ -54,15 +54,21 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 		guiStart = gui_Start;
 		spielerA = spieler;
 		
-		initFrame();
-		createButtons();
-		createLabels();
-		createTextfield();
+		setupGUI();
 		
 		goOn();
-		gui_SpielerAuswahl.setVisible(true);
 	}
 	
+	private void setupGUI() {
+		
+		initFrame();
+		createButtons();
+		createCheckbox();
+		createLabels();
+		createTextfield();
+		gui_SpielerAuswahl.setVisible(true);
+	}
+
 	private void goOn() {
 		
 		txt_SpielerNameEingabe.setText("");
@@ -81,6 +87,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	        public void valueChanged(ListSelectionEvent listSelectionEvent) {
 	         spielerIndex=lis_Spieler.getSelectedIndex();
 	         btn_SpielerAusgewaehlt.setEnabled(true);
+	         chb_SpielerMerken.setEnabled(true);
 	        }
 	      };
 	      lis_Spieler.addListSelectionListener(listSelectionListener);
@@ -97,6 +104,8 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 		
 		if (object.getSource() == btn_SpielerAusgewaehlt) {
 			spielerA.setSpielerName(arr_SpielerListe[spielerIndex]);
+			DataIO data = new DataIO(spielerA);
+			data.loadData();
 			GUI_Start.aktiviereGUI_Start();
 						
 			gui_SpielerAuswahl.dispose();
@@ -108,6 +117,9 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 				GUI_Start.aktiviereGUI_Start();
 				gui_SpielerAuswahl.dispose();
 			}
+		}
+		if (object.getSource() == chb_SpielerMerken) {
+			GUI_Start.setSpielerAuswahlAnzeigen(false);
 		}
 	}
 
@@ -143,13 +155,16 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 		btn_NeuerSpielerAnlegen.setMargin(new Insets(2, 2, 2, 2));
 		cp3.add(btn_NeuerSpielerAnlegen);
 		btn_NeuerSpielerAnlegen.addActionListener(this);
-		
-		// Checkbox
+	}
+	
+	private void createCheckbox() {
+
 	    chb_SpielerMerken.setBounds(10, 180, 300, 20);
 	    chb_SpielerMerken.setText("Ausgewählten Spieler speichern.");
 	    chb_SpielerMerken.setOpaque(false);
 	    chb_SpielerMerken.setEnabled(false);
 	    cp3.add(chb_SpielerMerken);
+	    chb_SpielerMerken.addActionListener(this);
 	}
 
 	private void createLabels() {
@@ -166,11 +181,14 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	private void initFrame() {
 		
 		gui_SpielerAuswahl.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		gui_SpielerAuswahl.setSize(310, 240);
+		int height=240;
+		int width=310;
+		gui_SpielerAuswahl.setSize(width, height);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		gui_SpielerAuswahl.setLocation(x, y);
+		gui_SpielerAuswahl.setLocation(x-width/2, y-height/2);
+		
 		gui_SpielerAuswahl.setTitle("Spieler");
 		gui_SpielerAuswahl.setResizable(false);
 		Container cp3 = gui_SpielerAuswahl.getContentPane();
@@ -178,7 +196,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 		gui_SpielerAuswahl.setVisible(true);
 	}
 	
-	public void loadSpielerListe() {
+	private void loadSpielerListe() {
 		
 		DataIO data = new DataIO();
 		

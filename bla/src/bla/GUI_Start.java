@@ -1,7 +1,5 @@
 package bla;
 
-//test
-
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,14 +22,16 @@ import javax.swing.*;
 
 public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte
-	static Spieler spielerEins = new Spieler();
+	private static Spieler spielerEins = new Spieler();
 		
-	// Frame-Container
-	JFrame gui_Start = new JFrame();
-	JFrame gui_SpielerWahl = new JFrame();
+	// Frame-Container-Tabs
+	private JFrame gui_Start = new JFrame();
+	private JPanel panel = new JPanel();	//Tab Einzelspieler
+	private JPanel panel2 = new JPanel();	//Tab Mehrspieler
+	private JTabbedPane tabLeiste = new JTabbedPane();
 	
 	// Varialblen
-	static boolean EingabeRichtig = false;
+	private static boolean spielerAuswahlAnzeigen = true;
 
 	// Buttons
 	private static JButton btn_ModusLeicht = new JButton();
@@ -43,10 +43,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 	// Labels
 	private static JLabel lab_SpielerName = new JLabel();
 	
-
-	// Zufallszahlen
-	Random rand = new Random();
-
 	//  Menüleiste
 	JMenuBar menueLeiste = new JMenuBar();
 
@@ -63,25 +59,29 @@ public class GUI_Start extends JFrame implements ActionListener {
 	JMenuItem men_ueber_version = new JMenuItem("Über 'Seawolf'");
 
 	public GUI_Start() {
-		gui_Start.setSize(585, 280);
-		gui_Start.setLocationRelativeTo(null);
-		gui_Start.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		JTabbedPane tabLeiste = new JTabbedPane();
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		tabLeiste.addTab("Einzelspieler", panel);
-
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(null);
-		panel2.add(new JLabel("Dauert noch eine weile..."));
-		tabLeiste.addTab("Mehrspieler", panel2);
-
-		gui_Start.add(tabLeiste);
-		gui_Start.setTitle("Projekt 'Seawolf'");
-		gui_Start.setResizable(false);
+		setupGUI();
+		
+	}
+	
+	private void setupGUI() {
+		
+		initFrame();
+		createButtons();
+		createLabels();
+		createMenuBar();
+		
 		gui_Start.setVisible(true);
+		
+		if (spielerAuswahlAnzeigen == true) {
+			GUI_SpielerAuswahl frame = new GUI_SpielerAuswahl(gui_Start, spielerEins);
+		}
+		else {
+			aktiviereGUI_Start();
+		}
+		panel.repaint();	
+	}
 
+	private void createMenuBar() {
 		// Untermenü > ActionListener-Aufruf
 		// Spiel
 		men_spiel_neu.addActionListener(this);
@@ -104,8 +104,18 @@ public class GUI_Start extends JFrame implements ActionListener {
 		men_ueber.add(men_ueber_version);
 		// MenueLeiste dem JFrame zuordnen
 		gui_Start.setJMenuBar(menueLeiste);
+	}
 
-		// GUI Elemente
+	private void createLabels() {
+		Border border = LineBorder.createGrayLineBorder();
+		lab_SpielerName.setBounds(400, 5, 160, 40);
+		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
+		lab_SpielerName.setBorder(border);
+		lab_SpielerName.setVisible(false);
+		panel.add(lab_SpielerName);
+	}
+
+	private void createButtons() {
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
 		btn_SpielerProfil.setBounds(350, 5, 40, 40);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
@@ -113,17 +123,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 		btn_SpielerProfil.setVisible(false);
 		panel.add(btn_SpielerProfil);
 		btn_SpielerProfil.addActionListener(this);
-
-
-
-		Border border = LineBorder.createGrayLineBorder();
-		lab_SpielerName.setBounds(400, 5, 160, 40);
-		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
-		lab_SpielerName.setBorder(border);
-		lab_SpielerName.setVisible(false);
-		panel.add(lab_SpielerName);
-
-		// Buttons
+		
 		btn_ModusLeicht.setBounds(15, 60, 125, 125);
 		btn_ModusLeicht.setIcon(new ImageIcon(getClass().getResource("img/modus_leicht.png")));
 		btn_ModusLeicht.setMargin(new Insets(0, 0, 0, 0));
@@ -151,13 +151,29 @@ public class GUI_Start extends JFrame implements ActionListener {
 		btn_ModusBenutzer.setEnabled(false);
 		panel.add(btn_ModusBenutzer);
 		btn_ModusBenutzer.addActionListener(this);
-
-		panel.repaint();
-		GUI_SpielerAuswahl frame = new GUI_SpielerAuswahl(gui_Start, spielerEins);
 	}
-	
+
+	private void initFrame() {
+		gui_Start.setSize(585, 280);
+		gui_Start.setLocationRelativeTo(null);
+		gui_Start.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		gui_Start.add(tabLeiste);
+		gui_Start.setTitle("Projekt 'Seawolf'");
+		gui_Start.setResizable(false);
+		
+		panel.setLayout(null);
+		tabLeiste.addTab("Einzelspieler", panel);
+
+		panel2.setLayout(null);
+		panel2.add(new JLabel("Dauert noch eine weile..."));
+		tabLeiste.addTab("Mehrspieler", panel2);
+		
+		gui_Start.setVisible(true);
+	}
+
 	public void actionPerformed(ActionEvent object) {
-		// Linksklick Menüleiste
+		
+		// Menüleiste
 		if (object.getSource() == men_spiel_neu) {
 			// do nothing
 		}
@@ -171,7 +187,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Version: " + Test.versiont);
 		}
 
-		// Linksklick Buttons
+		// Linksklick GUI-Buttons
 		if (object.getSource() == btn_SpielerProfil) {
 			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerEins);
 		}
@@ -193,11 +209,13 @@ public class GUI_Start extends JFrame implements ActionListener {
 		}
 	}
 
-	public static Boolean SpielerAngelegt() {
-		return EingabeRichtig;
+	public static void setSpielerAuswahlAnzeigen(Boolean anAus) {
+		spielerAuswahlAnzeigen = anAus;
 	}
 	
+	
 	public static void aktiviereGUI_Start() {
+		
 		lab_SpielerName.setVisible(true);
 		lab_SpielerName.setText(spielerEins.getSpielerName());
 		btn_SpielerProfil.setEnabled(true);
@@ -207,8 +225,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 		btn_ModusMittel.setEnabled(true);
 		btn_ModusSchwer.setEnabled(true);
 		btn_ModusBenutzer.setEnabled(true);
-		
-		EingabeRichtig = true;
 	}
 
 }

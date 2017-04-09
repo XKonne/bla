@@ -61,6 +61,11 @@ public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {
 		gui_Start = guiStart;
 		spielerEins = spieler;
 		
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		
 		initFrame();
 		createButtons();
 		createLabels();
@@ -68,7 +73,7 @@ public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {
 		
 		gui_SpielModusBenutzer.setVisible(true);
 	}
-	
+
 	public void actionPerformed(ActionEvent object) {
 		if (object.getSource() == btn_SpielZurueck) {
 			gui_SpielModusBenutzer.dispose();
@@ -126,12 +131,10 @@ public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {
 		lab_Minen.setText("Minen: ");
 		cp2.add(lab_Minen);
 
-		
 		lab_Felder.setBounds(269, 60, 70, 20);
 		lab_Felder.setText("Felder: "+sb_spalten.getValue()*sb_zeilen.getValue());
 		cp2.add(lab_Felder);
 
-				
 		lab_SpaltenZahl.setBounds(310, 10, 20, 20);
 		lab_SpaltenZahl.setText(Integer.toString(sb_spalten.getValue()));
 		cp2.add(lab_SpaltenZahl);
@@ -156,7 +159,6 @@ public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {
 	    sb_spalten.setValue(8);
 	    cp2.add(sb_spalten);
 
-	    
 	    sb_spalten.addAdjustmentListener(new AdjustmentListener() {
 	          @Override
 	          public void adjustmentValueChanged(AdjustmentEvent e) {
@@ -203,23 +205,20 @@ public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {
 	        	  lab_MinenZahl.setText(Integer.toString(sb_minen.getValue()));
 	             }
 	       });
-		
 	}
 
 	private void initFrame() {
+		
+		int width=347;
+		int heigth=190;
 		gui_SpielModusBenutzer.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		gui_SpielModusBenutzer.setSize(347, 190);
+		gui_SpielModusBenutzer.setSize(width, heigth);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		gui_SpielModusBenutzer.setLocation(x, y);
+		gui_SpielModusBenutzer.setLocation(x-width/2, y-heigth/2);
 		gui_SpielModusBenutzer.setTitle("Benutzerdefinierter Spielmodus");
 		gui_SpielModusBenutzer.setResizable(false);
 		cp2.setLayout(null);
 	}
-
-	public static boolean setGame() {
-		return true;
-	}
-
 }

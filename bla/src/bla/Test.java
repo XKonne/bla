@@ -1,7 +1,5 @@
 package bla;
 
-//test
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,7 +9,7 @@ import javax.swing.border.LineBorder;
 /**
  * Spielprojekt "Seawolf" GameApp-Name <not set/actually nameless>
  *
- * @version A.3.7 vom 08.04.2017
+ * @version A.3.7b vom 09.04.2017
  * @author XKonne
  * @author p0sE-Git
  */
@@ -20,20 +18,21 @@ public class Test extends JFrame implements ActionListener {
 
 	// Objekte
 	private static Spiel spiel;
-	static Spieler spielerT;
+	private static Spieler spielerT;
 	
 	// Frame-Container
+	private JFrame gui_SpielEnde = new JFrame();
+	private Container cp = getContentPane();
 
 	// Variablen
 	// String
-	static String versiont = "A.3.7";
+	static String versiont = "A.3.7b";
 
 	// Boolean
 	static boolean Spielfeldgesperrt = true;
-	static boolean EingabeRichtig = false;
 
 	// Long
-	static long zeittmp;
+	private static long zeittmp;
 
 	// GUI-Elemente
 	// Buttons
@@ -46,9 +45,6 @@ public class Test extends JFrame implements ActionListener {
 	private JButton btn_SpielNeueRunde = new JButton();
 	private JButton btn_SpielNeues = new JButton();
 	
-	// Container
-	private Container cp = getContentPane();
-
 	// Labels - Spielfeld
 	private JLabel lab_SpielerName = new JLabel();
 	private JLabel lab_SpielModus = new JLabel();
@@ -56,7 +52,7 @@ public class Test extends JFrame implements ActionListener {
 	private static JLabel lab_MinenRichtig = new JLabel();
 	private static JLabel lab_Restminen = new JLabel();
 	
-	// Labels - Spielende
+	// Labels - SpielEnde
 	private JLabel lab_SpielEndeInformation = new JLabel();
 
 	// Arrays
@@ -92,12 +88,14 @@ public class Test extends JFrame implements ActionListener {
 		super();
 		Test.spiel = spiel;
 		spielerT = spieler;
+		
 		setupGUI();
+		
 		spielStart();
 	}
 
 	private void spielStart() {
-		if (GUI_Start.SpielerAngelegt() == true) {
+		
 			// Spielfeld aktivieren
 			setSpielfeldAnAus(true);
 			Spielfeldgesperrt = false;
@@ -120,10 +118,9 @@ public class Test extends JFrame implements ActionListener {
 			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
 			
 			repaint();
-		}
 	}
 
-	private void createSpielfeldButtons() {
+	private void createSpielfeld() {
 
 		// Buttons bauen
 		for (int i = 0; i < buttons.length; i++) {
@@ -143,7 +140,7 @@ public class Test extends JFrame implements ActionListener {
 		setBoundsSpielfeldButtons();
 	}
 
-	private void createStartScreenButtons() {
+	private void createButtons() {
 
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
 		btn_SpielerProfil.setBounds(10, 5, 40, 40);
@@ -161,7 +158,7 @@ public class Test extends JFrame implements ActionListener {
 	}
 	
 
-	private void createStartScreenLabels() {
+	private void createLabels() {
 
 		Border border = LineBorder.createGrayLineBorder();
 
@@ -218,7 +215,6 @@ public class Test extends JFrame implements ActionListener {
 		}
 	}
 
-	// Anfang Methoden
 
 	public void aufSiegpruefen(boolean mineGetroffen) {
 		boolean winlose = false;
@@ -267,39 +263,7 @@ public class Test extends JFrame implements ActionListener {
 		}
 	}
 
-//	public void ButtonResetSpielfeld_ActionPerformed() { //braucht man vllt nochmal
-//		// Spielfeld Oberflaeche zu beginn
-//		for (int i = 0; i < buttons.length; i++) {
-//			buttons[i].setText(".");
-//		}
-//
-//		// Spielfeld deaktivieren
-//		setSpielfeldAnAus(false);
-//
-//		Spielfeldgesperrt = true;
-//		// Spielfeldgeklickt Array zurücksetzen
-//		for (int i = 0; i < 17; i++) {
-//			Spielfeldgeklickt[i] = 0;
-//		}
-//
-//		// Spielername zurücksetze, Label weg, Eingabe da
-//		// EingabeRichtig = false;
-//		btn_SpielerProfil.setVisible(false);
-//		// txt_SpielerName.setVisible(true);
-//		// txt_SpielerName.setText("");
-//		lab_SpielerName.setVisible(false);
-//		lab_SpielModus.setVisible(false);
-//		lab_Restminen.setVisible(false);
-//		lab_MinenRichtig.setVisible(false);
-//		// btn_Spielstarten.setVisible(true);
-//		btn_SpielNochmal.setEnabled(false);
-//		spiel.setRestMinen(3);
-//		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-//		spiel.setMinenRichtig(0);
-//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-//	}
-
-	private void initialiseFrame() {
+	private void initFrame() {
 	
 		// Frame-Initialisierung
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -326,7 +290,7 @@ public class Test extends JFrame implements ActionListener {
 		men_spiel_neu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				dispose();
-				GUI_Start neu = new GUI_Start();
+				GUI_Start frame = new GUI_Start();
 			}
 		});
 		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
@@ -378,11 +342,11 @@ public class Test extends JFrame implements ActionListener {
 
 	private void setupGUI() {
 
-		initialiseFrame();
+		initFrame();
 
-		createStartScreenButtons();
-		createSpielfeldButtons();
-		createStartScreenLabels();
+		createButtons();
+		createSpielfeld();
+		createLabels();
 
 		// frame spielfeld
 		setVisible(true);
@@ -391,22 +355,21 @@ public class Test extends JFrame implements ActionListener {
 
 	} // Ende Methoden
 	
-	public void GUI_SpielEnde(boolean mineGetroffen) {
+	private void GUI_SpielEnde(boolean mineGetroffen) {
 		{
 		// Lokale Variablen
 		String siegNiederlage="";
 			
 		// Frame-Initialisierung
-		JFrame spielEnde = new JFrame();
-		spielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		spielEnde.setSize(380, 170);
+		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		gui_SpielEnde.setSize(380, 170);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		spielEnde.setLocation(x, y);
-		spielEnde.setTitle("Spielende");
-		spielEnde.setResizable(false);
-		Container cp2 = spielEnde.getContentPane();
+		gui_SpielEnde.setLocation(x, y);
+		gui_SpielEnde.setTitle("Spielende");
+		gui_SpielEnde.setResizable(false);
+		Container cp2 = gui_SpielEnde.getContentPane();
 		//Container cp2 = getContentPane();
 		cp2.setLayout(null);
 		
@@ -416,53 +379,27 @@ public class Test extends JFrame implements ActionListener {
 		btn_SpielZurueck.setText("Zurück");
 		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
 		cp2.add(btn_SpielZurueck);
+		btn_SpielZurueck.addActionListener(this);
 		
 		btn_SpielNochmal.setBounds(100, 100, 80, 30);
 		btn_SpielNochmal.setText("Nochmal");
 		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
 		cp2.add(btn_SpielNochmal);
+		btn_SpielNochmal.addActionListener(this);
 		
 		btn_SpielNeueRunde.setBounds(190, 100, 80, 30);
 		btn_SpielNeueRunde.setText("Neue Runde");
 		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielNeueRunde.setEnabled(false);
 		cp2.add(btn_SpielNeueRunde);
+		btn_SpielNeueRunde.addActionListener(this);
 		
 		btn_SpielNeues.setBounds(280, 100, 80, 30);
 		btn_SpielNeues.setText("Neues Spiel");
 		btn_SpielNeues.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielNeues.setEnabled(false);
 		cp2.add(btn_SpielNeues);
-		
-		// Button Linksklick Methoden
-		btn_SpielZurueck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// Schließe GUI_SpielEnde und zeige Spielfeld nochmal an
-				spielEnde.dispose();
-			}
-		});
-		
-		btn_SpielNochmal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				// Schließe GUI_SpielEnde und starte die Runde noch einmal
-				spielNochmal();
-				spielEnde.dispose();
-			}
-		});
-		
-		btn_SpielNeueRunde.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				//TODO
-				spielEnde.dispose();
-			}
-		});
-		
-		btn_SpielNeues.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				//TODO
-				spielEnde.dispose();
-			}
-		});
+		btn_SpielNeues.addActionListener(this);
 		
 		// Ausgabetext Sieg oder Niederlage
 		if (mineGetroffen==false) {
@@ -478,7 +415,7 @@ public class Test extends JFrame implements ActionListener {
 		lab_SpielEndeInformation.setText("<HTML><font size=14><i>"+siegNiederlage+"!</i></font><br>Spieldauer: "+zeittmp / 1000+" Sekunden. </HTML>");
 		cp2.add(lab_SpielEndeInformation);
 		
-		spielEnde.setVisible(true);
+		gui_SpielEnde.setVisible(true);
 	}
 	}
 	// Spielfeld-Buttons Linksklick
@@ -491,7 +428,23 @@ public class Test extends JFrame implements ActionListener {
 		if (object.getSource() == btn_SpielerProfil) {
 			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
 		}
-			
+		
+		// GUI_SpielEnde
+		if (object.getSource() == btn_SpielZurueck) {
+			gui_SpielEnde.dispose();
+		}
+		if (object.getSource() == btn_SpielNochmal) {
+			spielNochmal();
+			gui_SpielEnde.dispose();
+		}
+		if (object.getSource() == btn_SpielNeueRunde) {
+			//TODO
+			gui_SpielEnde.dispose();
+		}
+		if (object.getSource() == btn_SpielNeues) {
+			//TODO
+			gui_SpielEnde.dispose();
+		}			
 	}
 	
 	private void spielNochmal() {
