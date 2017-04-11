@@ -1,9 +1,6 @@
 package bla;
 
-import java.lang.*;
 import java.text.*;
-
-import javax.swing.JOptionPane;
 
 public class Spieler {
 
@@ -27,7 +24,6 @@ public class Spieler {
 	// Liste
 
 	public Spieler() {
-		super();
 		// Init Spieler mit Standardwerten
 		spielerName = "";
 		spieleGespielt = 0.0;
@@ -45,22 +41,22 @@ public class Spieler {
 		spieleGewonnenProzent = (spieleGewonnen) / spieleGespielt * 100;
 	}
 
-	public void erhoeheMinenGefunden(int minen) {
+	private void erhoeheMinenGefunden(int minen) {
 		minenGefunden = minenGefunden + minen;
 	}
 
-	public void erhoeheSpieleGespielt() {
+	private void erhoeheSpieleGespielt() {
 		spieleGespielt = spieleGespielt + 1;
 		calculateSpieleGewonnenProzent();
 	}
 
-	public void erhoeheSpieleGewonnen(boolean sieg) {
+	private void erhoeheSpieleGewonnen(boolean sieg) {
 		if (sieg == true) {
 			spieleGewonnen = spieleGewonnen + 1;
 		}
 	}
 
-	public void erhoeheSpielerSiegesserie(boolean sieg) {
+	private void erhoeheSpielerSiegesserie(boolean sieg) {
 		// falls Sieg, dann erhöhe Siegesserie um 1
 		if (sieg == true) {
 			spielerSiegesserie = spielerSiegesserie + 1;
@@ -70,7 +66,7 @@ public class Spieler {
 		}
 	}
 
-	public void erhoeheZeitGesamt(long zeitSpiel) {
+	private void erhoeheZeitGesamt(long zeitSpiel) {
 		zeitGesamt = zeitGesamt + zeitSpiel;
 	}
 
@@ -169,7 +165,7 @@ public class Spieler {
 
 	}
 
-	public void setZeitSchnellsterSieg(long zeitSpiel, boolean sieg) {
+	private void setZeitSchnellsterSieg(long zeitSpiel, boolean sieg) {
 		// nur Siege werden als schnellstes Spiel gewertet
 		if (sieg == true) {
 			// noch kein schnellstes Spiel absolviert
@@ -202,5 +198,5 @@ public class Spieler {
 
 		setSpielHistorie(siegNiederlage);
 	}
-
+	
 }

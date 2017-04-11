@@ -1,9 +1,6 @@
 package bla;
 
-import javax.swing.JOptionPane;
-
 public class Spiel {
-	private static Spieler spieler;
 
 	private static int minenGesamt = 3;
 	private int minenRichtig = 0;
@@ -19,20 +16,8 @@ public class Spiel {
 	private static Test test;
 
 	public Spiel() {
-
 	}
-
-	// Spielfeld-Daten
-	public static void setSpielModus(int spalte, int zeile, int minen, String modus, Spieler spieler) {
-		anzahlSpalten = spalte;
-		anzahlZeilen = zeile;
-		anzahlMinen = minen;
-		spielModus = modus;
-//		JOptionPane.showMessageDialog(null, "Spalten: " + anzahlSpalten + "/ Zeilen: " + anzahlSpalten + " / Minen: "
-//				+ anzahlMinen + " Modus: " + spielModus);
-		setupSpiel(spieler);
-	}
-
+	
 	public static void main(String[] args) {
 		GUI_Start neu = new GUI_Start();
 	}
@@ -65,13 +50,13 @@ public class Spiel {
 	public int getMinenRichtig() {
 		return minenRichtig;
 	}
-
-	public static String getSpielModus() {
-		return Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
-	}
 	
 	public int getRestMinen() {
 		return restMinen;
+	}
+
+	public static String getSpielModus() {
+		return Integer.toString(anzahlSpalten)+"x"+Integer.toString(anzahlZeilen)+" "+spielModus;
 	}
 
 	public static void setMinenGesamt(int gesamtMinen) {
@@ -84,6 +69,17 @@ public class Spiel {
 
 	public static void setRestMinen(int minen) {
 		restMinen = minen;
+	}
+	
+	// Spielfeld-Daten
+	public static void setSpielModus(int spalte, int zeile, int minen, String modus, Spieler spieler) {
+		anzahlSpalten = spalte;
+		anzahlZeilen = zeile;
+		anzahlMinen = minen;
+		spielModus = modus;
+//		JOptionPane.showMessageDialog(null, "Spalten: " + anzahlSpalten + "/ Zeilen: " + anzahlSpalten + " / Minen: "
+//				+ anzahlMinen + " Modus: " + spielModus);
+		setupSpiel(spieler);
 	}
 
 	private static void setupSpiel(Spieler spieler) {
