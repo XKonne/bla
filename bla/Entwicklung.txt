@@ -268,5 +268,11 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 	    			Variablen/Attribute/Methoden auf "private" gesetzt, falls möglich
 	    			
 	    			Das Spielerprofil wird früher geladen, d.h. es ist schon ab GUI_Start einsehbar
-						
+	    			
+	    			
+	    done		>DataIO: 																	 11.04.2017  A.3.8
+						> neue Methoden zum Updaten der Spielerdaten in der "data.txt"-Datei
+						> alle Methoden der Klasse DataIO sind nun statisch
+						> bisherige Methodenaufrufe sind angepasst
+						> JavaDoc bei Methoden hinzugefügt
 	

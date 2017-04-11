@@ -4,34 +4,149 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
 
-public class DataIO {
+public abstract class DataIO {
 
-	static String dataFilename = "data.txt";
-	Spieler spieler;
-		
-	String SpielerListe[] = new String[8];
-	int indexSpieler=0;
-
-	public DataIO(Spieler spieler) {
-		this.spieler = spieler;
-	}
+	private static String dataFilename = "./data.txt";
+	private static String SpielerListe[] = new String[8];
 	
 	public DataIO() {
 	}
 
+	
+	/**
+	 * Erstellt eine Datei (hier data.txt).
+	 */
+	private static void createFile() {
+
+		FileWriter writer;
+		try {
+			writer = new FileWriter(DataIO.dataFilename);
+			writer.close();
+		} catch (IOException e) {
+		}
+
+	}
+	
+	/**
+	 * Liest alle Spielernamen aus der "data.txt"-Datei und schreibt sie in das String-Array Spielerliste[].
+	 */
+	public static void createSpielerList() {
+		
+		int indexSpieler=0;
+		String data;
+		
+		try {
+			Scanner sc = new Scanner(new File(dataFilename));
+			while (sc.hasNext()) {
+				data = sc.nextLine();
+				
+				String[] dataArray = data.split("\\|");
+				SpielerListe[indexSpieler]=dataArray[0];
+				indexSpieler=indexSpieler+1;
+				
+			}
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			createFile();
+		}
+		
+	}
+	
+	
+	/**
+	 * Die alte Datei wird gelöscht.
+	 * Die neue Datei wird erstellt und am Ende umbenannt.
+	 */
+	private static void deleteAndRenameFile() {
+		File realName = new File(dataFilename);
+		realName.delete();
+		new File("./tmp_data.txt").renameTo(realName);
+	}
+	
+	
+	/**
+	 * Das Ergebnis wird hiermit persistiert.
+	 * 
+	 * Editieren nicht möglich, daher wird alte Datei eingelesen und jede Zeile
+	 * kopiert. Die Zeile des Spielers wird dabei aktualisiert.
+	 * 
+	 * @param
+	 * 		spieler Objekt der Klasse Spieler.
+	 * 
+	 * @throws IOException
+	 */
+	private static void editSpielerData(Spieler spieler) {
+
+		String tmpFileName = "./tmp_data.txt";
+
+		Scanner sc = null;
+		FileWriter updateWriter = null;
+		try {
+			sc = new Scanner(new File(dataFilename));
+			updateWriter = new FileWriter(tmpFileName);
+			String line;
+			while ((line = sc.nextLine()) != null) {
+				if (line.contains(spieler.getSpielerName())) {
+					line = fetchSpielerData(spieler);
+				}
+
+				updateWriter.write(line + "\n");
+
+			}
+		} catch (Exception e) {
+			return;
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+			try {
+				if (updateWriter != null) {
+					updateWriter.flush();
+					updateWriter.close();
+				}
+			} catch (IOException e) {
+			}
+
+		}
+		
+	}
+	
+	
+	/**	 * Lädt alle Spielerdaten, um diese anschließend schreiben zu können.
+	 * 
+	 * @param
+	 * 		spieler Objekt der Klasse Spieler.
+	 * 
+	 * @return String mit allen Spielerdaten zum Schreiben
+	 */
+	private static String fetchSpielerData(Spieler spieler) {
+	
+		return spieler.getSpielerName() + "|" + spieler.getSpieleGespielt() + "|" + spieler.getSpieleGewonnen() + "|"
+				+ spieler.getMinenGefunden() + "|" + spieler.getZeitGesamt() + "|" + spieler.getZeitLetztesSpiel() + "|"
+				+ spieler.getZeitSchnellsterSiegl() + "|" + spieler.getSpielerSiegesserie();
+	}
+	
+	
+	public static String getSpielerListe(int i) {
+		return SpielerListe[i];
+	}
+	
+	
 	/**
 	 * Hier wird die Datei ("data.txt") geladen, sofern sie existiert. Falls
 	 * nicht, wird sie erstellt.
 	 * 
 	 * Die geladene Datei wird zeilenweise gelesen. Wenn der Spielername des
 	 * aktiven Spielers in der Datei gefunden wird, werden dessen Stats geladen.
+	 * 
+ 	 * @param
+	 * 		spieler Objekt der Klasse Spieler.
 	 */
-	public void loadData() {
+	public static void loadData(Spieler spieler) {
 
 		Boolean spielerGefunden = false;
 		String data;
@@ -41,42 +156,37 @@ public class DataIO {
 			while (sc.hasNext() && spielerGefunden == false) {
 
 				data = sc.nextLine();
-				spielerGefunden = loadSpieler(data);
+				spielerGefunden = loadSpieler(spieler, data);
 
 			}
 			sc.close();
+
+			if (spielerGefunden == false) {
+				writeNewSpieler(spieler);
+			}
+			
 		} catch (FileNotFoundException e) {
 			createFile();
 		}
 	}
-
-	/**
-	 * 
-	 * Erstellt eine Datei (hier data.txt)
-	 */
-	private void createFile() {
-
-		FileWriter writer;
-		try {
-			writer = new FileWriter(DataIO.dataFilename);
-		} catch (IOException e) {
-		}
-
-	}
+	
 
 	/**
 	 * Splittet den übergebenen String bei jedem "|". Die gesplitteten Strings
 	 * werden zwischengespeichert und dann das entsprechende Spielerattribut
 	 * gesetzt.
-	 * 
-	 * @param data
-	 *            String, der die Spielerdaten enthält
+	 *
+	 * 		
+	 * @param 
+	 * 		spieler Objekt der Klasse Spieler.
+	 * @param 
+	 * 		data String, der die Spielerdaten enthält.
 	 * 
 	 * @return spielerGefunden
 	 * 			  Boolean, der die Schleife der aufrufenden Methode
 	 *            abbricht, sobald der Spielername in der Datei gefunden wurde.
 	 */
-	private boolean loadSpieler(String data) {
+	private static boolean loadSpieler(Spieler spieler, String data) {
 
 		Boolean spielerGefunden = false;
 		String[] dataArray = data.split("\\|");
@@ -101,36 +211,46 @@ public class DataIO {
 		return spielerGefunden;
 	}
 	
-	public void createSpielerList() {
-		
-		String data;
-		
-		try {
-			Scanner sc = new Scanner(new File(dataFilename));
-			while (sc.hasNext()) {
-				data = sc.nextLine();
-				
-				String[] dataArray = data.split("\\|");
-				SpielerListe[indexSpieler]=dataArray[0];
-				indexSpieler=indexSpieler+1;
-				
-				
-			}
-			sc.close();
-			indexSpieler=0;
-			
-		} catch (FileNotFoundException e) {
-			createFile();
-		}
-		
-	}
 	
-	public String getSpielerListe(int i) {
-		return SpielerListe[i];
-	}
-	
-	public Integer returnLengthSpielerListe() {
+	public static Integer returnLengthSpielerListe() {
 		return SpielerListe.length;
+	}
+	
+	/**
+	 * Bei Sieg oder Niederlage wird das Ergebnis persistiert.
+	 * Editieren und anschließendes Löschen der Altdatei + umbenennen der neuen Datei.
+	 * 
+	 * @param 
+	 * 		spieler Objekt der Klasse Spieler.
+	 * 
+	 */
+	public static void updateSpielerData(Spieler spieler) {
+		
+		editSpielerData(spieler);
+		deleteAndRenameFile();
+		
+	}
+
+
+	/**
+	 * Wenn der Spielername nicht in der Datei gefunden wird, erstellt diese
+	 * Methode einen neuen Eintrag für diesen Spieler.
+	 * 
+	 * @param 
+	 * 		spieler Objekt der Klasse Spieler.
+	 */
+	private static void writeNewSpieler(Spieler spieler) {
+
+		FileWriter writer;
+		try {
+			
+			writer = new FileWriter(DataIO.dataFilename, true);
+			writer.write(fetchSpielerData(spieler) + "\n");
+			writer.close();
+
+		} catch (IOException e) {
+		}
+
 	}
 
 }

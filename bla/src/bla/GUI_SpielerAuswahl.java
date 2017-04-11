@@ -104,8 +104,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 		
 		if (object.getSource() == btn_SpielerAusgewaehlt) {
 			spielerA.setSpielerName(arr_SpielerListe[spielerIndex]);
-			DataIO data = new DataIO(spielerA);
-			data.loadData();
+			DataIO.loadData(spielerA);
 			GUI_Start.aktiviereGUI_Start();
 						
 			gui_SpielerAuswahl.dispose();
@@ -198,12 +197,10 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	
 	private void loadSpielerListe() {
 		
-		DataIO data = new DataIO();
+		DataIO.createSpielerList();
 		
-		data.createSpielerList();
-		
-		for (int i=0; i<data.returnLengthSpielerListe(); i++) {
-			arr_SpielerListe[i]=data.getSpielerListe(i);
+		for (int i=0; i<DataIO.returnLengthSpielerListe(); i++) {
+			arr_SpielerListe[i]=DataIO.getSpielerListe(i);
 		}	
 	}
 
