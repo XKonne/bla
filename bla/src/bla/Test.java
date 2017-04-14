@@ -56,6 +56,8 @@ public class Test extends JFrame implements ActionListener {
 	private JLabel lab_SpielEndeInformation = new JLabel();
 
 	// Arrays
+	
+	// !!! Verschoben nach Spiel, angepasst an 2dim
 	// 0=Spielfeld noch nicht geklickt --- 1=Spielfeld bereits 1x gedrückt
 	// 5=Linksklick. Spielfeld aufgedeckt. Keine weiteren Aktion möglich
 	static int[] Spielfeldgeklickt = { 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -73,7 +75,7 @@ public class Test extends JFrame implements ActionListener {
 	// 5 6 7 8 <=> 1 2 3 2
 	// 9 10 11 12 <=> 1 M M 1
 	// 13 14 15 16 <=> 1 2 2 1
-	static String a_btnText[] = { "1", "1", "1", "1", "1", "1", "-", "-",
+	static String a_btnText[] = { "1", "1", "1", "1", "1", "1", "-", "-",	// Überlfüssig, da durch Spiel_spielfeld ersetzt
 								  "1", "M", "1", "1", "M", "2", "1", "1",
 								  "1", "1", "1", "1", "1", "2", "M", "1",
 								  "-", "1", "2", "2", "1", "2", "2", "2",
@@ -94,32 +96,34 @@ public class Test extends JFrame implements ActionListener {
 		spielStart();
 	}
 
+	// !!! Übernommen in GUI_Spielfeld
 	private void spielStart() {
 		
-			// Spielfeld aktivieren
-			setSpielfeldAnAus(true);
-			Spielfeldgesperrt = false;
-
-			btn_SpielerProfil.setVisible(true);
-
-			zeittmp = Spiel.zeitmessungStart();
-			
-			// Spielfeldgeklickt Array initialisieren
-			for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-				Spielfeldgeklickt[i] = 0;
-			}
-			
-			// Labels Text setzen
-			lab_SpielerName.setText(spielerT.getSpielerName());
-			spiel.setRestMinen(spiel.getMinenGesamt());
-			lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-			spiel.setMinenRichtig(0);
-			lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
-			
-			repaint();
+//			// Spielfeld aktivieren
+//			setSpielfeldAnAus(true);
+//			Spielfeldgesperrt = false;
+//
+//			btn_SpielerProfil.setVisible(true);
+//
+//			zeittmp = Spiel.zeitmessungStart();
+//			
+//			// Spielfeldgeklickt Array initialisieren
+//			for (int i = 0; i < Spielfeldgeklickt.length; i++) {
+//				Spielfeldgeklickt[i] = 0;
+//			}
+//			
+//			// Labels Text setzen
+//			lab_SpielerName.setText(spielerT.getSpielerName());
+//			spiel.setRestMinen(spiel.getMinenGesamt());
+//			lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+//			spiel.setMinenRichtig(0);
+//			lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+//			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
+//			
+//			repaint();
 	}
 
+	// !!! Überlfüssig, da Felder erzeugen eine neue Routine ist
 	private void createSpielfeld() {
 
 		// Buttons bauen
@@ -142,54 +146,55 @@ public class Test extends JFrame implements ActionListener {
 
 	private void createButtons() {
 
-		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
-		btn_SpielerProfil.setBounds(10, 5, 40, 40);
-		btn_SpielerProfil.setVisible(false);
-		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
-		cp.add(btn_SpielerProfil);
-		btn_SpielerProfil.addActionListener(this);
-
-		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
-		btn_SpielNeustart.setToolTipText("Startet die Runde neu.");
-		btn_SpielNeustart.setBounds(340, 5, 40, 40);
-		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
-		cp.add(btn_SpielNeustart);
-		btn_SpielNeustart.addActionListener(this);
+//		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
+//		btn_SpielerProfil.setBounds(10, 5, 40, 40);
+//		btn_SpielerProfil.setVisible(false);
+//		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
+//		cp.add(btn_SpielerProfil);
+//		btn_SpielerProfil.addActionListener(this);
+//
+//		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
+//		btn_SpielNeustart.setToolTipText("Startet die Runde neu.");
+//		btn_SpielNeustart.setBounds(340, 5, 40, 40);
+//		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
+//		cp.add(btn_SpielNeustart);
+//		btn_SpielNeustart.addActionListener(this);
 	}
 	
 
 	private void createLabels() {
 
-		Border border = LineBorder.createGrayLineBorder();
-
-		lab_SpielerName.setBounds(55, 5, 160, 40);
-		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
-		lab_SpielerName.setBorder(border);
-		lab_SpielerName.setVisible(true);
-		cp.add(lab_SpielerName);
-
-		lab_SpielModus.setBounds(220, 0, 120, 20);
-		lab_SpielModus.setVisible(false);
-		lab_SpielModus.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lab_SpielModus.setVisible(true);
-		cp.add(lab_SpielModus);
-
-		lab_Restminen.setBounds(220, 14, 100, 20);
-		lab_Restminen.setVisible(true);
-		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
-		cp.add(lab_Restminen);
-
-		lab_MinenRichtig.setBounds(220, 28, 100, 20);
-		lab_MinenRichtig.setVisible(true);
-		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-		cp.add(lab_MinenRichtig);
-
-		lab_Version.setBounds(12, 47, 100, 20);
-		lab_Version.setVisible(true);
-		lab_Version.setText(versiont);
-		cp.add(lab_Version);
+//		Border border = LineBorder.createGrayLineBorder();
+//
+//		lab_SpielerName.setBounds(55, 5, 160, 40);
+//		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
+//		lab_SpielerName.setBorder(border);
+//		lab_SpielerName.setVisible(true);
+//		cp.add(lab_SpielerName);
+//
+//		lab_SpielModus.setBounds(220, 0, 120, 20);
+//		lab_SpielModus.setVisible(false);
+//		lab_SpielModus.setFont(new Font("Dialog", Font.PLAIN, 11));
+//		lab_SpielModus.setVisible(true);
+//		cp.add(lab_SpielModus);
+//
+//		lab_Restminen.setBounds(220, 14, 100, 20);
+//		lab_Restminen.setVisible(true);
+//		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
+//		cp.add(lab_Restminen);
+//
+//		lab_MinenRichtig.setBounds(220, 28, 100, 20);
+//		lab_MinenRichtig.setVisible(true);
+//		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
+//		cp.add(lab_MinenRichtig);
+//
+//		lab_Version.setBounds(12, 47, 100, 20);
+//		lab_Version.setVisible(true);
+//		lab_Version.setText(versiont);
+//		cp.add(lab_Version);
 	}
 
+	// in GUI_Spielfeld überlfüssig da Gridlayout
 	/**
 	 * x-y-Wert setzen bei den Spielfeld-Buttons
 	 */
@@ -216,51 +221,53 @@ public class Test extends JFrame implements ActionListener {
 	}
 
 
+	
+	// Verschoben nach Spiel
 	public void aufSiegpruefen(boolean mineGetroffen) {
-		boolean winlose = false;
-		// aufSiegpruefen wird nach _jedem_ Mausklick ausgeführt.
-
-		// Minen-Markiert-Zähler und Minen-Richtig-Zähler aktualisieren
-		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-
-		// Sieg
-		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0
-				&& Spielfeldgesperrt == false) {
-			// Variable für Spielhistorie
-			winlose = true;
-			
-			// zeitmesser stoppen und Wert in zeittmp speichern
-			zeittmp = Spiel.zeitmessungEnde(zeittmp);
-
-			// Ausgabe
-			GUI_SpielEnde(mineGetroffen);
-
-			// Spieler Stats aktualsieren
-			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
-
-			// Spielfeld deaktivieren
-			setSpielfeldAnAus(false);
-			Spielfeldgesperrt = true;
-		}
-		
-		// Niederlage (=Mine aufgedeckt)
-		if (mineGetroffen == true) {
-			
-			winlose = false;
-			// zeitmesser stoppen und Wert in zeittmp speichern
-			zeittmp = Spiel.zeitmessungEnde(zeittmp);
-			
-			// Ausgabe
-			GUI_SpielEnde(mineGetroffen);
-
-			// Spieler Stats aktualisieren
-			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
-
-			// Spielfeld deaktivieren
-			setSpielfeldAnAus(false);
-			Spielfeldgesperrt = true;
-		}
+//		boolean winlose = false;
+//		// aufSiegpruefen wird nach _jedem_ Mausklick ausgeführt.
+//
+//		// Minen-Markiert-Zähler und Minen-Richtig-Zähler aktualisieren
+//		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+//
+//		// Sieg
+//		if (spiel.getMinenRichtig() == spiel.getMinenGesamt() && spiel.getRestMinen() == 0
+//				&& Spielfeldgesperrt == false) {
+//			// Variable für Spielhistorie
+//			winlose = true;
+//			
+//			// zeitmesser stoppen und Wert in zeittmp speichern
+//			zeittmp = Spiel.zeitmessungEnde(zeittmp);
+//
+//			// Ausgabe
+//			GUI_SpielEnde(mineGetroffen);
+//
+//			// Spieler Stats aktualsieren
+//			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+//
+//			// Spielfeld deaktivieren
+//			setSpielfeldAnAus(false);
+//			Spielfeldgesperrt = true;
+//		}
+//		
+//		// Niederlage (=Mine aufgedeckt)
+//		if (mineGetroffen == true) {
+//			
+//			winlose = false;
+//			// zeitmesser stoppen und Wert in zeittmp speichern
+//			zeittmp = Spiel.zeitmessungEnde(zeittmp);
+//			
+//			// Ausgabe
+//			GUI_SpielEnde(mineGetroffen);
+//
+//			// Spieler Stats aktualisieren
+//			spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(), winlose);
+//
+//			// Spielfeld deaktivieren
+//			setSpielfeldAnAus(false);
+//			Spielfeldgesperrt = true;
+//		}
 	}
 
 	private void initFrame() {
@@ -278,66 +285,71 @@ public class Test extends JFrame implements ActionListener {
 		setResizable(false);
 		cp.setLayout(null);
 
-		//  Menüleiste
-		JMenuBar menueLeiste = new JMenuBar();
-
-		//  Menüleiste Elemente
-		JMenu men_spiel = new JMenu("Spiel");
-		JMenu men_ueber = new JMenu("Über");
-
-		// Untermenü + Linksklick-Methode
-		JMenuItem men_spiel_neu = new JMenuItem("Neues Spiel");
-		men_spiel_neu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				dispose();
-				GUI_Start frame = new GUI_Start();
-			}
-		});
-		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
-		men_spiel_beenden.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				System.exit(0);
-			}
-		});
-		JMenuItem men_ueber_version = new JMenuItem("Version");
-		men_ueber_version.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				JOptionPane.showMessageDialog(null, "Version: " + versiont);
-			}
-		});
-
-		// Menüleiste
-		// Menüleiste hinzufügen
-		cp.add(menueLeiste);
-		// Hauptmenü-Punkte hinzufügen
-		menueLeiste.add(men_spiel);
-		menueLeiste.add(men_ueber);
-		// Untermenü-Punkte hinzufügen
-		men_spiel.add(men_spiel_neu);
-		men_spiel.add(men_spiel_beenden);
-		men_ueber.add(men_ueber_version);
-		// MenueLeiste dem JFrame zuordnen
-		setJMenuBar(menueLeiste);
+		// !!! Übernommen in GUI_Spielfeld
+//		//  Menüleiste
+//		JMenuBar menueLeiste = new JMenuBar();
+//
+//		//  Menüleiste Elemente
+//		JMenu men_spiel = new JMenu("Spiel");
+//		JMenu men_ueber = new JMenu("Über");
+//
+//		// Untermenü + Linksklick-Methode
+//		JMenuItem men_spiel_neu = new JMenuItem("Neues Spiel");
+//		men_spiel_neu.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent evt) {
+//				dispose();
+//				GUI_Start frame = new GUI_Start();
+//			}
+//		});
+//		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
+//		men_spiel_beenden.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent evt) {
+//				System.exit(0);
+//			}
+//		});
+//		JMenuItem men_ueber_version = new JMenuItem("Version");
+//		men_ueber_version.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent evt) {
+//				JOptionPane.showMessageDialog(null, "Version: " + versiont);
+//			}
+//		});
+//
+//		// Menüleiste
+//		// Menüleiste hinzufügen
+//		cp.add(menueLeiste);
+//		// Hauptmenü-Punkte hinzufügen
+//		menueLeiste.add(men_spiel);
+//		menueLeiste.add(men_ueber);
+//		// Untermenü-Punkte hinzufügen
+//		men_spiel.add(men_spiel_neu);
+//		men_spiel.add(men_spiel_beenden);
+//		men_ueber.add(men_ueber_version);
+//		// MenueLeiste dem JFrame zuordnen
+//		setJMenuBar(menueLeiste);
 	}
 
+	// !!! Verschoben nach GUI_Spielfeld
 	// Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
 	public static void setDisabled(int i) {
-		buttons[i].setEnabled(false);
+//		buttons[i].setEnabled(false);
 	}
 
+	// !!! Verschoben nach GUI_Spielfeld
 	// Alle Spielfeld-Button deaktivieren (false) oder aktivieren (true)
 	public static void setSpielfeldAnAus(boolean x) {
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setEnabled(x);
-		}
+//		for (int i = 0; i < buttons.length; i++) {
+//			buttons[i].setEnabled(x);
+//		}
 	}
 
+	// !!! Verschoben nach Spiel
 	public static void setSpielfeldgeklickt(int i, int j) {
-		Spielfeldgeklickt[i] = j;
+//		Spielfeldgeklickt[i] = j;
 	}
 
+	// !!! Überlfüssig, da neue Routine für Felder geschrieben
 	public static void setText(int i, String text) {
-		buttons[i].setText(text);
+//		buttons[i].setText(text);
 	}
 
 	private void setupGUI() {
@@ -355,120 +367,124 @@ public class Test extends JFrame implements ActionListener {
 
 	} // Ende Methoden
 	
+	// !!! Übernommen nach GUI_Spielfeld
 	private void GUI_SpielEnde(boolean mineGetroffen) {
-		{
-		// Lokale Variablen
-		String siegNiederlage="";
-			
-		// Frame-Initialisierung
-		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		gui_SpielEnde.setSize(380, 170);
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (d.width - getSize().width) / 2;
-		int y = (d.height - getSize().height) / 2;
-		gui_SpielEnde.setLocation(x, y);
-		gui_SpielEnde.setTitle("Spielende");
-		gui_SpielEnde.setResizable(false);
-		Container cp2 = gui_SpielEnde.getContentPane();
-		//Container cp2 = getContentPane();
-		cp2.setLayout(null);
-		
-		// Frame-Elemente
-		// Buttons
-		btn_SpielZurueck.setBounds(10, 100, 80, 30);
-		btn_SpielZurueck.setText("Zurück");
-		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
-		cp2.add(btn_SpielZurueck);
-		btn_SpielZurueck.addActionListener(this);
-		
-		btn_SpielNochmal.setBounds(100, 100, 80, 30);
-		btn_SpielNochmal.setText("Nochmal");
-		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
-		cp2.add(btn_SpielNochmal);
-		btn_SpielNochmal.addActionListener(this);
-		
-		btn_SpielNeueRunde.setBounds(190, 100, 80, 30);
-		btn_SpielNeueRunde.setText("Neue Runde");
-		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielNeueRunde.setEnabled(false);
-		cp2.add(btn_SpielNeueRunde);
-		btn_SpielNeueRunde.addActionListener(this);
-		
-		btn_SpielNeues.setBounds(280, 100, 80, 30);
-		btn_SpielNeues.setText("Neues Spiel");
-		btn_SpielNeues.setMargin(new Insets(2, 2, 2, 2));
-		btn_SpielNeues.setEnabled(false);
-		cp2.add(btn_SpielNeues);
-		btn_SpielNeues.addActionListener(this);
-		
-		// Ausgabetext Sieg oder Niederlage
-		if (mineGetroffen==false) {
-			siegNiederlage = "Sieg";
-		}
-		else {
-			siegNiederlage = "Niederlage";
-		}
-		
-		// Labels
-		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
-		lab_SpielEndeInformation.setVisible(true);
-		lab_SpielEndeInformation.setText("<HTML><font size=14><i>"+siegNiederlage+"!</i></font><br>Spieldauer: "+zeittmp / 1000+" Sekunden. </HTML>");
-		cp2.add(lab_SpielEndeInformation);
-		
-		gui_SpielEnde.setVisible(true);
+//		{
+//		// Lokale Variablen
+//		String siegNiederlage="";
+//			
+//		// Frame-Initialisierung
+//		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+//		gui_SpielEnde.setSize(380, 170);
+//		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+//		int x = (d.width - getSize().width) / 2;
+//		int y = (d.height - getSize().height) / 2;
+//		gui_SpielEnde.setLocation(x, y);
+//		gui_SpielEnde.setTitle("Spielende");
+//		gui_SpielEnde.setResizable(false);
+//		Container cp2 = gui_SpielEnde.getContentPane();
+//		//Container cp2 = getContentPane();
+//		cp2.setLayout(null);
+//		
+//		// Frame-Elemente
+//		// Buttons
+//		btn_SpielZurueck.setBounds(10, 100, 80, 30);
+//		btn_SpielZurueck.setText("Zurück");
+//		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
+//		cp2.add(btn_SpielZurueck);
+//		btn_SpielZurueck.addActionListener(this);
+//		
+//		btn_SpielNochmal.setBounds(100, 100, 80, 30);
+//		btn_SpielNochmal.setText("Nochmal");
+//		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
+//		cp2.add(btn_SpielNochmal);
+//		btn_SpielNochmal.addActionListener(this);
+//		
+//		btn_SpielNeueRunde.setBounds(190, 100, 80, 30);
+//		btn_SpielNeueRunde.setText("Neue Runde");
+//		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
+//		btn_SpielNeueRunde.setEnabled(false);
+//		cp2.add(btn_SpielNeueRunde);
+//		btn_SpielNeueRunde.addActionListener(this);
+//		
+//		btn_SpielNeues.setBounds(280, 100, 80, 30);
+//		btn_SpielNeues.setText("Neues Spiel");
+//		btn_SpielNeues.setMargin(new Insets(2, 2, 2, 2));
+//		btn_SpielNeues.setEnabled(false);
+//		cp2.add(btn_SpielNeues);
+//		btn_SpielNeues.addActionListener(this);
+//		
+//		// Ausgabetext Sieg oder Niederlage
+//		if (mineGetroffen==false) {
+//			siegNiederlage = "Sieg";
+//		}
+//		else {
+//			siegNiederlage = "Niederlage";
+//		}
+//		
+//		// Labels
+//		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
+//		lab_SpielEndeInformation.setVisible(true);
+//		lab_SpielEndeInformation.setText("<HTML><font size=14><i>"+siegNiederlage+"!</i></font><br>Spieldauer: "+zeittmp / 1000+" Sekunden. </HTML>");
+//		cp2.add(lab_SpielEndeInformation);
+//		
+//		gui_SpielEnde.setVisible(true);
+//	}
 	}
-	}
+	
+	// !!! Übernommen nach GUI_Spielfeld
 	// Spielfeld-Buttons Linksklick
 	public void actionPerformed(ActionEvent object) {
 		
-		// Linksklick Menüleiste
-		if (object.getSource() == btn_SpielNeustart) {
-			spielNochmal();
-		}
-		if (object.getSource() == btn_SpielerProfil) {
-			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
-		}
-		
-		// GUI_SpielEnde
-		if (object.getSource() == btn_SpielZurueck) {
-			gui_SpielEnde.dispose();
-		}
-		if (object.getSource() == btn_SpielNochmal) {
-			spielNochmal();
-			gui_SpielEnde.dispose();
-		}
-		if (object.getSource() == btn_SpielNeueRunde) {
-			//TODO
-			gui_SpielEnde.dispose();
-		}
-		if (object.getSource() == btn_SpielNeues) {
-			//TODO
-			gui_SpielEnde.dispose();
-		}			
+//		// Linksklick Menüleiste
+//		if (object.getSource() == btn_SpielNeustart) {
+//			spielNochmal();
+//		}
+//		if (object.getSource() == btn_SpielerProfil) {
+//			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
+//		}
+//		
+//		// GUI_SpielEnde
+//		if (object.getSource() == btn_SpielZurueck) {
+//			gui_SpielEnde.dispose();
+//		}
+//		if (object.getSource() == btn_SpielNochmal) {
+//			spielNochmal();
+//			gui_SpielEnde.dispose();
+//		}
+//		if (object.getSource() == btn_SpielNeueRunde) {
+//			//TODO
+//			gui_SpielEnde.dispose();
+//		}
+//		if (object.getSource() == btn_SpielNeues) {
+//			//TODO
+//			gui_SpielEnde.dispose();
+//		}			
 	}
 	
+	// !!! Übernommen nach GUI_Spielfeld
 	private void spielNochmal() {
 		// Spielfeld-Buttons auf Anfangswert
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i].setText(".");
-		}
-
-		// Spielfeld aktivieren
-		setSpielfeldAnAus(true);
-		Spielfeldgesperrt = false;
-
-		// Spielfeldgeklickt Array zurücksetzen
-		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-			Spielfeldgeklickt[i] = 0;
-		}
-		//Zurücksetzen der Minen
-		spiel.setRestMinen(spiel.getMinenGesamt());
-		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-		spiel.setMinenRichtig(0);
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-
-		// Zeiterfassung starten
-		zeittmp = Spiel.zeitmessungStart();
+//		for (int i = 0; i < buttons.length; i++) {
+//			buttons[i].setText(".");
+//		}
+//
+//		// Spielfeld aktivieren
+//		setSpielfeldAnAus(true);
+//		Spielfeldgesperrt = false;
+//
+//		// Spielfeldgeklickt Array zurücksetzen
+//		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
+//			Spielfeldgeklickt[i] = 0;
+//		}
+//		//Zurücksetzen der Minen
+//		spiel.setRestMinen(spiel.getMinenGesamt());
+//		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
+//		spiel.setMinenRichtig(0);
+//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
+//
+//		// Zeiterfassung starten
+//		zeittmp = Spiel.zeitmessungStart();
 	}
 
 } // end of class Test

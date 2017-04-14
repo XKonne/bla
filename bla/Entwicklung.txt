@@ -275,4 +275,30 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						> alle Methoden der Klasse DataIO sind nun statisch
 						> bisherige Methodenaufrufe sind angepasst
 						> JavaDoc bei Methoden hinzugefügt
+						
+		done		+Class: GUI_Spielfeld: GUI mit Spielfeld									14.04.2017	A.3.9
+						Vom Aussehen her genau so wie "Test". Neu: Layoutmanager für GUI, dynamische Spielfeldgröße (Framegröße)
+						Spielfeld besteht nun aus "Feldern". Anordnung per Gridlayout.
+						Bezieht alle Spielfeld-Infos aus Spiel
+					+Class: Feld: Feld-Element auf Spielfeld
+					>Spiel: +createSpiel()
+								+ initSpielfeldStatus(): Alles auf 0 (leeres Feld)
+								+ setSpielfeldMinen(): Setze per Zufall Minen
+								+ setSpielfeldZahlen(): Berechne für jedes Feld wie viele Minen in der Nachbarschaft sind
+								+ getSpielfeldStatus(int zeile, int spalte): Gibt Info zurück, um was auf dem Feld steht
+								
+								Folgende Methoden waren davor in "Test": Sind noch nicht an die neue Spiellogik angepasst
+					TO-DO		+ div. Variablen verschoben
+					"			+ setSpielfeldgeklickt(int i, int j)
+					"			+ aufSiegpruefen(boolean mineGetroffen)
+					TO-DO		MouseInput mit Feldern verknpüfen
+								MouseInput-Algo an veränderten Code anpassen
+					
+					Vorerst sind folgende Classes noch vorhanden, werden aber sobald alle TODO's abgearbeitet sind, entfernt
+						TestAlpha
+						Test
+						TestSpielfeld
+						
+					Dateien entfernt:	Codeschnipsel: Inhalt in To-Do verschoben
+								
 	

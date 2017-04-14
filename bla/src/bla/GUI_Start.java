@@ -1,24 +1,12 @@
 package bla;
 
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
-import java.awt.Scrollbar;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Random;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Arrays;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import javax.swing.*;
 
 public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte

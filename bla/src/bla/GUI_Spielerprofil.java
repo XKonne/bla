@@ -3,16 +3,13 @@ package bla;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.event.*;
 
 public class GUI_Spielerprofil extends JFrame implements ActionListener {
 	// Objekte
-	static Spieler spieler;
+	private Spieler spieler;
 	
 	// Frame-Container
-	Container cp = getContentPane();
+	private Container cp = getContentPane();
 	
 	// Variablen
 	
@@ -22,25 +19,24 @@ public class GUI_Spielerprofil extends JFrame implements ActionListener {
 	private JButton btn_SpielerprofilAktualisieren = new JButton();
 
 	// Labels
-	private JLabel lab_MinenGefunden = new JLabel();
-	private JLabel lab_profilBild = new JLabel();
-	private JLabel lab_SpieleGespielt = new JLabel();
-	private JLabel lab_SpieleGewonnen = new JLabel();
-	private JLabel lab_SpieleGewonnenProzent = new JLabel();
-	private JLabel lab_SpielHistorie = new JLabel();
-	private JLabel lab_SpielerName = new JLabel();
-	private JLabel lab_SpieleSiegesserie = new JLabel();
-	private JLabel lab_SpielVerlauf = new JLabel();
-	private JLabel lab_ZeitGesamt = new JLabel();
-	private JLabel lab_ZeitLetztesSpiel = new JLabel();
-	private JLabel lab_ZeitSchnellstesSpiel = new JLabel();
+	private static JLabel lab_MinenGefunden = new JLabel();
+	private static JLabel lab_profilBild = new JLabel();
+	private static JLabel lab_SpieleGespielt = new JLabel();
+	private static JLabel lab_SpieleGewonnen = new JLabel();
+	private static JLabel lab_SpieleGewonnenProzent = new JLabel();
+	private static JLabel lab_SpielHistorie = new JLabel();
+	private static JLabel lab_SpielerName = new JLabel();
+	private static JLabel lab_SpieleSiegesserie = new JLabel();
+	private static JLabel lab_SpielVerlauf = new JLabel();
+	private static JLabel lab_ZeitGesamt = new JLabel();
+	private static JLabel lab_ZeitLetztesSpiel = new JLabel();
+	private static JLabel lab_ZeitSchnellstesSpiel = new JLabel();
 	
 	
 
 	public GUI_Spielerprofil(Spieler spieler) {
 		
-		super();
-		GUI_Spielerprofil.spieler = spieler;
+		this.spieler = spieler;
 
 		setupGUI();
 		
