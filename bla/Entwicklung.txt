@@ -300,5 +300,9 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						TestSpielfeld
 						
 					Dateien entfernt:	Codeschnipsel: Inhalt in To-Do verschoben
+					
+		done		+Class GUI_Menubar: global einsetzbare Menüleiste							15.04.2017	A.3.10
+						Alle nicht umgesetzten Funktionen sind deaktiviert.
+					>addMenubar() in GUI_Start und GUI_Spielfeld
 								
 	

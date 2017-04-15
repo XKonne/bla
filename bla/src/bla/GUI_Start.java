@@ -56,7 +56,7 @@ public class GUI_Start extends JFrame implements ActionListener {
 		initFrame();
 		createButtons();
 		createLabels();
-		createMenuBar();
+		addMenubar();
 		
 		gui_Start.setVisible(true);
 		
@@ -68,30 +68,11 @@ public class GUI_Start extends JFrame implements ActionListener {
 		}
 		panel.repaint();	
 	}
-
-	private void createMenuBar() {
-		// Untermenü > ActionListener-Aufruf
-		// Spiel
-		men_spiel_neu.addActionListener(this);
-		men_spiel_beenden.addActionListener(this);
-
-		// Hilfe
-		men_ueber_anleitung.addActionListener(this);
-		men_ueber_version.addActionListener(this);
-
-		// Menüleiste
-		// Menüleiste hinzufügen
-		gui_Start.add(menueLeiste);
-		// Hauptmenü-Punkte hinzufügen
-		menueLeiste.add(men_spiel);
-		menueLeiste.add(men_ueber);
-		// Untermenü-Punkte hinzufügen
-		men_spiel.add(men_spiel_neu);
-		men_spiel.add(men_spiel_beenden);
-		men_ueber.add(men_ueber_anleitung);
-		men_ueber.add(men_ueber_version);
-		// MenueLeiste dem JFrame zuordnen
-		gui_Start.setJMenuBar(menueLeiste);
+	
+	
+	private void addMenubar() {
+		JMenuBar menubar = new GUI_AddMenubar();
+		gui_Start.setJMenuBar(menubar);
 	}
 
 	private void createLabels() {
@@ -161,20 +142,6 @@ public class GUI_Start extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent object) {
 		
-		// Menüleiste
-		if (object.getSource() == men_spiel_neu) {
-			// do nothing
-		}
-		if (object.getSource() == men_spiel_beenden) {
-			System.exit(0);
-		}
-		if (object.getSource() == men_ueber_anleitung) {
-			// do nothing
-		}
-		if (object.getSource() == men_ueber_version) {
-			JOptionPane.showMessageDialog(null, "Version: " + Test.versiont);
-		}
-
 		// Linksklick GUI-Buttons
 		if (object.getSource() == btn_SpielerProfil) {
 			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerEins);

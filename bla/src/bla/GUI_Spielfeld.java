@@ -42,7 +42,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 	private static long zeittmp;
 
 	// String
-	static String versiont = "A.3.9";
+	static String versiont = "A.3.10";
 
 	// GUI-Elemente
 	// Buttons - guiSpielfeld
@@ -74,8 +74,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		
 		setupGUI();
 		
-		createSpielfeldFeld();
-		setSpielfeldStatusZuFeld();
+		neueRunde();
 		
 		spielStart();
 	}
@@ -84,7 +83,18 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		initFrame();
 		createButtons();
 		createLabels();
+		addMenubar();
 		
+	}
+	
+	public void neueRunde() {
+		createSpielfeldFeld();
+		setSpielfeldStatusZuFeld();
+	}
+	
+	private void addMenubar() {
+		JMenuBar menubar = new GUI_AddMenubar();
+		gui_Spielfeld.setJMenuBar(menubar);
 	}
 	
 	private void spielStart() {
@@ -139,7 +149,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
 		cpTop.add(lab_MinenRichtig);
 
-		lab_Version.setBounds(220, 2, 80, 20);
+		lab_Version.setBounds(213, 2, 80, 20);
 		lab_Version.setVisible(true);
 		lab_Version.setText(versiont);
 		cpTop.add(lab_Version);
@@ -188,48 +198,8 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		gui_Spielfeld.setResizable(false);
 		
 		gui_Spielfeld.setVisible(true);
-		
-		//  Menüleiste
-		JMenuBar menueLeiste = new JMenuBar();
-
-		//  Menüleiste Elemente
-		JMenu men_spiel = new JMenu("Spiel");
-		JMenu men_ueber = new JMenu("Über");
-
-		// Untermenü + Linksklick-Methode
-		JMenuItem men_spiel_neu = new JMenuItem("Neues Spiel");
-		men_spiel_neu.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent evt) {
-				dispose();
-				GUI_Start frame = new GUI_Start();
-			}
-		});
-		JMenuItem men_spiel_beenden = new JMenuItem("Beenden");
-		men_spiel_beenden.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				System.exit(0);
-			}
-		});
-		JMenuItem men_ueber_version = new JMenuItem("Version");
-		men_ueber_version.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				JOptionPane.showMessageDialog(null, "Version: " + versiont);
-			}
-		});
-
-		// Menüleiste
-		// Menüleiste hinzufügen
-		cpTop.add(menueLeiste);
-		// Hauptmenü-Punkte hinzufügen
-		menueLeiste.add(men_spiel);
-		menueLeiste.add(men_ueber);
-		// Untermenü-Punkte hinzufügen
-		men_spiel.add(men_spiel_neu);
-		men_spiel.add(men_spiel_beenden);
-		men_ueber.add(men_ueber_version);
-		// MenueLeiste dem JFrame zuordnen
-		gui_Spielfeld.setJMenuBar(menueLeiste);
 	}	
+	
 	private void createButtons() {
 		
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
