@@ -1,5 +1,6 @@
 package bla;
 
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -19,7 +20,7 @@ public class GUI_AddMenubar extends JMenuBar implements ActionListener {
 
 	public GUI_AddMenubar() {
 		super();
-		
+				
 		// Menu > Spiel
 		spiel = new JMenu("Spiel");
 		// "S" unterstreichen
@@ -124,7 +125,8 @@ public class GUI_AddMenubar extends JMenuBar implements ActionListener {
 		}
 		if (object.getSource() == akt_neueRunde) {
 			//TODO folgender Befehl geht nicht weil nicht static.
-			//GUI_Spielfeld.neueRunde();
+			//Spiel.createSpiel();
+			//GUI_Spielfeld.setSpielfeldStatusZuFeld();
 		}
 		if (object.getSource() == spielLaden) {
 			// do nothing

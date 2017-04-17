@@ -304,5 +304,13 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		done		+Class GUI_Menubar: global einsetzbare Menüleiste							15.04.2017	A.3.10
 						Alle nicht umgesetzten Funktionen sind deaktiviert.
 					>addMenubar() in GUI_Start und GUI_Spielfeld
+					
+		done		+img/felder: Bilder für das Spielfeld hinzugefügt							17.04.2017	A.3.11
+					>GUI_Spielfeld: >setSpielfeldStatusToFeld: zeigt nun nicht mehr die Zahlen aus SpielfeldStatus, sondern
+								    						   ordnet dem Wert das entsprechende Bild hinzu.
+								    >resetSpielfeldStatusToFeld: Setzt auf den Feldern gesetzt Bilder, Texte zurück, damit
+								    							 bei einer neuen Runde keine Bilder/Texte doppelt gesetzt werden
+								    Frame-Größe: Neue Formel eingefügt, die den Spielfeld-Frame an die Größe des Spielfeldes
+								    			 (plus Menüleiste, Spielername etc) anpasst.
 								
 	

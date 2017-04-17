@@ -15,17 +15,22 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 	private static Spieler spielerT;
 	
 	// Frame-Containe-Panel
-	private JFrame gui_Spielfeld = new JFrame();
+	private static JFrame gui_Spielfeld = new JFrame();
 	private JFrame gui_SpielEnde = new JFrame();
+	GridBagConstraints gbc = new GridBagConstraints();
 	
 	// Hauptcontainer mit Borderlayout
 	private Container cp = gui_Spielfeld.getContentPane();
 	// Container für Borderlayout: TOP, LEFT, CENTER, RIGHT, BOT
 	private Container cpTop = new Container();
 	private Container cpLeft = new Container();
-	private JPanel panSpielfeld = new JPanel();		//Gridlayout
+	private static JPanel panSpielfeld = new JPanel();		//Gridlayout
 	private Container cpRight = new Container();
 	private Container cpBot = new Container();
+	
+	
+	JMenuBar menubar = new GUI_AddMenubar();
+	
 		
 	// Variablen
 	// Boolean
@@ -42,7 +47,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 	private static long zeittmp;
 
 	// String
-	static String versiont = "A.3.10";
+	static String versiont = "A.3.11";
 
 	// GUI-Elemente
 	// Buttons - guiSpielfeld
@@ -66,7 +71,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 	private JLabel lab_SpielEndeInformation = new JLabel();
 		
 	// Arrays
-	Feld[][] Felder = new Feld[Spiel.getSpielfeldZeilen()][Spiel.getSpielfeldSpalten()];
+	static Feld[][] Felder = new Feld[Spiel.getSpielfeldZeilen()][Spiel.getSpielfeldSpalten()];
 	
 	
 	public GUI_Spielfeld(Spieler spieler) {
@@ -81,9 +86,9 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 
 	private void setupGUI() {
 		initFrame();
+		addMenubar();
 		createButtons();
 		createLabels();
-		addMenubar();
 		
 	}
 	
@@ -93,7 +98,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 	}
 	
 	private void addMenubar() {
-		JMenuBar menubar = new GUI_AddMenubar();
+//		JMenuBar menubar = new GUI_AddMenubar();
 		gui_Spielfeld.setJMenuBar(menubar);
 	}
 	
@@ -149,45 +154,53 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
 		cpTop.add(lab_MinenRichtig);
 
-		lab_Version.setBounds(213, 2, 80, 20);
+		lab_Version.setBounds(213, 2, 120, 20); //100
 		lab_Version.setVisible(true);
 		lab_Version.setText(versiont);
+		//debug: lab_Version.setText(" W: "+gui_Spielfeld.getWidth()+", H: "+gui_Spielfeld.getHeight());
 		cpTop.add(lab_Version);
 	}
 
 	private void initFrame() {
-		int extraBreite = 0;
+		int extraBreiteLinks = 0;
+		int extraBreiteRechts = 0;
 		
 		cp.setLayout(new BorderLayout());
 		
-		// Bei 8x8 Spielen ist das Spielfeld zu klein, durch einen Rand wird es groß genug
-		if (Spiel.getSpielfeldZeilen()*feldHeight+50+75+7 < 400) {
-			extraBreite = 65;
+		if (Spiel.getSpielfeldSpalten() < 15) {
+			// unter 15 Spalten ist das Spielfeld zu klein um top vollständig anzuzeigen.
+			// Füge links und rechts leeren Raum ein, damit restliche Größen wieder passen
+			// pro Spalte unter 15 ist das Spielfeld um 29 zu klein
+			extraBreiteLinks = 15*(15-Spiel.getSpielfeldSpalten());
+			extraBreiteRechts = 14*(15-Spiel.getSpielfeldSpalten());
 		}
-
+		
 		cpTop.setLayout(null);
 		cpTop.setPreferredSize(new Dimension(600,50));
 		gui_Spielfeld.getContentPane().add(cpTop, BorderLayout.PAGE_START);
 		
 		cpLeft.setLayout(null);
-		cpLeft.setPreferredSize(new Dimension(extraBreite,0));
+		cpLeft.setPreferredSize(new Dimension(extraBreiteLinks,0));
 		gui_Spielfeld.getContentPane().add(cpLeft, BorderLayout.LINE_START);
 		
 		cpRight.setLayout(null);
-		cpRight.setPreferredSize(new Dimension(extraBreite,0));
+		cpRight.setPreferredSize(new Dimension(extraBreiteRechts,0));
 		gui_Spielfeld.getContentPane().add(cpRight, BorderLayout.LINE_END);
 		
 		cpBot.setLayout(null);
 		cpBot.setPreferredSize(new Dimension(0,0));
 		gui_Spielfeld.getContentPane().add(cpBot, BorderLayout.PAGE_END);
 		
-		panSpielfeld.setLayout(new GridLayout(Spiel.getSpielfeldZeilen(), Spiel.getSpielfeldSpalten(), feldAbstand,feldAbstand));
-		
+		//Center > Spielfeld
+		//panSpielfeld.setLayout(new GridLayout(Spiel.getSpielfeldZeilen(), Spiel.getSpielfeldSpalten(), feldAbstand,feldAbstand));
+		panSpielfeld.setLayout(new GridBagLayout());
+
+		// 73 anscheinend top und 23 menubar
+		frameHeight=Spiel.getSpielfeldZeilen()*(feldHeight)+Spiel.getSpielfeldZeilen()*4+16+73+23;
+		frameWidth=Spiel.getSpielfeldSpalten()*(feldWidth)+Spiel.getSpielfeldSpalten()*4+16 + extraBreiteLinks+extraBreiteRechts;
 		
 		gui_Spielfeld.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		// zeilen*feldHeight + 50 page start + 75 ?? + 30 menubar
-		frameHeight=Spiel.getSpielfeldZeilen()*feldHeight+50+75+30;
-		frameWidth=Spiel.getSpielfeldSpalten()*feldWidth+75+2*extraBreite;
+		
 		gui_Spielfeld.setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
@@ -195,7 +208,7 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		gui_Spielfeld.setLocation(x-frameWidth/2, y-frameHeight/2);
 		
 		gui_Spielfeld.setTitle("Projekt 'Seawolf' <no GameApp actually found>");
-		gui_Spielfeld.setResizable(false);
+		gui_Spielfeld.setResizable(true);
 		
 		gui_Spielfeld.setVisible(true);
 	}	
@@ -210,8 +223,8 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		btn_SpielerProfil.addActionListener(this);
 
 		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
-		btn_SpielNeustart.setToolTipText("Startet die Runde neu.");
-		btn_SpielNeustart.setBounds(frameWidth-50, 5, 40, 40);
+		btn_SpielNeustart.setToolTipText("Debug: Genieriert derzeit eine neue Runde");
+		btn_SpielNeustart.setBounds(gui_Spielfeld.getWidth()-60, 5, 40, 40);
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		cpTop.add(btn_SpielNeustart);
 		btn_SpielNeustart.addActionListener(this);
@@ -232,11 +245,23 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 //		});
 	}
 	
-	private void setSpielfeldStatusZuFeld() {
+	public void setSpielfeldStatusZuFeld() {
 
 		for (int z=0; z<Spiel.getSpielfeldZeilen(); z++) {
 			for (int sp=0; sp<Spiel.getSpielfeldSpalten(); sp++) {
-				Felder[z][sp].setText(Integer.toString(Spiel.getSpielfeldStatus(z+1,sp+1)));
+				switch (Spiel.getSpielfeldStatus(z+1,sp+1))
+				{
+				case -1: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
+				case 0: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
+				case 1: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
+				case 2: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
+				case 3: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
+				case 4: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
+				case 5: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
+				case 6: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
+				case 7: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
+				case 8: Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
+				}
 			}
 		}
 	}
@@ -245,14 +270,25 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 				
 		for (int z=0; z<Spiel.getSpielfeldZeilen(); z++) {
 			for (int sp=0; sp<Spiel.getSpielfeldSpalten(); sp++) {
+				// Erzeugen der Felder und Eigenschaften setzen
 				Felder[z][sp] = new Feld();
 				Felder[z][sp].setMargin(new Insets(0, 0, 0, 0));
-				panSpielfeld.add(Felder[z][sp]);
+
+				// Eigenschaften-Anordnung für das GridBagLayout
+				gbc.gridx = sp;
+				gbc.gridy = z;
+				gbc.insets = new Insets(1,1,1,1);
+				gbc.gridwidth = gbc.gridheight = 1;
+				gbc.fill = GridBagConstraints.BOTH;
+				gbc.anchor = GridBagConstraints.NORTHWEST;
+				gbc.weightx = feldWidth;
+				gbc.weighty = feldHeight;
+				
+				panSpielfeld.add(Felder[z][sp], gbc);
 			}
 		}
 
 		gui_Spielfeld.getContentPane().add(panSpielfeld, BorderLayout.CENTER);
-		pack();
 	}
 	
 	
@@ -340,7 +376,10 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 		
 		// Linksklick Menüleiste
 		if (object.getSource() == btn_SpielNeustart) {
-			spielNochmal();
+			//spielNochmal();
+			Spiel.createSpiel();
+			resetSpielfeldStatusToFeld();
+			setSpielfeldStatusZuFeld();
 		}
 		if (object.getSource() == btn_SpielerProfil) {
 			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
@@ -363,6 +402,15 @@ public class GUI_Spielfeld extends JFrame implements ActionListener {
 			gui_SpielEnde.dispose();
 			GUI_Start frame = new GUI_Start();
 		}			
+	}
+
+	private void resetSpielfeldStatusToFeld() {
+		for (int z=0; z<Spiel.getSpielfeldZeilen(); z++) {
+			for (int sp=0; sp<Spiel.getSpielfeldSpalten(); sp++) {
+				Felder[z][sp].setText(null);
+				Felder[z][sp].setIcon(null);
+			}
+		}
 	}
 	
 	private static void spielNochmal() {
