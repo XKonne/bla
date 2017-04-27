@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.WindowConstants;
 
+@SuppressWarnings("serial")
 public class GUI_SpielModusBenutzer extends JFrame implements ActionListener {	
 	
 	// Objekte

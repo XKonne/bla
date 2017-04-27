@@ -6,7 +6,6 @@ package bla;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 
 /**
@@ -19,7 +18,7 @@ import javax.swing.event.*;
   * 
   */
 
-
+@SuppressWarnings("serial")
 public class TestAlpha extends JFrame {
   // Anfang Attribute
 	
@@ -806,7 +805,6 @@ public class TestAlpha extends JFrame {
 
   
   public void ButtonSpielNeustart_ActionPerformed(ActionEvent evt) {
-    // TODO hier Quelltext einfügen
 	  // Spielfeld Oberflaeche zu beginn
 	    MFeld1.setText(".");
 	    MFeld2.setText(".");
@@ -890,7 +888,6 @@ public class TestAlpha extends JFrame {
 	  } // end of jButton1_ActionPerformed  
   
   public void ButtonResetSpielfeld_ActionPerformed(ActionEvent evt) {
-	    // TODO hier Quelltext einfügen
 	    // Spielfeld Oberflaeche zu beginn
 	    MFeld1.setText(".");
 	    MFeld2.setText(".");

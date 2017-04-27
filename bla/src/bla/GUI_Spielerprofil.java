@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class GUI_Spielerprofil extends JFrame implements ActionListener {
 	// Objekte
 	private Spieler spieler;

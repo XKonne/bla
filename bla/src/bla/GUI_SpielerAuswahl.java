@@ -10,7 +10,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.*;
 
-
+@SuppressWarnings("serial")
 public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	// Objekte
 	private Spieler spielerA;
@@ -42,7 +42,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 	private JLabel lab_NeuerSpieler = new JLabel();
 	
 	// List
-	private JList lis_Spieler = new JList();
+//	private JList<String> lis_Spieler = new JList<String>();
 	
 	// Textfelder
 	private JTextField txt_SpielerNameEingabe = new JTextField();
@@ -78,7 +78,7 @@ public class GUI_SpielerAuswahl extends JFrame implements ActionListener {
 
 	private void createJList() {
 		
-        JList lis_Spieler = new JList(arr_SpielerListe);
+        JList<String> lis_Spieler = new JList<String>(arr_SpielerListe);
 	    lis_Spieler.setBounds(10, 30, 120, 145);
 	    lis_Spieler.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    cp3.add(lis_Spieler);

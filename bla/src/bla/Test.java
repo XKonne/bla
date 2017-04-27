@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder;
  * @author p0sE-Git
  */
 
+@SuppressWarnings("serial")
 public class Test extends JFrame implements ActionListener {
 
 	// Objekte

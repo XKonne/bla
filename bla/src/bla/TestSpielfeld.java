@@ -12,7 +12,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-
+@SuppressWarnings("serial")
 public class TestSpielfeld extends JFrame implements ActionListener {
 	
 	public int zeilen=4+2; 

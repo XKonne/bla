@@ -1,9 +1,7 @@
 package bla;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JButton;
 
 public class MouseInput implements MouseListener {
 
@@ -32,8 +30,8 @@ public class MouseInput implements MouseListener {
 
 		if (test.Spielfeldgesperrt == false) {
 			if (e.getButton() == MouseEvent.BUTTON1 && test.Spielfeldgeklickt[buttonnummer] != 5) {
-				test.setText(buttonnummer, test.a_btnText[buttonnummer]);
-				test.setDisabled(buttonnummer);
+				Test.setText(buttonnummer, test.a_btnText[buttonnummer]);
+				Test.setDisabled(buttonnummer);
 				if (test.Spielfeldgeklickt[buttonnummer] == 2) {
 					spiel.countMinenMarkierung(1);
 				}
@@ -41,27 +39,27 @@ public class MouseInput implements MouseListener {
 //					test.mineAufgedeckt();
 					test.aufSiegpruefen(true);
 				}
-				test.setSpielfeldgeklickt(buttonnummer, 5);
+				Test.setSpielfeldgeklickt(buttonnummer, 5);
 			}
 
 			if (e.getButton() == MouseEvent.BUTTON3 && test.Spielfeldgeklickt[buttonnummer] != 5) {
 
 				if (test.Spielfeldgeklickt[buttonnummer] == 0) {
-					test.setText(buttonnummer, "*");
+					Test.setText(buttonnummer, "*");
 					if (test.Spielfeldgeklickt[buttonnummer] != 2) {
 						if (test.a_btnText[buttonnummer] == ("M")) {
 							spiel.countMineRichtig(1);
 						}
 						spiel.countMinenMarkierung(-1);
 					}
-					test.setSpielfeldgeklickt(buttonnummer, 2);
+					Test.setSpielfeldgeklickt(buttonnummer, 2);
 				} else {
-					test.setText(buttonnummer, ".");
+					Test.setText(buttonnummer, ".");
 					if (test.a_btnText[buttonnummer] == ("M")) {
 						spiel.countMineRichtig(-1);
 					}
 					spiel.countMinenMarkierung(1);
-					test.setSpielfeldgeklickt(buttonnummer, 0);
+					Test.setSpielfeldgeklickt(buttonnummer, 0);
 				}
 			}
 
@@ -71,7 +69,6 @@ public class MouseInput implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 	public static void setupMouseInput(Spiel spiel, Test test) {

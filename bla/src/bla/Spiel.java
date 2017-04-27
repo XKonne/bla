@@ -31,9 +31,7 @@ public class Spiel {
 	public static int [][] spielfeld = new int [anzahlZeilen][anzahlSpalten];
 	public static int[][] spielfeldGeklickt = new int [anzahlZeilen][anzahlSpalten];
 
-	public Spiel() {
-	}
-	
+
 	public static void main(String[] args) {
 		GUI_Start neu = new GUI_Start();
 	}
@@ -45,7 +43,7 @@ public class Spiel {
 	 * @param i
 	 *            Integer, der die Änderung beinhaltet
 	 */
-	public void countMinenMarkierung(int i) {
+	public static void countMinenMarkierung(int i) {
 		restMinen += i;
 	}
 
@@ -55,7 +53,7 @@ public class Spiel {
 	 * @param i
 	 *            Integer, der die Änderung beinhaltet
 	 */
-	public void countMineRichtig(int i) {
+	public static void countMineRichtig(int i) {
 		minenRichtig += i;
 	}
 

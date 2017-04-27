@@ -7,7 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.*;
 import javax.swing.*;
 
-
+@SuppressWarnings("serial")
 public class GUI_Start extends JFrame implements ActionListener {
 	// Objekte
 	private static Spieler spielerEins = new Spieler();
@@ -71,8 +71,10 @@ public class GUI_Start extends JFrame implements ActionListener {
 	
 	
 	private void addMenubar() {
-		JMenuBar menubar = new GUI_AddMenubar();
-		gui_Start.setJMenuBar(menubar);
+//		JMenuBar menubar = new GUI_AddMenubar();
+//		gui_Start.setJMenuBar(menubar);
+		ObjectHandler.createGui_AddMenubar();
+		gui_Start.setJMenuBar(ObjectHandler.getGui_AddMenubar());
 	}
 
 	private void createLabels() {
