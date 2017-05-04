@@ -136,7 +136,7 @@ public class GUI_Spielerprofil extends JFrame {
 	
 	
 
-	public void setLabelText() {
+	private void setLabelText() {
 
 		Spieler spieler = ObjectHandler.getSpieler();
 

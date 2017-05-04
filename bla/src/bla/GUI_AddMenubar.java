@@ -1,5 +1,7 @@
 package bla;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -11,8 +13,7 @@ public class GUI_AddMenubar extends JMenuBar {
 	
 	public void neueRunde() {
 		// TODO folgender Befehl geht nicht weil nicht static.
-//		 Spiel.createSpiel();
-//		 GUI_Spielfeld.setSpielfeldStatusZuFeld();
+		 ObjectHandler.getGui_Spielfeld().spielNeustart();
 	}
 
 	private void setupGUI() {
@@ -32,10 +33,9 @@ public class GUI_AddMenubar extends JMenuBar {
 		// Menu > Spiel
 		jm_Spiel = new JMenu("Spiel");
 		// "S" unterstreichen
-		// jm_Spiel.setMnemonic(KeyEvent.VK_S);
+		 jm_Spiel.setMnemonic(KeyEvent.VK_S);
 		// Info
-		// jm_Spiel.getAccessibleContext().setAccessibleDescription("Bla bla
-		// blu");
+		 jm_Spiel.getAccessibleContext().setAccessibleDescription("Bla blablu");
 		this.add(jm_Spiel);
 
 		// Menu > Spiel > Sub
@@ -51,7 +51,7 @@ public class GUI_AddMenubar extends JMenuBar {
 		jmi_akt_nochmalSpielen.setEnabled(false);
 		jm_AktuellesSpiel.add(jmi_akt_nochmalSpielen);
 		jmi_akt_neueRunde = new JMenuItem("Neue Runde");
-		jmi_akt_neueRunde.setEnabled(false);
+		jmi_akt_neueRunde.setEnabled(true);
 		jm_AktuellesSpiel.add(jmi_akt_neueRunde);
 		jmi_akt_neueRunde.addActionListener(e -> neueRunde());
 

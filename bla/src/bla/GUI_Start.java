@@ -45,7 +45,7 @@ public class GUI_Start extends JFrame {
 	public static void aktiviereGUI_Start() {
 
 		lab_SpielerName.setVisible(true);
-		lab_SpielerName.setText(spieler.getSpielerName());
+		lab_SpielerName.setText(ObjectHandler.getSpieler().getSpielerName());
 		btn_SpielerProfil.setEnabled(true);
 		btn_SpielerProfil.setVisible(true);
 

@@ -106,8 +106,8 @@ public class Test extends JFrame {
 			buttons[i].setMargin(new Insets(2, 2, 2, 2));
 			buttons[i].setEnabled(false);
 
-			MouseInput mouse = new MouseInput(i);
-			buttons[i].addMouseListener(mouse);
+//			MouseInput mouse = new MouseInput(i);
+//			buttons[i].addMouseListener(mouse);
 
 			cp.add(buttons[i]);
 

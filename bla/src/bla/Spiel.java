@@ -5,7 +5,6 @@ import java.util.Random;
 public class Spiel {
 
 	// Variablen
-	// Boolean
 
 	// Integer
 	private static int minenGesamt = 3;
@@ -34,7 +33,7 @@ public class Spiel {
 
 	}
 
-	public void aufSiegpruefen(boolean mineGetroffen) {
+	public static void aufSiegpruefen(boolean mineGetroffen) {
 		// boolean winlose = false;
 		// // aufSiegpruefen wird nach _jedem_ Mausklick ausgeführt.
 		//
@@ -89,6 +88,7 @@ public class Spiel {
 	public static void createSpiel() {
 
 		// Erstellt eine neue Spiel-Runde
+		initSpielfeldGeklickt();
 		initSpielfeldStatus();
 		setSpielfeldMinen();
 		setSpielfeldZahlen();
@@ -131,13 +131,25 @@ public class Spiel {
 		return Integer.toString(anzahlZeilen) + "x" + Integer.toString(anzahlSpalten) + " " + spielModus;
 	}
 
-	// TODO muss an ein 2dim Array (schon deklariert) angepasst werden
-	public static void setSpielfeldgeklickt(int i, int j) {
-		// Spielfeldgeklickt[i] = j;
+
+	public static void setSpielfeldgeklickt(int zeile, int spalte, int wert) {
+		spielfeldGeklickt[zeile][spalte] = wert;
 	}
 
 	public static Integer getSpielfeldStatus(int zeile, int spalte) {
 		return spielfeld[zeile][spalte];
+	}
+	
+	private static void initSpielfeldGeklickt() {
+
+		// Spielfeldstatus ist um 2 Einheiten größer als das angezeigte
+		// Spielfeld
+		// Zu beginn ist das Spielfeld leer (Wert: 0)
+		for (int i = 0; i < anzahlZeilen; i++) {
+			for (int j = 0; j < anzahlSpalten; j++) {
+				spielfeldGeklickt[i][j] = 0;
+			}
+		}
 	}
 
 	private static void initSpielfeldStatus() {

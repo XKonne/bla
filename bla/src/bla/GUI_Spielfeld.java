@@ -20,7 +20,7 @@ public class GUI_Spielfeld extends JFrame {
 
 	// Variablen
 	// Boolean
-	static boolean Spielfeldgesperrt = true;
+	static boolean Spielfeldgesperrt = false;
 
 	// Integer
 	private int frameHeight = 0;
@@ -139,6 +139,9 @@ public class GUI_Spielfeld extends JFrame {
 				// Erzeugen der Felder und Eigenschaften setzen
 				Felder[z][sp] = new Feld();
 				Felder[z][sp].setMargin(new Insets(0, 0, 0, 0));
+				
+				MouseInput mouse = new MouseInput(z, sp);
+				Felder[z][sp].addMouseListener(mouse);
 
 				// Eigenschaften-Anordnung für das GridBagLayout
 				gbc.gridx = sp;
@@ -290,7 +293,12 @@ public class GUI_Spielfeld extends JFrame {
 
 	public void neueRunde() {
 		createSpielfeldFeld();
-		setSpielfeldStatusZuFeld();
+		setSpielfeldStatusVerdeckt();
+	}
+	
+	public static void refreshLabels() {
+		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
+		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
 	}
 
 	private void resetSpielfeldStatusToFeld() {
@@ -302,42 +310,11 @@ public class GUI_Spielfeld extends JFrame {
 		}
 	}
 
-	public void setSpielfeldStatusZuFeld() {
-
-		for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
-			for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
-				switch (Spiel.getSpielfeldStatus(z + 1, sp + 1)) {
-				case -1:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
-					break;
-				case 0:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif")));
-					break;
-				case 1:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif")));
-					break;
-				case 2:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif")));
-					break;
-				case 3:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif")));
-					break;
-				case 4:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif")));
-					break;
-				case 5:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif")));
-					break;
-				case 6:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif")));
-					break;
-				case 7:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif")));
-					break;
-				case 8:
-					Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif")));
-					break;
-				}
+	public void setSpielfeldStatusVerdeckt () {
+		
+		for (int z=0; z<Spiel.getSpielfeldZeilen(); z++) {
+			for (int sp=0; sp<Spiel.getSpielfeldSpalten(); sp++) {
+				Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
 			}
 		}
 	}
@@ -367,7 +344,7 @@ public class GUI_Spielfeld extends JFrame {
 	private void spielNeueRunde() {
 
 		Spiel.createSpiel();
-		setSpielfeldStatusZuFeld();
+		setSpielfeldStatusVerdeckt();
 		closeGUI_SpielEnde();
 
 	}
@@ -379,12 +356,13 @@ public class GUI_Spielfeld extends JFrame {
 
 	}
 
-	private void spielNeustart() {
+	public void spielNeustart() {
 
 		// spielNochmal();
 		Spiel.createSpiel();
+		
 		resetSpielfeldStatusToFeld();
-		setSpielfeldStatusZuFeld();
+		setSpielfeldStatusVerdeckt();
 
 	}
 
@@ -442,5 +420,5 @@ public class GUI_Spielfeld extends JFrame {
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
 		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
 	}
-
+	
 }
