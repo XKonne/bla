@@ -1,161 +1,122 @@
 package bla;
 
-import java.awt.event.*;
 import javax.swing.*;
 
-
-public class GUI_AddMenubar extends JMenuBar implements ActionListener {
-	
-	JMenu spiel, aktuellesSpiel, spieler, hilfe;
-	JMenuItem neuesSpiel, akt_nochmalSpielen, akt_neueRunde, spielSpeichern, spielLaden, spielEinstellung, beenden;
-	JMenuItem profil, optionen;
-	JMenuItem anleitung, ueber;
-	
-	JSeparator sep1 = new JSeparator();
-	JSeparator sep2 = new JSeparator();
-	JSeparator sep3 = new JSeparator();
-	JSeparator sep4 = new JSeparator();
-	JSeparator sep5 = new JSeparator();
+@SuppressWarnings("serial")
+public class GUI_AddMenubar extends JMenuBar {
 
 	public GUI_AddMenubar() {
-		super();
-				
-		// Menu > Spiel
-		spiel = new JMenu("Spiel");
-		// "S" unterstreichen
-		//spiel.setMnemonic(KeyEvent.VK_S);
-		// Info
-		//spiel.getAccessibleContext().setAccessibleDescription("Bla bla blu");
-		this.add(spiel);
-		
-		// Menu > Spiel > Sub
-		neuesSpiel = new JMenuItem("Neues Spiel");
-		neuesSpiel.setEnabled(false);
-		spiel.add(neuesSpiel);
-		neuesSpiel.addActionListener(this);
-		
-		spiel.add(sep1);
-		
-		aktuellesSpiel  = new JMenu("Aktuelles Spiel");
-		spiel.add(aktuellesSpiel);
-		// Menu > Spiel > Aktuelles Spiel > Sub
-			akt_nochmalSpielen  = new JMenuItem("Nochmal spielen");
-			akt_nochmalSpielen.setEnabled(false);
-			aktuellesSpiel.add(akt_nochmalSpielen);
-			akt_nochmalSpielen.addActionListener(this);
-			akt_neueRunde  = new JMenuItem("Neue Runde");
-			akt_neueRunde.setEnabled(false);
-			aktuellesSpiel.add(akt_neueRunde);
-			akt_neueRunde.addActionListener(this);
-		
-		spiel.add(sep2);
-		
-		spielLaden = new JMenuItem("Spiel laden");
-		spielLaden.setEnabled(false);
-		spiel.add(spielLaden);
-		spielLaden.addActionListener(this);
-		spielSpeichern = new JMenuItem("Spiel speichern");
-		spielSpeichern.setEnabled(false);
-		spiel.add(spielSpeichern);
-		spielSpeichern.addActionListener(this);
-		
-		spiel.add(sep3);
-		
-		spielEinstellung = new JMenuItem("Einstellungen");
-		spielEinstellung.setEnabled(false);
-		spiel.add(spielEinstellung);
-		spielEinstellung.addActionListener(this);
-		
-		spiel.add(sep4);
-		
-		beenden = new JMenuItem("Beenden");
-		spiel.add(beenden);
-		beenden.addActionListener(this);
-//		
-////		// Menüitem
-////		close = new JMenuItem("Beenden", KeyEvent.VK_B);
-////		// Darstellung Tastenkürzel
-////		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
-////		close.getAccessibleContext().setAccessibleDescription("Beende");
-////		spiel.add(close);
-//		
-		// Menu > Spieler
-		spieler = new JMenu("Spieler");
-		//spieler.setMnemonic(KeyEvent.VK_HELP);
-		//spieler.getAccessibleContext().setAccessibleDescription("Nicht implementiert!");
-		this.add(spieler);
-		
-		// Menu > Spieler > Sub
-		profil = new JMenuItem("Profil");
-		profil.setEnabled(false);
-		spieler.add(profil);
-		profil.addActionListener(this);
-		optionen  = new JMenuItem("Optionen");
-		optionen.setEnabled(false);
-		spieler.add(optionen);
-		optionen.addActionListener(this);
-		
-		// Menu > Hilfe
-		hilfe = new JMenu("Hilfe");
-		//hilfe.setMnemonic(KeyEvent.VK_HELP);
-		//hilfe.getAccessibleContext().setAccessibleDescription("Nicht implementiert!");
-		this.add(hilfe);
-		
-		// Menu > Hilfe > Sub
-		anleitung = new JMenuItem("Anleitung");
-		anleitung.setEnabled(false);
-		hilfe.add(anleitung);
-		anleitung.addActionListener(this);
-		
-		hilfe.add(sep5);
-		
-		ueber  = new JMenuItem("Über");
-		hilfe.add(ueber);
-		ueber.addActionListener(this);
+		setupGUI();
 	}
 	
-	public void actionPerformed(ActionEvent object) {
+	public void neueRunde() {
+		// TODO folgender Befehl geht nicht weil nicht static.
+//		 Spiel.createSpiel();
+//		 GUI_Spielfeld.setSpielfeldStatusZuFeld();
+	}
+
+	private void setupGUI() {
 		
-		if (object.getSource() == neuesSpiel) {
-			// do nothing
-		}
-		if (object.getSource() == akt_nochmalSpielen) {
-			// do nothing
-		}
-		if (object.getSource() == akt_neueRunde) {
-			//TODO folgender Befehl geht nicht weil nicht static.
-//			Spiel.createSpiel();
-//			GUI_Spielfeld.setSpielfeldStatusZuFeld();
-		}
-		if (object.getSource() == spielLaden) {
-			// do nothing
-		}
-		if (object.getSource() == spielSpeichern) {
-			// do nothing
-		}
-		if (object.getSource() == spielEinstellung) {
-			// do nothing
-		}
-		if (object.getSource() == beenden) {
-			System.exit(0);
-		}
-		
-		// Spieler
-		if (object.getSource() == profil) {
-			// do nothing
-		}
-		if (object.getSource() == optionen) {
-			// do nothing
-		}
-		
-		// Hilfe
-		if (object.getSource() == anleitung) {
-			// do nothing
-		}
-		if (object.getSource() == ueber) {
-			JOptionPane.showMessageDialog(null, "Version: " + GUI_Spielfeld.versiont);
-		}
+		JMenu jm_Spiel, jm_AktuellesSpiel, jm_Spieler, jm_Hilfe;
+		JMenuItem jmi_neuesSpiel, jmi_akt_nochmalSpielen, jmi_akt_neueRunde, jmi_spielSpeichern, jmi_spielLaden,
+				jmi_spielEinstellung, jmi_beenden;
+		JMenuItem jmi_profil, jmi_optionen;
+		JMenuItem jmi_anleitung, jmi_ueber;
+
+		JSeparator sep1 = new JSeparator();
+		JSeparator sep2 = new JSeparator();
+		JSeparator sep3 = new JSeparator();
+		JSeparator sep4 = new JSeparator();
+		JSeparator sep5 = new JSeparator();
+
+		// Menu > Spiel
+		jm_Spiel = new JMenu("Spiel");
+		// "S" unterstreichen
+		// jm_Spiel.setMnemonic(KeyEvent.VK_S);
+		// Info
+		// jm_Spiel.getAccessibleContext().setAccessibleDescription("Bla bla
+		// blu");
+		this.add(jm_Spiel);
+
+		// Menu > Spiel > Sub
+		jmi_neuesSpiel = new JMenuItem("Neues Spiel");
+		jmi_neuesSpiel.setEnabled(false);
+		jm_Spiel.add(jmi_neuesSpiel);
+		jm_Spiel.add(sep1);
+
+		jm_AktuellesSpiel = new JMenu("Aktuelles Spiel");
+		jm_Spiel.add(jm_AktuellesSpiel);
+		// Menu > Spiel > Aktuelles Spiel > Sub
+		jmi_akt_nochmalSpielen = new JMenuItem("Nochmal spielen");
+		jmi_akt_nochmalSpielen.setEnabled(false);
+		jm_AktuellesSpiel.add(jmi_akt_nochmalSpielen);
+		jmi_akt_neueRunde = new JMenuItem("Neue Runde");
+		jmi_akt_neueRunde.setEnabled(false);
+		jm_AktuellesSpiel.add(jmi_akt_neueRunde);
+		jmi_akt_neueRunde.addActionListener(e -> neueRunde());
+
+		jm_Spiel.add(sep2);
+
+		jmi_spielLaden = new JMenuItem("Spiel laden");
+		jmi_spielLaden.setEnabled(false);
+		jm_Spiel.add(jmi_spielLaden);
+		jmi_spielSpeichern = new JMenuItem("Spiel speichern");
+		jmi_spielSpeichern.setEnabled(false);
+		jm_Spiel.add(jmi_spielSpeichern);
+
+		jm_Spiel.add(sep3);
+
+		jmi_spielEinstellung = new JMenuItem("Einstellungen");
+		jmi_spielEinstellung.setEnabled(false);
+		jm_Spiel.add(jmi_spielEinstellung);
+
+		jm_Spiel.add(sep4);
+
+		jmi_beenden = new JMenuItem("Beenden");
+		jm_Spiel.add(jmi_beenden);
+		jmi_beenden.addActionListener(e -> System.exit(0));
+		//
+		//// // Menüitem
+		//// close = new JMenuItem("Beenden", KeyEvent.VK_B);
+		//// // Darstellung Tastenkürzel
+		//// close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
+		// ActionEvent.ALT_MASK));
+		//// close.getAccessibleContext().setAccessibleDescription("Beende");
+		//// spiel.add(close);
+		//
+		// Menu > Spieler
+		jm_Spieler = new JMenu("Spieler");
+		// spieler.setMnemonic(KeyEvent.VK_HELP);
+		// spieler.getAccessibleContext().setAccessibleDescription("Nicht
+		// implementiert!");
+		this.add(jm_Spieler);
+
+		// Menu > Spieler > Sub
+		jmi_profil = new JMenuItem("Profil");
+		jmi_profil.setEnabled(false);
+		jm_Spieler.add(jmi_profil);
+		jmi_optionen = new JMenuItem("Optionen");
+		jmi_optionen.setEnabled(false);
+		jm_Spieler.add(jmi_optionen);
+
+		// Menu > Hilfe
+		jm_Hilfe = new JMenu("Hilfe");
+		// hilfe.setMnemonic(KeyEvent.VK_HELP);
+		// hilfe.getAccessibleContext().setAccessibleDescription("Nicht
+		// implementiert!");
+		this.add(jm_Hilfe);
+
+		// Menu > Hilfe > Sub
+		jmi_anleitung = new JMenuItem("Anleitung");
+		jmi_anleitung.setEnabled(false);
+		jm_Hilfe.add(jmi_anleitung);
+
+		jm_Hilfe.add(sep5);
+
+		jmi_ueber = new JMenuItem("Über");
+		jm_Hilfe.add(jmi_ueber);
+		jmi_ueber.addActionListener(e -> JOptionPane.showMessageDialog(null, "Version: " + GUI_Spielfeld.versiont));
+
 	}
 
 }
-

@@ -8,7 +8,6 @@ public class Spieler {
 	private Double spieleGewonnen;
 	private Double spieleGewonnenProzent;
 	private int minenGefunden;
-	private int profilBild;
 	private int spielerSiegesserie;
 	private long zeitGesamt;
 	private long zeitLetztesSpiel;
@@ -33,7 +32,6 @@ public class Spieler {
 		zeitGesamt = 0;
 		zeitLetztesSpiel = 0;
 		zeitSchnellsterSieg = 0;
-		profilBild = 0;
 		spielerSiegesserie = 0;
 	}
 

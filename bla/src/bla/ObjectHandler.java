@@ -1,12 +1,8 @@
 package bla;
 
-import java.util.ArrayList;
-
 public abstract class ObjectHandler {
 	
-//	private static Spiel spiel = new Spiel();
-	
-	private static ArrayList<Spieler> spielerList = new ArrayList<Spieler>();
+	private static Spiel spiel;
 	private static Spieler spieler;
 	private static GUI_AddMenubar gui_AddMenubar;
 	private static GUI_SpielerAuswahl gui_SpielerAuswahl;
@@ -20,23 +16,27 @@ public static void createGui_AddMenubar() {
 }
 
 public static void createGui_SpielerAuswahl() {
-//	ObjectHandler.gui_SpielerAuswahl = new GUI_SpielerAuswahl();
+	ObjectHandler.gui_SpielerAuswahl = new GUI_SpielerAuswahl();
 }
 
 public static void createGui_Spielerprofil() {
-//	ObjectHandler.gui_Spielerprofil = new GUI_Spielerprofil();
+	ObjectHandler.gui_Spielerprofil = new GUI_Spielerprofil();
 }
 
 public static void createGui_Spielfeld() {
-//	ObjectHandler.gui_Spielfeld = new GUI_Spielfeld();
+	ObjectHandler.gui_Spielfeld = new GUI_Spielfeld();
 }
 
 public static void createGui_SpielModusBenutzer() {
-//	ObjectHandler.gui_SpielModusBenutzer = new GUI_SpielModusBenutzer();
+	ObjectHandler.gui_SpielModusBenutzer = new GUI_SpielModusBenutzer();
 }
 
 public static void createGui_Start() {
 	ObjectHandler.gui_Start = new GUI_Start();
+}
+
+public static void createSpiel() {
+	ObjectHandler.spiel = new Spiel();
 }
 
 public static void createSpieler() {
@@ -67,14 +67,44 @@ public static GUI_Start getGui_Start() {
 	return gui_Start;
 }
 
+public static Spiel getSpiel() {
+	return spiel;
+}
+
 public static Spieler getSpieler() {
 	return spieler;
 }
 
-public ObjectHandler() {
-	
-	spielerList.add(spieler);
-	
+public static void setSpiel(Spiel spiel) {
+	ObjectHandler.spiel = spiel;
+}
+
+public static void setSpieler(Spieler spieler) {
+	ObjectHandler.spieler = spieler;
+}
+
+public static void setGui_AddMenubar(GUI_AddMenubar gui_AddMenubar) {
+	ObjectHandler.gui_AddMenubar = gui_AddMenubar;
+}
+
+public static void setGui_SpielerAuswahl(GUI_SpielerAuswahl gui_SpielerAuswahl) {
+	ObjectHandler.gui_SpielerAuswahl = gui_SpielerAuswahl;
+}
+
+public static void setGui_Spielerprofil(GUI_Spielerprofil gui_Spielerprofil) {
+	ObjectHandler.gui_Spielerprofil = gui_Spielerprofil;
+}
+
+public static void setGui_Spielfeld(GUI_Spielfeld gui_Spielfeld) {
+	ObjectHandler.gui_Spielfeld = gui_Spielfeld;
+}
+
+public static void setGui_SpielModusBenutzer(GUI_SpielModusBenutzer gui_SpielModusBenutzer) {
+	ObjectHandler.gui_SpielModusBenutzer = gui_SpielModusBenutzer;
+}
+
+public static void setGui_Start(GUI_Start gui_Start) {
+	ObjectHandler.gui_Start = gui_Start;
 }
 
 

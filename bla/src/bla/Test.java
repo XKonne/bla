@@ -1,7 +1,6 @@
 package bla;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -15,7 +14,7 @@ import javax.swing.border.LineBorder;
  */
 
 @SuppressWarnings("serial")
-public class Test extends JFrame implements ActionListener {
+public class Test extends JFrame {
 
 	// Objekte
 	private static Spiel spiel;
@@ -88,40 +87,12 @@ public class Test extends JFrame implements ActionListener {
 
 	public Test(Spiel spiel, Spieler spieler) {
 
-		super();
-		Test.spiel = spiel;
-		spielerT = spieler;
+		Test.spiel = ObjectHandler.getSpiel();
+		spielerT = ObjectHandler.getSpieler();
 		
 		setupGUI();
 		
-		spielStart();
-	}
-
-	// !!! Übernommen in GUI_Spielfeld
-	private void spielStart() {
-		
-//			// Spielfeld aktivieren
-//			setSpielfeldAnAus(true);
-//			Spielfeldgesperrt = false;
-//
-//			btn_SpielerProfil.setVisible(true);
-//
-//			zeittmp = Spiel.zeitmessungStart();
-//			
-//			// Spielfeldgeklickt Array initialisieren
-//			for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-//				Spielfeldgeklickt[i] = 0;
-//			}
-//			
-//			// Labels Text setzen
-//			lab_SpielerName.setText(spielerT.getSpielerName());
-//			spiel.setRestMinen(spiel.getMinenGesamt());
-//			lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-//			spiel.setMinenRichtig(0);
-//			lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-//			lab_SpielModus.setText("Modus: "+Spiel.getSpielModus());
-//			
-//			repaint();
+//		spielStart();
 	}
 
 	// !!! Überlfüssig, da Felder erzeugen eine neue Routine ist
@@ -433,59 +404,4 @@ public class Test extends JFrame implements ActionListener {
 //	}
 	}
 	
-	// !!! Übernommen nach GUI_Spielfeld
-	// Spielfeld-Buttons Linksklick
-	public void actionPerformed(ActionEvent object) {
-		
-//		// Linksklick Menüleiste
-//		if (object.getSource() == btn_SpielNeustart) {
-//			spielNochmal();
-//		}
-//		if (object.getSource() == btn_SpielerProfil) {
-//			GUI_Spielerprofil profil = new GUI_Spielerprofil(spielerT);
-//		}
-//		
-//		// GUI_SpielEnde
-//		if (object.getSource() == btn_SpielZurueck) {
-//			gui_SpielEnde.dispose();
-//		}
-//		if (object.getSource() == btn_SpielNochmal) {
-//			spielNochmal();
-//			gui_SpielEnde.dispose();
-//		}
-//		if (object.getSource() == btn_SpielNeueRunde) {
-//			//TODO
-//			gui_SpielEnde.dispose();
-//		}
-//		if (object.getSource() == btn_SpielNeues) {
-//			//TODO
-//			gui_SpielEnde.dispose();
-//		}			
-	}
-	
-	// !!! Übernommen nach GUI_Spielfeld
-	private void spielNochmal() {
-		// Spielfeld-Buttons auf Anfangswert
-//		for (int i = 0; i < buttons.length; i++) {
-//			buttons[i].setText(".");
-//		}
-//
-//		// Spielfeld aktivieren
-//		setSpielfeldAnAus(true);
-//		Spielfeldgesperrt = false;
-//
-//		// Spielfeldgeklickt Array zurücksetzen
-//		for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-//			Spielfeldgeklickt[i] = 0;
-//		}
-//		//Zurücksetzen der Minen
-//		spiel.setRestMinen(spiel.getMinenGesamt());
-//		lab_Restminen.setText("Minen: " + Integer.toString(spiel.getRestMinen()));
-//		spiel.setMinenRichtig(0);
-//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(spiel.getMinenRichtig()));
-//
-//		// Zeiterfassung starten
-//		zeittmp = Spiel.zeitmessungStart();
-	}
-
-} // end of class Test
+}
