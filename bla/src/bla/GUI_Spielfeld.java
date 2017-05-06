@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
 
-	static String versiont = "A.3.11";
+	static String versiont = "A.3.13";
 
 	// Frame-Containe-Panel
 	private JFrame gui_SpielEnde = new JFrame();
@@ -35,10 +35,17 @@ public class GUI_Spielfeld extends JFrame {
 	// GUI-Elemente
 	// Labels - guiSpielfeld
 	private JLabel lab_SpielerName = new JLabel();
-	private JLabel lab_SpielModus = new JLabel();
+	private static JLabel lab_SpielModus = new JLabel();
 
 	private static JLabel lab_MinenRichtig = new JLabel();
 	private static JLabel lab_Restminen = new JLabel();
+	
+	// GUI - SpielEnde
+	JLabel lab_SpielEndeInformation = new JLabel();
+	JButton btn_SpielZurueck = new JButton();
+	JButton btn_SpielNochmal = new JButton();
+	JButton btn_SpielNeueRunde = new JButton();
+	JButton btn_SpielNeues = new JButton();
 
 	// Arrays
 	static Feld[][] Felder = new Feld[Spiel.getSpielfeldZeilen()][Spiel.getSpielfeldSpalten()];
@@ -73,11 +80,11 @@ public class GUI_Spielfeld extends JFrame {
 		btn_SpielerProfil.addActionListener(e -> ObjectHandler.createGui_Spielerprofil());
 
 		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
-		btn_SpielNeustart.setToolTipText("Debug: Genieriert derzeit eine neue Runde");
+		btn_SpielNeustart.setToolTipText("Startet aktuelle Runde neu.");
 		btn_SpielNeustart.setBounds(this.getWidth() - 60, 5, 40, 40);
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		cpTop.add(btn_SpielNeustart);
-		btn_SpielNeustart.addActionListener(e -> spielNeustart());
+		btn_SpielNeustart.addActionListener(e -> spielNochmal());
 
 		// Button-Rahmen für später nützlich
 
@@ -160,11 +167,7 @@ public class GUI_Spielfeld extends JFrame {
 		this.getContentPane().add(panSpielfeld, BorderLayout.CENTER);
 	}
 
-	private void GUI_SpielEnde(boolean mineGetroffen) { // Sieg-Niederlage Frame
-
-		// Lokale Variablen
-		JLabel lab_SpielEndeInformation = new JLabel();
-		String siegNiederlage = "";
+	public void GUI_SpielEnde(String SiegNiederlage) { // SpielEnde: Sieg-Niederlage Frame
 
 		// Frame-Initialisierung
 		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -176,52 +179,44 @@ public class GUI_Spielfeld extends JFrame {
 		gui_SpielEnde.setTitle("Spielende");
 		gui_SpielEnde.setResizable(false);
 		Container cpGUI_SpielEnde = gui_SpielEnde.getContentPane();
-		// Container cp2 = getContentPane();
 		cpGUI_SpielEnde.setLayout(null);
 
 		// Frame-Elemente
 		// Buttons
-		JButton btn_SpielZurueck = new JButton();
-		JButton btn_SpielNochmal = new JButton();
-		JButton btn_SpielNeueRunde = new JButton();
-		JButton btn_SpielNeues = new JButton();
-
 		btn_SpielZurueck.setBounds(10, 100, 80, 30);
 		btn_SpielZurueck.setText("Zurück");
 		btn_SpielZurueck.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielZurueck.setToolTipText("Kehr zum Spielfeld zurück.");
 		cpGUI_SpielEnde.add(btn_SpielZurueck);
 		btn_SpielZurueck.addActionListener(e -> closeGUI_SpielEnde());
 
 		btn_SpielNochmal.setBounds(100, 100, 80, 30);
 		btn_SpielNochmal.setText("Nochmal");
 		btn_SpielNochmal.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNochmal.setToolTipText("Startet die aktuelle Runde neu.");
 		cpGUI_SpielEnde.add(btn_SpielNochmal);
 		btn_SpielNochmal.addActionListener(e -> spielNochmal());
 
 		btn_SpielNeueRunde.setBounds(190, 100, 80, 30);
 		btn_SpielNeueRunde.setText("Neue Runde");
 		btn_SpielNeueRunde.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeueRunde.setToolTipText("Generiert im aktuellen Spielmodus eine neue Runde.");
 		cpGUI_SpielEnde.add(btn_SpielNeueRunde);
 		btn_SpielNeueRunde.addActionListener(e -> spielNeueRunde());
 
 		btn_SpielNeues.setBounds(280, 100, 80, 30);
 		btn_SpielNeues.setText("Neues Spiel");
 		btn_SpielNeues.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielNeues.setToolTipText("Kehrt zum Hauptmenü zurück, um einen anderen Spielmodus zu wählen.");
 		cpGUI_SpielEnde.add(btn_SpielNeues);
 		btn_SpielNeues.addActionListener(e -> spielNeues());
-
-		// Ausgabetext Sieg oder Niederlage
-		if (mineGetroffen == false) {
-			siegNiederlage = "Sieg";
-		} else {
-			siegNiederlage = "Niederlage";
-		}
+		btn_SpielNeues.setEnabled(false);
 
 		// Labels
 		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
 		lab_SpielEndeInformation.setVisible(true);
-		lab_SpielEndeInformation.setText("<HTML><font size=14><i>" + siegNiederlage + "!</i></font><br>Spieldauer: "
-				+ zeittmp / 1000 + " Sekunden. </HTML>");
+		lab_SpielEndeInformation.setText("<HTML><font size=14><i>" + SiegNiederlage + "!</i></font><br>Spieldauer: "
+				+ ObjectHandler.getSpieler().getZeitLetztesSpiel() / 1000 + " Sekunden. </HTML>");
 		cpGUI_SpielEnde.add(lab_SpielEndeInformation);
 
 		gui_SpielEnde.setVisible(true);
@@ -287,7 +282,7 @@ public class GUI_Spielfeld extends JFrame {
 
 		this.setTitle("Projekt 'Seawolf' <no GameApp actually found>");
 		this.setResizable(true);
-
+		this.repaint();
 		this.setVisible(true);
 	}
 
@@ -297,8 +292,14 @@ public class GUI_Spielfeld extends JFrame {
 	}
 	
 	public static void refreshLabels() {
+		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
 		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
+	}
+	
+	private void resetMinenWerte() {
+		Spiel.setRestMinen(Spiel.getMinenGesamt());
+		Spiel.setMinenRichtig(0);
 	}
 
 	private void resetSpielfeldStatusToFeld() {
@@ -327,24 +328,15 @@ public class GUI_Spielfeld extends JFrame {
 
 	}
 
-	// TODO Muss an Feld angepasst werden.
-	// Einzelnen Spielfeld-Button [aus MouseInput heraus] deaktivieren
-	public static void setDisabled(int i) {
-		// buttons[i].setEnabled(false);
-	}
-
-	// Alle Spielfeld-Button deaktivieren (false) oder aktivieren (true)
-	private static void setSpielfeldAnAus(boolean anAus) {
-		// TODO muss an Felder angepasst werden
-		// for (int i = 0; i < buttons.length; i++) {
-		// buttons[i].setEnabled(anAus);
-		// }
-	}
-
-	private void spielNeueRunde() {
+	public void spielNeueRunde() {
 
 		Spiel.createSpiel();
+		Spielfeldgesperrt = false;
+		resetMinenWerte();
+		refreshLabels();
+		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
+		
 		closeGUI_SpielEnde();
 
 	}
@@ -352,73 +344,31 @@ public class GUI_Spielfeld extends JFrame {
 	private void spielNeues() {
 
 		closeGUI_SpielEnde();
+		//Spielfeld Frame schließen
+		dispose();
 		ObjectHandler.createGui_Start();
 
 	}
 
-	public void spielNeustart() {
-
-		// spielNochmal();
-		Spiel.createSpiel();
-		
+	public void spielNochmal() {
+		Spielfeldgesperrt = false;
+		resetMinenWerte();
+		refreshLabels();
+		Spiel.initSpielfeldGeklickt();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
-
-	}
-
-	private void spielNochmal() {
-		// TODO an Felder anpassen
-		// Felder auf Anfangswert
-		// for (int i = 0; i < buttons.length; i++) {
-		// buttons[i].setText(".");
-		// }
-
-		// Spielfeld aktivieren
-		setSpielfeldAnAus(true);
-		Spielfeldgesperrt = false;
-
-		// Spielfeldgeklickt Array zurücksetzen
-		// TODO siehe in Spiel: doppelschleife
-		// for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-		// Spielfeldgeklickt[i] = 0;
-		// }
-
-		// GUI Elemente zur Anzeige. Zurücksetzen der Minen in Spiel
-		Spiel.setRestMinen(Spiel.getMinenGesamt());
-		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
-		Spiel.setMinenRichtig(0);
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
-
-		// TODO Eventuell nach Spiel auslagern...
-		// Zeiterfassung starten
-		zeittmp = Spiel.zeitmessungStart();
+		
+		Spiel.zeitMessungStart();
 
 		closeGUI_SpielEnde();
 	}
 
 	private void spielStart() {
-		// TODO muss überprüft werden was man hier noch braucht
-		// // Spielfeld aktivieren
-		// setSpielfeldAnAus(true);
-		// Spielfeldgesperrt = false;
-		//
-		// btn_SpielerProfil.setVisible(true);
-		//
-		// zeittmp = Spiel.zeitmessungStart();
-		//
-		// // Spielfeldgeklickt Array initialisieren
-		// for (int i = 0; i < Spielfeldgeklickt.length; i++) {
-		// Spielfeldgeklickt[i] = 0;
-		// }
-
-		// Labels Text setzen
 		Spieler spieler = ObjectHandler.getSpieler();
+		
+		// Labels Text setzen
 		lab_SpielerName.setText(spieler.getSpielerName());
-		Spiel.setRestMinen(Spiel.getMinenGesamt());
-		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
-		Spiel.setMinenRichtig(0);
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
-		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
-	}
-	
+		resetMinenWerte();
+		refreshLabels();
+	}	
 }

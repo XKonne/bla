@@ -50,6 +50,11 @@ B.2	Spiel pausieren/unterbrechen = Speichern
 Codeschnipsel
 
 
+//			 JDialog meinJDialog = new JDialog();
+//			 meinJDialog.setTitle("Gewonnen");
+//			 meinJDialog.setVisible(true);
+
+
 // action listener kürzer gestalten durch objekt-übergabe
 // http://blog.mynotiz.de/programmieren/java-jmenubar-beispiel-tutorial-235/
 

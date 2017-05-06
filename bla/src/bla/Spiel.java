@@ -2,17 +2,22 @@ package bla;
 
 import java.util.Random;
 
+import javax.swing.JDialog;
+
 public class Spiel {
 
 	// Variablen
 
 	// Integer
-	private static int minenGesamt = 3;
+	private static int minenGesamt = 0;
 	private static int minenRichtig = 0;
-	private static int restMinen = 3;
+	private static int restMinen = 0;
 	static int anzahlSpalten = 0;
 	static int anzahlZeilen = 0;
 	static int anzahlMinen = 0;
+	
+	// Long
+	private static long zeittmp = 0;
 
 	// String
 	static String spielModus = "noModus";
@@ -34,55 +39,45 @@ public class Spiel {
 	}
 
 	public static void aufSiegpruefen(boolean mineGetroffen) {
-		// boolean winlose = false;
-		// // aufSiegpruefen wird nach _jedem_ Mausklick ausgeführt.
-		//
-		// // Minen-Markiert-Zähler und Minen-Richtig-Zähler aktualisieren
-		// lab_Restminen.setText("Minen: " +
-		// Integer.toString(spiel.getRestMinen()));
-		// lab_MinenRichtig.setText("Mine Richtig: " +
-		// Integer.toString(spiel.getMinenRichtig()));
-		//
-		// // Sieg
-		// if (spiel.getMinenRichtig() == spiel.getMinenGesamt() &&
-		// spiel.getRestMinen() == 0
-		// && Spielfeldgesperrt == false) {
-		// // Variable für Spielhistorie
-		// winlose = true;
-		//
-		// // zeitmesser stoppen und Wert in zeittmp speichern
-		// zeittmp = Spiel.zeitmessungEnde(zeittmp);
-		//
-		// // Ausgabe
-		// GUI_SpielEnde(mineGetroffen);
-		//
-		// // Spieler Stats aktualsieren
-		// spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(),
-		// winlose);
-		//
-		// // Spielfeld deaktivieren
-		// setSpielfeldAnAus(false);
-		// Spielfeldgesperrt = true;
-		// }
-		//
-		// // Niederlage (=Mine aufgedeckt)
-		// if (mineGetroffen == true) {
-		//
-		// winlose = false;
-		// // zeitmesser stoppen und Wert in zeittmp speichern
-		// zeittmp = Spiel.zeitmessungEnde(zeittmp);
-		//
-		// // Ausgabe
-		// GUI_SpielEnde(mineGetroffen);
-		//
-		// // Spieler Stats aktualisieren
-		// spielerT.spielerAktualisieren(zeittmp, spiel.getMinenRichtig(),
-		// winlose);
-		//
-		// // Spielfeld deaktivieren
-		// setSpielfeldAnAus(false);
-		// Spielfeldgesperrt = true;
-		// }
+		
+		// Hilfsvariable für Siegesserie
+		boolean winlose = false;
+		
+		// Spielfeld-Labels aktualisieren
+		GUI_Spielfeld.refreshLabels();
+
+		// Sieg (=alle Minen richtig markiert
+		 if (ObjectHandler.getSpiel().getMinenRichtig() == ObjectHandler.getSpiel().getMinenGesamt() && ObjectHandler.getSpiel().getRestMinen() == 0 && GUI_Spielfeld.Spielfeldgesperrt == false) {
+			 
+			 // Setze Hilfsvariable auf Sieg (=true) für Spielhistorie
+			 winlose = true;
+					 		
+			 // Spieler Stats aktualsieren & Zeitmessung stoppen
+			 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), ObjectHandler.getSpiel().getMinenRichtig(), winlose);
+		
+			 // Ausgabe > Spielende
+			 ObjectHandler.getGui_Spielfeld().GUI_SpielEnde("Sieg");
+			 
+			 // Spielfeld deaktivieren
+			 GUI_Spielfeld.Spielfeldgesperrt = true;
+		}
+		
+		// Niederlage (=Mine aufgedeckt)
+		if (mineGetroffen == true && GUI_Spielfeld.Spielfeldgesperrt == false ) {
+		
+			// Setze Hilfsvariable auf Niederlage (=false) für Spielhistorie
+			winlose = false;
+				
+			// Spieler Stats aktualisieren & Zeitmessung stoppen
+			 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), ObjectHandler.getSpiel().getMinenRichtig(), winlose);
+		
+			// Ausgabe > Spielende
+			ObjectHandler.getGui_Spielfeld().GUI_SpielEnde("Niederlage");
+			 
+			// Spielfeld deaktivieren
+			GUI_Spielfeld.Spielfeldgesperrt = true;
+			mineGetroffen=false;
+		}
 	}
 
 	public static void createSpiel() {
@@ -92,7 +87,10 @@ public class Spiel {
 		initSpielfeldStatus();
 		setSpielfeldMinen();
 		setSpielfeldZahlen();
+		
+		zeitMessungStart();
 	}
+
 
 	/**
 	 * Feld per Rechtsklick markiert > Erniedrige Minenzähler um 1 (=-1).
@@ -140,13 +138,11 @@ public class Spiel {
 		return spielfeld[zeile][spalte];
 	}
 	
-	private static void initSpielfeldGeklickt() {
+	public static void initSpielfeldGeklickt() {
 
-		// Spielfeldstatus ist um 2 Einheiten größer als das angezeigte
-		// Spielfeld
-		// Zu beginn ist das Spielfeld leer (Wert: 0)
-		for (int i = 0; i < anzahlZeilen; i++) {
-			for (int j = 0; j < anzahlSpalten; j++) {
+		// Zu beginn ist das spielfeldGeklickt-Status 0
+		for (int i = 0; i < anzahlZeilen + 2; i++) {
+			for (int j = 0; j < anzahlSpalten + 2; j++) {
 				spielfeldGeklickt[i][j] = 0;
 			}
 		}
@@ -170,6 +166,11 @@ public class Spiel {
 
 	public static Integer getSpielfeldSpalten() {
 		return anzahlSpalten;
+	}
+	
+	private static long saveAktuelleZeit() {
+		long timeMs = System.currentTimeMillis();
+		return timeMs;
 	}
 
 	public static void setMinenGesamt(int gesamtMinen) {
@@ -250,7 +251,7 @@ public class Spiel {
 		spielModus = modus;
 
 		spielfeld = new int[anzahlZeilen + 2][anzahlSpalten + 2];
-		spielfeldGeklickt = new int[anzahlZeilen][anzahlSpalten];
+		spielfeldGeklickt = new int[anzahlZeilen + 2][anzahlSpalten + 2];
 
 		setupSpiel(spieler);
 	}
@@ -266,14 +267,15 @@ public class Spiel {
 
 	}
 
-	public static long zeitmessungEnde(long x) {
-		long spielZeit = System.currentTimeMillis() - x;
+	public static long zeitmessungEnde(long tmpZeit) {
+		long spielZeit = System.currentTimeMillis() - tmpZeit;
 		return spielZeit;
 	}
-
-	public static long zeitmessungStart() {
-		long spielZeitStart = System.currentTimeMillis();
-		return spielZeitStart;
+	
+	public static void zeitMessungStart() {
+		zeittmp = saveAktuelleZeit();
 	}
+
+
 
 }

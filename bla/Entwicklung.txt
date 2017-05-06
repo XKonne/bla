@@ -315,7 +315,35 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 								    			 
 								    			 
 		done		+Class ObjectHandler: Objekte werden hier verwaltet							04.05.2017	A.3.12
+		
+		done		+img.felder: fahne.gif hinzugefügt											06.05.2017	A.3.13
+					>GUI_Spielfeld: Spielfeld startet nun verdeckt
+					>MouseInput: an Felder angepasst; div. Änderungen
+					+MouseInput.setSpielfeldStatusZuFeld(x,y): Deckt geklicktes Feld auf (war vorher in GUI_Spielfeld).
+					>Spiel.aufSiegpruefen an GUI_Spielfeld, Felder, ObjectHander angepasst: Funktionalität wiederhergestellt.
+					>GUI_Spielfeld >GUI_SpielEnde angepasst
+					+GUI_Spielfeld.setSpielfeldStatusVerdeckt: Startet das Spielfeld verdeckt.
+					+GUI_Spielfeld.refreshLabels(): Methode zum aktualisieren aller Labels auf dem Spielfeld.
+					+GUI_Spielfeld.resetMinenWerte(): Setzt beim Wiederholen oder neuer Runde die Werte zurück.
+					>GUI_Spielfeld.spielNeueRunde / .spielNochmal(): Funktionalität wiederhergestellt.
+					>GUI_SpielEnde: Buttons, Labels deklaration global, da ab zweiten Spiel die Labels sich selbst überschreiben.
+					>GUI_AddMenubar: Menüeinträge Spiel / Aktuelles Spiel / "Nochmal spielen" und "neue Runde" funktionieren jetzt.
+					>GUI_Spielerwahl: Die Liste mit den Spielernanem, welche aus data.txt geladen werden, ist nun nur noch so groß
+									  wie die Anzahl der Spieler (keine leeren Einträge mehr).
+									  Dazu wurde in DataIO folgendes geändert...
+									  DataIO.createSpielerList(): ruft zaehlerSpieler() auf, passt dann Arraygröße an, dann
+									  							  werden erst die Spielernamen kopiert.
+									  DataIO.zaehleSpieler(): Zählt zunächst einmal wie viele Spieler angelegt sind und gibt 
+									  						  diesen Wert zurück.
+					>Spiel.zeitMessungStart(): Startet die Zeitmessung, in dem saveAktuelleZeit() aufgerufen wird.
+											   Wird immer dann aufgerufen, wenn eine neue Runde bzw. die Runde wiederholt wird
+					+Spiel.saveAktuelleZeit(): Funktionalität was früher zeitMessungStart war, da die Methode aber die Zeit zurückgibt, 
+											   war sie als (externer) Methodenaufruf zur Zeitmessung ungeeignet.
+					+Spiel.initspielfeldGeklickt(): Setzt das Array mit den protokollierten Mausklicks zurück.
+		
 								
+		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
+					Spielfeld ist nur eine Zeile lang
 								
 								
 								

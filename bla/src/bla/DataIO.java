@@ -10,7 +10,7 @@ import java.util.Scanner;
 public abstract class DataIO {
 
 	private static String dataFilename = "./data.txt";
-	private static String SpielerListe[] = new String[8];
+	private static String SpielerListe[] = new String[0];
 	
 	public DataIO() {
 	}
@@ -30,10 +30,18 @@ public abstract class DataIO {
 
 	}
 	
+	public static void createSpielerList() {
+		int anzahlSpieler = zaehlerSpieler();
+		
+		SpielerListe = new String[anzahlSpieler];
+		
+		spielernameAuslesen();
+	}
+		
 	/**
 	 * Liest alle Spielernamen aus der "data.txt"-Datei und schreibt sie in das String-Array Spielerliste[].
 	 */
-	public static void createSpielerList() {
+	private static void spielernameAuslesen() {
 		
 		int indexSpieler=0;
 		String data;
@@ -53,7 +61,6 @@ public abstract class DataIO {
 		} catch (FileNotFoundException e) {
 			createFile();
 		}
-		
 	}
 	
 	
@@ -251,6 +258,27 @@ public abstract class DataIO {
 		} catch (IOException e) {
 		}
 
+	}
+	
+	private static Integer zaehlerSpieler() {
+		int indexSpieler=0;
+		String data;
+		
+		try {
+			Scanner sc = new Scanner(new File(dataFilename));
+			while (sc.hasNext()) {
+				data = sc.nextLine();
+				
+				String[] dataArray = data.split("\\|");
+				indexSpieler=indexSpieler+1;
+				
+			}
+			sc.close();
+			
+		} catch (FileNotFoundException e) {
+			createFile();
+		}
+		return indexSpieler;
 	}
 
 }

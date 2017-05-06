@@ -23,7 +23,7 @@ public class GUI_SpielerAuswahl extends JFrame {
 	private int spielerIndex = 0;
 
 	// Arrays
-	String arr_SpielerListe[] = new String[8];
+	String arr_SpielerListe[] = new String[0];
 
 	// GUI-Elemente
 	// Buttons
@@ -136,6 +136,8 @@ public class GUI_SpielerAuswahl extends JFrame {
 	private void loadSpielerListe() {
 
 		DataIO.createSpielerList();
+		
+		arr_SpielerListe = new String[DataIO.returnLengthSpielerListe()];
 
 		for (int i = 0; i < DataIO.returnLengthSpielerListe(); i++) {
 			arr_SpielerListe[i] = DataIO.getSpielerListe(i);

@@ -12,10 +12,13 @@ public class GUI_AddMenubar extends JMenuBar {
 	}
 	
 	public void neueRunde() {
-		// TODO folgender Befehl geht nicht weil nicht static.
-		 ObjectHandler.getGui_Spielfeld().spielNeustart();
+		 ObjectHandler.getGui_Spielfeld().spielNeueRunde();
 	}
-
+	
+	public void wiederholeRunde() {
+		 ObjectHandler.getGui_Spielfeld().spielNochmal();
+	}
+	
 	private void setupGUI() {
 		
 		JMenu jm_Spiel, jm_AktuellesSpiel, jm_Spieler, jm_Hilfe;
@@ -45,11 +48,14 @@ public class GUI_AddMenubar extends JMenuBar {
 		jm_Spiel.add(sep1);
 
 		jm_AktuellesSpiel = new JMenu("Aktuelles Spiel");
+		
 		jm_Spiel.add(jm_AktuellesSpiel);
-		// Menu > Spiel > Aktuelles Spiel > Sub
+		// Menu > Spiel > Aktuelles Spiel > Sub1
 		jmi_akt_nochmalSpielen = new JMenuItem("Nochmal spielen");
-		jmi_akt_nochmalSpielen.setEnabled(false);
+		jmi_akt_nochmalSpielen.setEnabled(true);
 		jm_AktuellesSpiel.add(jmi_akt_nochmalSpielen);
+		jmi_akt_nochmalSpielen.addActionListener(e -> wiederholeRunde());
+		// Menu > Spiel > Aktuelles Spiel > Sub2
 		jmi_akt_neueRunde = new JMenuItem("Neue Runde");
 		jmi_akt_neueRunde.setEnabled(true);
 		jm_AktuellesSpiel.add(jmi_akt_neueRunde);

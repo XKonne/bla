@@ -44,7 +44,7 @@ public class MouseInput implements MouseListener {
 				}
 				
 				// Aufgedecktes Feld ist eine Mine, dann aufSiegpruefen(true) (=Niederlage) aufrufen
-				if (Spiel.getSpielfeldStatus(mi_zeile, mi_spalte) == -1) {
+				if (Spiel.getSpielfeldStatus(mi_zeile+1, mi_spalte+1) == -1) {
 					Spiel.aufSiegpruefen(true);
 				}
 				// Setze Feld auf "aufgedeckt" (=1)
@@ -63,7 +63,7 @@ public class MouseInput implements MouseListener {
 					GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne.gif")));
 					Spiel.countMinenMarkierung(-1);
 					
-					// Feld ist Mine, erhöhe Minen-Richtig-Zähler
+					// Feld ist Mine, erhöhe Minen-Richtig-Zähler                                hier +1
 					if (Spiel.getSpielfeldStatus(mi_zeile+1, mi_spalte+1) == -1) {
 						Spiel.countMineRichtig(1);
 					}
