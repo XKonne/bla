@@ -340,6 +340,8 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					+Spiel.saveAktuelleZeit(): Funktionalität was früher zeitMessungStart war, da die Methode aber die Zeit zurückgibt, 
 											   war sie als (externer) Methodenaufruf zur Zeitmessung ungeeignet.
 					+Spiel.initspielfeldGeklickt(): Setzt das Array mit den protokollierten Mausklicks zurück.
+					
+		done		Spielerdaten werden bei Spielende gespeichert		
 		
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 

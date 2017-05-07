@@ -231,9 +231,9 @@ public abstract class DataIO {
 	 * 		spieler Objekt der Klasse Spieler.
 	 * 
 	 */
-	public static void updateSpielerData(Spieler spieler) {
+	public static void updateSpielerData() {
 		
-		editSpielerData(spieler);
+		editSpielerData(ObjectHandler.getSpieler());
 		deleteAndRenameFile();
 		
 	}
@@ -267,9 +267,10 @@ public abstract class DataIO {
 		try {
 			Scanner sc = new Scanner(new File(dataFilename));
 			while (sc.hasNext()) {
-				data = sc.nextLine();
 				
+				data = sc.nextLine();
 				String[] dataArray = data.split("\\|");
+				
 				indexSpieler=indexSpieler+1;
 				
 			}

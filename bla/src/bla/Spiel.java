@@ -2,8 +2,6 @@ package bla;
 
 import java.util.Random;
 
-import javax.swing.JDialog;
-
 public class Spiel {
 
 	// Variablen
@@ -47,19 +45,12 @@ public class Spiel {
 		GUI_Spielfeld.refreshLabels();
 
 		// Sieg (=alle Minen richtig markiert
-		 if (ObjectHandler.getSpiel().getMinenRichtig() == ObjectHandler.getSpiel().getMinenGesamt() && ObjectHandler.getSpiel().getRestMinen() == 0 && GUI_Spielfeld.Spielfeldgesperrt == false) {
+		 if (getMinenRichtig() == getMinenGesamt() && getRestMinen() == 0 && GUI_Spielfeld.Spielfeldgesperrt == false) {
 			 
 			 // Setze Hilfsvariable auf Sieg (=true) für Spielhistorie
 			 winlose = true;
-					 		
-			 // Spieler Stats aktualsieren & Zeitmessung stoppen
-			 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), ObjectHandler.getSpiel().getMinenRichtig(), winlose);
-		
-			 // Ausgabe > Spielende
-			 ObjectHandler.getGui_Spielfeld().GUI_SpielEnde("Sieg");
+			 spielEnde(winlose, "Sieg");
 			 
-			 // Spielfeld deaktivieren
-			 GUI_Spielfeld.Spielfeldgesperrt = true;
 		}
 		
 		// Niederlage (=Mine aufgedeckt)
@@ -67,18 +58,11 @@ public class Spiel {
 		
 			// Setze Hilfsvariable auf Niederlage (=false) für Spielhistorie
 			winlose = false;
-				
-			// Spieler Stats aktualisieren & Zeitmessung stoppen
-			 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), ObjectHandler.getSpiel().getMinenRichtig(), winlose);
-		
-			// Ausgabe > Spielende
-			ObjectHandler.getGui_Spielfeld().GUI_SpielEnde("Niederlage");
-			 
-			// Spielfeld deaktivieren
-			GUI_Spielfeld.Spielfeldgesperrt = true;
+			spielEnde(winlose, "Niederlage");
 			mineGetroffen=false;
 		}
 	}
+
 
 	public static void createSpiel() {
 
@@ -265,6 +249,21 @@ public class Spiel {
 		ObjectHandler.createSpiel();
 		ObjectHandler.createGui_Spielfeld();
 
+	}
+	
+	private static void spielEnde(boolean winlose, String spielEndeText) {
+		
+		// Spieler Stats aktualisieren & Zeitmessung stoppen
+		 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), getMinenRichtig(), winlose);
+
+		// Ausgabe > Spielende
+		ObjectHandler.getGui_Spielfeld().GUI_SpielEnde(spielEndeText);
+		 
+		// Spielfeld deaktivieren
+		GUI_Spielfeld.Spielfeldgesperrt = true;
+		
+		DataIO.updateSpielerData();
+		
 	}
 
 	public static long zeitmessungEnde(long tmpZeit) {
