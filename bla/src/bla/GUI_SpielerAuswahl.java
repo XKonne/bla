@@ -124,7 +124,7 @@ public class GUI_SpielerAuswahl extends JFrame {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		this.setLocation(x - width / 2, y - height / 2);
+		this.setLocation(x, y);
 
 		this.setTitle("Spieler");
 		this.setResizable(false);
@@ -148,6 +148,7 @@ public class GUI_SpielerAuswahl extends JFrame {
 		EingabeRichtig = pruefeSpielerNameEingabe();
 
 		if (EingabeRichtig == true) {
+			DataIO.loadData(spieler);
 			GUI_Start.aktiviereGUI_Start();
 			closeGUI_SpielerAuswahl();
 		}

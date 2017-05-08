@@ -180,7 +180,7 @@ public class GUI_SpielModusBenutzer extends JFrame {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		this.setLocation(x - width / 2, y - heigth / 2);
+		this.setLocation(x, y);
 		this.setTitle("Benutzerdefinierter Spielmodus");
 		this.setResizable(false);
 		cp.setLayout(null);

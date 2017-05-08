@@ -341,11 +341,27 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 											   war sie als (externer) Methodenaufruf zur Zeitmessung ungeeignet.
 					+Spiel.initspielfeldGeklickt(): Setzt das Array mit den protokollierten Mausklicks zurück.
 					
-		done		Spielerdaten werden bei Spielende gespeichert		
+		done		Spielerdaten werden bei Spielende gespeichert								07.05.2017	A.3.14
+		
+		done		Alle GUI-Fenster werden nun zentriert-mittig geöffnet						08.05.2017	A.3.15
+					Neu angelegte Spieler werden nun auch gespeichert
+					Die Spielhistorie wird nun gespeichert bzw. wird geladen
+						"Spieler" bekommt ein neues Attribut -> spielfolge <- welches als String in Zahlenform die Spielhistorie
+							speichert. zB spielfolge=10002 bedeutet ===> "Sieg" / "Niederlage" / "Niederlage" / "Niederlage" / "-"
+						Spieler:	+public setSpielHistorieFromDataIO(Integer spielfolge): spielfolge wird vom Spielerobjekt übergeben und
+																						 	anschließend Zeichen für Zeichen den Strings
+																							 "Sieg" oder "Niederlage" oder "-" im 
+																					 		Spieler.spielHistorie[] zugeorndet
+									+public String getSpielfolge(): liest Spieler.SpielHistorie[] Stelle für Stelle aus und erzeugt
+																	einen String (wie oben beschrieben)	und gibt es als spielfolge zurück
+						DataIO: >loadSpieler(Spieler spieler, String data): liest nun dataArray[8] aus, welches die Spielhistorie beinhaltet
+								>fetchSpielerData(Spieler spieler): um spieler.getSpielfolge() erweitert
 		
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
 					Spielfeld ist nur eine Zeile lang
+					
+					Im Spielerprofil wird "Aktuelle Siegesserie" nicht in DataIO gespeichert oder ausgelesen
 								
 								
 								

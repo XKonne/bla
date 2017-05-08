@@ -29,9 +29,6 @@ public class GUI_Spielfeld extends JFrame {
 	private int feldWidth = 25;
 	// private int feldAbstand = 2;
 
-	// Long
-	private static long zeittmp;
-
 	// GUI-Elemente
 	// Labels - guiSpielfeld
 	private JLabel lab_SpielerName = new JLabel();
@@ -278,7 +275,8 @@ public class GUI_Spielfeld extends JFrame {
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		this.setLocation(x - frameWidth / 2, y - frameHeight / 2);
+		this.setLocation(x, y);
+		//this.setLocation(x - frameWidth / 2, y - frameHeight / 2);
 
 		this.setTitle("Projekt 'Seawolf' <no GameApp actually found>");
 		this.setResizable(true);

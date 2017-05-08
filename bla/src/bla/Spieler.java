@@ -13,6 +13,7 @@ public class Spieler {
 	private long zeitLetztesSpiel;
 	private long zeitSchnellsterSieg;
 	private String spielerName;
+	private String spielfolge;
 
 	private static DecimalFormat f = new DecimalFormat("#0.0"); // erzeugt einen String
 
@@ -33,6 +34,8 @@ public class Spieler {
 		zeitLetztesSpiel = 0;
 		zeitSchnellsterSieg = 0;
 		spielerSiegesserie = 0;
+		// spielfolge initialisiert mit "nie gespielt": "-", "-", "-", "-", "-"
+		spielfolge="22222";
 	}
 
 	public void calculateSpieleGewonnenProzent() {
@@ -70,6 +73,25 @@ public class Spieler {
 
 	public Integer getMinenGefunden() {
 		return minenGefunden;
+	}
+	
+	public String getSpielfolge() {
+		// Falls schon einmal gespielt, dann lies spielHistorie aus
+		if (spielfolge != "22222") {
+			spielfolge="";
+			for (int i=0; i<spielHistorie.length; i++) {
+				if (spielHistorie[i] == "Gewonnen") {
+					spielfolge=spielfolge+1;
+				}
+				if (spielHistorie[i] == "-") {
+					spielfolge=spielfolge+2;
+				}
+				if (spielHistorie[i] == "Verloren") {
+					spielfolge=spielfolge+0;
+				}
+			}
+		}
+		return spielfolge;
 	}
 
 	public Integer getSpieleGespielt() {
@@ -137,6 +159,7 @@ public class Spieler {
 
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
 	private void setSpielHistorie(boolean sieg) {
+		spielfolge="9";
 		// Einträge um 1 nach "unten" verschieben
 		for (int i = 4; i > 0; i--) {
 			spielHistorie[i] = spielHistorie[i - 1];
@@ -147,6 +170,26 @@ public class Spieler {
 		} else {
 			spielHistorie[0] = "Verloren";
 		}
+	}
+	
+	public void setSpielHistorieFromDataIO(Integer spielfolge) {
+		
+		String tmpString = "" + spielfolge;
+		
+		for (int i=0; i<tmpString.length(); i++) {
+			// Fälle: 	=1 ist "Gewonnen"
+			//			=2 ist nicht gespielt, also "-"
+			//			=0 ist "Verloren"
+			if (Character.getNumericValue(tmpString.charAt(i)) == 1) {
+				spielHistorie[i] = "Gewonnen"; 
+			 }
+			 if (Character.getNumericValue(tmpString.charAt(i)) == 2) {
+				 spielHistorie[i] = "-"; 
+			 }
+			 if (Character.getNumericValue(tmpString.charAt(i)) == 0) {
+				spielHistorie[i] = "Verloren"; 
+			 }
+		 }
 	}
 
 	public void setZeitGesamt(long zeitGesamt) {

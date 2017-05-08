@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 
 public abstract class DataIO {
 
@@ -131,10 +133,10 @@ public abstract class DataIO {
 	 * @return String mit allen Spielerdaten zum Schreiben
 	 */
 	private static String fetchSpielerData(Spieler spieler) {
-	
+
 		return spieler.getSpielerName() + "|" + spieler.getSpieleGespielt() + "|" + spieler.getSpieleGewonnen() + "|"
 				+ spieler.getMinenGefunden() + "|" + spieler.getZeitGesamt() + "|" + spieler.getZeitLetztesSpiel() + "|"
-				+ spieler.getZeitSchnellsterSiegl() + "|" + spieler.getSpielerSiegesserie();
+				+ spieler.getZeitSchnellsterSiegl() + "|" + spieler.getSpielerSiegesserie() + "|" + spieler.getSpielfolge();
 	}
 	
 	
@@ -211,6 +213,7 @@ public abstract class DataIO {
 			// spieler.setProfilBild = 0; // Profilbild noch nicht ausreichend
 			// implementiert
 			spieler.setSpielerSiegesserie(Integer.parseInt(dataArray[7]));
+			spieler.setSpielHistorieFromDataIO(Integer.parseInt(dataArray[8]));
 
 			spielerGefunden = true;
 		}
