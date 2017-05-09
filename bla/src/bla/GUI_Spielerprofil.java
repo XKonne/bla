@@ -20,6 +20,7 @@ public class GUI_Spielerprofil extends JFrame {
 	private static JLabel lab_SpielHistorie = new JLabel();
 	private static JLabel lab_SpielerName = new JLabel();
 	private static JLabel lab_SpieleSiegesserie = new JLabel();
+	private static JLabel lab_SpieleMaxSiegesserie = new JLabel();
 	private static JLabel lab_SpielVerlauf = new JLabel();
 	private static JLabel lab_ZeitGesamt = new JLabel();
 	private static JLabel lab_ZeitLetztesSpiel = new JLabel();
@@ -76,26 +77,29 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpieleSiegesserie.setBounds(10, 120, 230, 20);
 		cp.add(lab_SpieleSiegesserie);
+		
+		lab_SpieleMaxSiegesserie.setBounds(10, 150, 230, 20);
+		cp.add(lab_SpieleMaxSiegesserie);
 
-		lab_SpieleGewonnenProzent.setBounds(10, 150, 230, 20);
+		lab_SpieleGewonnenProzent.setBounds(10, 180, 230, 20);
 		cp.add(lab_SpieleGewonnenProzent);
 
-		lab_MinenGefunden.setBounds(10, 180, 200, 20);
+		lab_MinenGefunden.setBounds(10, 210, 200, 20);
 		cp.add(lab_MinenGefunden);
 
-		lab_ZeitLetztesSpiel.setBounds(10, 210, 230, 20);
+		lab_ZeitLetztesSpiel.setBounds(10, 240, 230, 20);
 		cp.add(lab_ZeitLetztesSpiel);
 
-		lab_ZeitSchnellstesSpiel.setBounds(10, 240, 230, 20);
+		lab_ZeitSchnellstesSpiel.setBounds(10, 270, 230, 20);
 		cp.add(lab_ZeitSchnellstesSpiel);
 
-		lab_ZeitGesamt.setBounds(10, 270, 230, 20);
+		lab_ZeitGesamt.setBounds(10, 300, 230, 20);
 		cp.add(lab_ZeitGesamt);
 
-		lab_SpielVerlauf.setBounds(10, 300, 75, 20);
+		lab_SpielVerlauf.setBounds(10, 330, 75, 20);
 		cp.add(lab_SpielVerlauf);
 
-		lab_SpielHistorie.setBounds(90, 300, 200, 80);
+		lab_SpielHistorie.setBounds(90, 330, 200, 80);
 		cp.add(lab_SpielHistorie);
 	}
 
@@ -104,13 +108,13 @@ public class GUI_Spielerprofil extends JFrame {
 		JButton btn_SpielerprofilSchliessen = new JButton();
 		JButton btn_SpielerprofilAktualisieren = new JButton();
 
-		btn_SpielerprofilSchliessen.setBounds(135, 430, 100, 30);
+		btn_SpielerprofilSchliessen.setBounds(135, 450, 100, 30);
 		btn_SpielerprofilSchliessen.setText("Profil schließen");
 		btn_SpielerprofilSchliessen.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerprofilSchliessen);
 		btn_SpielerprofilSchliessen.addActionListener(e ->closeGUI_Spielerprofil());
 
-		btn_SpielerprofilAktualisieren.setBounds(10, 430, 100, 30);
+		btn_SpielerprofilAktualisieren.setBounds(10, 450, 100, 30);
 		btn_SpielerprofilAktualisieren.setText("Aktualisieren");
 		btn_SpielerprofilAktualisieren.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerprofilAktualisieren);
@@ -121,7 +125,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // Darf nicht schließen, weil sonst keine Rückmeldung an ObjectHandler geht.
 		int frameWidth = 250;
-		int frameHeight = 500;
+		int frameHeight = 520;
 		setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
@@ -145,6 +149,7 @@ public class GUI_Spielerprofil extends JFrame {
 		lab_SpieleGespielt.setText("Spiele gespielt: " + Integer.toString(spieler.getSpieleGespielt()));
 		lab_SpieleGewonnen.setText("Spiele gewonnen: " + Integer.toString(spieler.getSpieleGewonnen()));
 		lab_SpieleSiegesserie.setText("Aktuelle Siegesserie: " + spieler.getSpielerSiegesserie());
+		lab_SpieleMaxSiegesserie.setText("Längste Siegesserie: " + spieler.getMaxSiegesserie());
 		lab_SpieleGewonnenProzent.setText("Spiele gewonnen in %: " + spieler.getSpieleGewonnenProzent() + "%");
 		lab_MinenGefunden.setText("Minen gefunden: " + Integer.toString(spieler.getMinenGefunden()));
 		lab_ZeitLetztesSpiel.setText("Spielzeit Letztes Spiel: " + spieler.getZeitLetztesSpiel() / 1000 + " Sekunden");

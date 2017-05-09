@@ -99,8 +99,9 @@ public class GUI_AddMenubar extends JMenuBar {
 
 		// Menu > Spieler > Sub
 		jmi_profil = new JMenuItem("Profil");
-		jmi_profil.setEnabled(false);
+		jmi_profil.setEnabled(true);
 		jm_Spieler.add(jmi_profil);
+		jmi_profil.addActionListener(e -> ObjectHandler.createGui_Spielerprofil());
 		jmi_optionen = new JMenuItem("Optionen");
 		jmi_optionen.setEnabled(false);
 		jm_Spieler.add(jmi_optionen);

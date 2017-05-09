@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
 
-	static String versiont = "A.3.13";
+	static String versiont = "A.3.16";
 
 	// Frame-Containe-Panel
 	private JFrame gui_SpielEnde = new JFrame();

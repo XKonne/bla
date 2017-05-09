@@ -9,6 +9,7 @@ public class Spieler {
 	private Double spieleGewonnenProzent;
 	private int minenGefunden;
 	private int spielerSiegesserie;
+	private int spielerMaxSiegesserie;
 	private long zeitGesamt;
 	private long zeitLetztesSpiel;
 	private long zeitSchnellsterSieg;
@@ -34,6 +35,7 @@ public class Spieler {
 		zeitLetztesSpiel = 0;
 		zeitSchnellsterSieg = 0;
 		spielerSiegesserie = 0;
+		spielerMaxSiegesserie = 0;
 		// spielfolge initialisiert mit "nie gespielt": "-", "-", "-", "-", "-"
 		spielfolge="22222";
 	}
@@ -65,10 +67,15 @@ public class Spieler {
 		} else {
 			spielerSiegesserie = 0;
 		}
+		ueberpruefeMaxSiegesserie();
 	}
-
+		
 	private void erhoeheZeitGesamt(long zeitSpiel) {
 		zeitGesamt = zeitGesamt + zeitSpiel;
+	}
+	
+	public Integer getMaxSiegesserie() {
+		return spielerMaxSiegesserie;
 	}
 
 	public Integer getMinenGefunden() {
@@ -136,6 +143,10 @@ public class Spieler {
 	public long getZeitSchnellsterSiegl() {
 		return zeitSchnellsterSieg;
 	}
+	
+	public void setMaxSiegesserieFromData(Integer maxSiegesserie) {
+		this.spielerMaxSiegesserie = maxSiegesserie;
+	}
 
 	public void setMinenGefunden(Integer minenGefunden) {
 		this.minenGefunden = minenGefunden;
@@ -153,8 +164,8 @@ public class Spieler {
 		this.spielerName = name;
 	}
 
-	public void setSpielerSiegesserie(Integer spielerSiegesserie) {
-		this.spielerSiegesserie = spielerSiegesserie;
+	public void setSpielerSiegesserie(Integer Siegesserie) {
+		this.spielerSiegesserie = Siegesserie;
 	}
 
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
@@ -238,6 +249,12 @@ public class Spieler {
 		erhoeheZeitGesamt(spielZeit);
 
 		setSpielHistorie(siegNiederlage);
+	}
+	
+	private void ueberpruefeMaxSiegesserie() {
+		if (spielerSiegesserie > spielerMaxSiegesserie) {
+			spielerMaxSiegesserie = spielerSiegesserie;
+		}
 	}
 	
 }

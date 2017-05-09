@@ -135,8 +135,8 @@ public abstract class DataIO {
 	private static String fetchSpielerData(Spieler spieler) {
 
 		return spieler.getSpielerName() + "|" + spieler.getSpieleGespielt() + "|" + spieler.getSpieleGewonnen() + "|"
-				+ spieler.getMinenGefunden() + "|" + spieler.getZeitGesamt() + "|" + spieler.getZeitLetztesSpiel() + "|"
-				+ spieler.getZeitSchnellsterSiegl() + "|" + spieler.getSpielerSiegesserie() + "|" + spieler.getSpielfolge();
+				+ spieler.getSpielerSiegesserie() + "|" + spieler.getMaxSiegesserie() + "|" + spieler.getMinenGefunden() + "|" + spieler.getZeitGesamt() + "|" 
+				+ spieler.getZeitLetztesSpiel() + "|" + spieler.getZeitSchnellsterSiegl() + "|" + spieler.getSpielfolge();
 	}
 	
 	
@@ -205,15 +205,16 @@ public abstract class DataIO {
 
 			spieler.setSpieleGespielt(Integer.parseInt(dataArray[1]));
 			spieler.setSpieleGewonnen(Integer.parseInt(dataArray[2]));
+			spieler.setSpielerSiegesserie(Integer.parseInt(dataArray[3]));
+			spieler.setMaxSiegesserieFromData(Integer.parseInt(dataArray[4]));
 			spieler.calculateSpieleGewonnenProzent();
-			spieler.setMinenGefunden(Integer.parseInt(dataArray[3]));
-			spieler.setZeitGesamt(Long.parseLong(dataArray[4]));
-			spieler.setZeitLetztesSpiel(Long.parseLong(dataArray[5]));
-			spieler.setZeitSchnellsterSieg(Long.parseLong(dataArray[6]));
+			spieler.setMinenGefunden(Integer.parseInt(dataArray[5]));
+			spieler.setZeitGesamt(Long.parseLong(dataArray[6]));
+			spieler.setZeitLetztesSpiel(Long.parseLong(dataArray[7]));
+			spieler.setZeitSchnellsterSieg(Long.parseLong(dataArray[8]));
 			// spieler.setProfilBild = 0; // Profilbild noch nicht ausreichend
 			// implementiert
-			spieler.setSpielerSiegesserie(Integer.parseInt(dataArray[7]));
-			spieler.setSpielHistorieFromDataIO(Integer.parseInt(dataArray[8]));
+			spieler.setSpielHistorieFromDataIO(Integer.parseInt(dataArray[9]));
 
 			spielerGefunden = true;
 		}

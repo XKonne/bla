@@ -49,6 +49,8 @@ B.2	Spiel pausieren/unterbrechen = Speichern
 
 Codeschnipsel
 
+in jave objekte zerstören - 3 methoden - http://mein-javablog.de/java-objekte-zerstoeren/
+
 
 //			 JDialog meinJDialog = new JDialog();
 //			 meinJDialog.setTitle("Gewonnen");

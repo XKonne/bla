@@ -356,12 +356,22 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 																	einen String (wie oben beschrieben)	und gibt es als spielfolge zurück
 						DataIO: >loadSpieler(Spieler spieler, String data): liest nun dataArray[8] aus, welches die Spielhistorie beinhaltet
 								>fetchSpielerData(Spieler spieler): um spieler.getSpielfolge() erweitert
+								
+		donw		>DataIO: Spieler-Siegesserie funktioniert nun wie vorgesehen				09.05.2017	A.3.16
+					>DataIO: Spieler-MaxSiegesserie an den entsprechenden Stellen hinzugefügt
+					>data.txt: Spielerstatistiken zurückgesetzt, da neue Felder hinzugefügt
+					+Spieler: Attribut "spielerMaxSiegesserie" hinzugefügt
+						+getMaxSiegesserie(): gibt aktuellen Wert von spielerMaxSiegesserie zurück
+						+setMaxSiegesserieFromData(): liest aus Data.txt den Wert aus und speichert es in spielerMaxSiegesserie
+						+ueberpruefeMaxSiegesserie(): speichert einen neuen Wert für spielerMaxSiegesserie, sofern die aktuelle Siegesserie höher ist.
+													  Die Methode wird nach setzen der aktuallen Siegesserie aufgerufen.
+					>GUI_Spielerprofil: Label für spielerMaxSiegesserie hinzugefügt und ggf. andere Stellen dafür angepasst
+					>GUI_AddMenubar: Spieler > Spielerprofil aktiviert und implementiert
+		
 		
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
 					Spielfeld ist nur eine Zeile lang
-					
-					Im Spielerprofil wird "Aktuelle Siegesserie" nicht in DataIO gespeichert oder ausgelesen
 								
 								
 								
