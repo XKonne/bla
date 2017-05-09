@@ -37,7 +37,7 @@ public class Spieler {
 		spielerSiegesserie = 0;
 		spielerMaxSiegesserie = 0;
 		// spielfolge initialisiert mit "nie gespielt": "-", "-", "-", "-", "-"
-		spielfolge="22222";
+		spielfolge="322222";
 	}
 
 	public void calculateSpieleGewonnenProzent() {
@@ -84,8 +84,8 @@ public class Spieler {
 	
 	public String getSpielfolge() {
 		// Falls schon einmal gespielt, dann lies spielHistorie aus
-		if (spielfolge != "22222") {
-			spielfolge="";
+		if (spielfolge != "322222") {
+			spielfolge="3";
 			for (int i=0; i<spielHistorie.length; i++) {
 				if (spielHistorie[i] == "Gewonnen") {
 					spielfolge=spielfolge+1;
@@ -170,7 +170,6 @@ public class Spieler {
 
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
 	private void setSpielHistorie(boolean sieg) {
-		spielfolge="9";
 		// Einträge um 1 nach "unten" verschieben
 		for (int i = 4; i > 0; i--) {
 			spielHistorie[i] = spielHistorie[i - 1];
@@ -187,18 +186,18 @@ public class Spieler {
 		
 		String tmpString = "" + spielfolge;
 		
-		for (int i=0; i<tmpString.length(); i++) {
+		for (int i=1; i<tmpString.length(); i++) {
 			// Fälle: 	=1 ist "Gewonnen"
 			//			=2 ist nicht gespielt, also "-"
 			//			=0 ist "Verloren"
-			if (Character.getNumericValue(tmpString.charAt(i)) == 1) {
-				spielHistorie[i] = "Gewonnen"; 
+			 if (Character.getNumericValue(tmpString.charAt(i)) == 0) {
+				spielHistorie[i-1] = "Verloren"; 
+			 }
+			 if (Character.getNumericValue(tmpString.charAt(i)) == 1) {
+				spielHistorie[i-1] = "Gewonnen"; 
 			 }
 			 if (Character.getNumericValue(tmpString.charAt(i)) == 2) {
-				 spielHistorie[i] = "-"; 
-			 }
-			 if (Character.getNumericValue(tmpString.charAt(i)) == 0) {
-				spielHistorie[i] = "Verloren"; 
+				 spielHistorie[i-1] = "-"; 
 			 }
 		 }
 	}

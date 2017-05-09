@@ -367,6 +367,12 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 													  Die Methode wird nach setzen der aktuallen Siegesserie aufgerufen.
 					>GUI_Spielerprofil: Label für spielerMaxSiegesserie hinzugefügt und ggf. andere Stellen dafür angepasst
 					>GUI_AddMenubar: Spieler > Spielerprofil aktiviert und implementiert
+					
+		done		Hotfix: Beim Speichern der Spielerhistorie kam es zu einem Informationsverlust, wenn das letzt Spiel eine Niederlage war.
+							Da bei Integerzahlen führende 0'en (=Niederlage) nicht gespeichert werden. Abhilfe schafft eine "dummy"Zahl als
+							führende Zahl.
+					+GUI_Start.spielerWechseln(): ruft erneut GUI_SpielerAuswahl auf, um den Spieler zu wechseln.
+												  Ein entsprechener Button ist in GUI_Start neben dem Spielernamen hinzugefügt.
 		
 		
 								

@@ -23,6 +23,7 @@ public class GUI_Start extends JFrame {
 	private static JButton btn_ModusSchwer = new JButton();
 	private static JButton btn_ModusBenutzer = new JButton();
 	private static JButton btn_SpielerProfil = new JButton();
+	private static JButton btn_SpielerWechseln = new JButton();
 
 	// Labels
 	private static JLabel lab_SpielerName = new JLabel();
@@ -48,6 +49,8 @@ public class GUI_Start extends JFrame {
 		lab_SpielerName.setText(ObjectHandler.getSpieler().getSpielerName());
 		btn_SpielerProfil.setEnabled(true);
 		btn_SpielerProfil.setVisible(true);
+		btn_SpielerWechseln.setEnabled(true);
+		btn_SpielerWechseln.setVisible(true);
 
 		btn_ModusLeicht.setEnabled(true);
 		btn_ModusMittel.setEnabled(true);
@@ -61,12 +64,20 @@ public class GUI_Start extends JFrame {
 
 	private void createButtons() {
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
-		btn_SpielerProfil.setBounds(350, 5, 40, 40);
+		btn_SpielerProfil.setBounds(325, 5, 40, 40);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielerProfil.setEnabled(false);
 		btn_SpielerProfil.setVisible(false);
 		panel.add(btn_SpielerProfil);
 		btn_SpielerProfil.addActionListener(e->ObjectHandler.createGui_Spielerprofil());
+		
+		btn_SpielerWechseln.setIcon(new ImageIcon(getClass().getResource("img/spielerWechseln.gif")));
+		btn_SpielerWechseln.setBounds(540, 5, 20, 40);
+		btn_SpielerWechseln.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielerWechseln.setEnabled(false);
+		btn_SpielerWechseln.setVisible(false);
+		panel.add(btn_SpielerWechseln);
+		btn_SpielerWechseln.addActionListener(e->spielerWechseln());
 
 		btn_ModusLeicht.setBounds(15, 60, 125, 125);
 		btn_ModusLeicht.setIcon(new ImageIcon(getClass().getResource("img/modus_leicht.png")));
@@ -97,9 +108,13 @@ public class GUI_Start extends JFrame {
 		btn_ModusBenutzer.addActionListener(e -> ObjectHandler.createGui_SpielModusBenutzer());
 	}
 
+	private void spielerWechseln() {
+		ObjectHandler.createGui_SpielerAuswahl();
+	}
+
 	private void createLabels() {
 		Border border = LineBorder.createGrayLineBorder();
-		lab_SpielerName.setBounds(400, 5, 160, 40);
+		lab_SpielerName.setBounds(375, 5, 160, 40);
 		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
 		lab_SpielerName.setBorder(border);
 		lab_SpielerName.setVisible(false);
