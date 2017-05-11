@@ -35,7 +35,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 	}
 
-	private boolean checkGUI_Spielerprofil_active() {
+	private static boolean checkGUI_Spielerprofil_active() {
 
 		if (ObjectHandler.getGui_Spielerprofil() == null) {
 			return false;
@@ -167,10 +167,10 @@ public class GUI_Spielerprofil extends JFrame {
 
 	}
 
-	public void updateGUI_Spielerprofil() {
+	public static void updateGUI_Spielerprofil() {
 
 		if (checkGUI_Spielerprofil_active() == true) {
-			this.setLabelText();
+			ObjectHandler.getGui_Spielerprofil().setLabelText();
 		}
 
 	}
