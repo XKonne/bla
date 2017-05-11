@@ -262,9 +262,8 @@ public class Spiel {
 		// Spielfeld deaktivieren
 		GUI_Spielfeld.Spielfeldgesperrt = true;
 		
+		ObjectHandler.getGui_Spielerprofil().updateGUI_Spielerprofil();
 		DataIO.updateSpielerData();
-		
-		ObjectHandler.showActiveObjects();
 		
 	}
 

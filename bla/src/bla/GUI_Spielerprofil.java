@@ -9,7 +9,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 	// Frame-Container
 	private Container cp = getContentPane();
-	
+
 	// GUI-Elemente
 	// Labels
 	private static JLabel lab_MinenGefunden = new JLabel();
@@ -27,35 +27,26 @@ public class GUI_Spielerprofil extends JFrame {
 	private static JLabel lab_ZeitSchnellstesSpiel = new JLabel();
 
 	public GUI_Spielerprofil() {
-		
-		if(checkGUI_Spielerprofil_active() == false) {
+
+		if (checkGUI_Spielerprofil_active() == false) {
 			setupGUI();
 			setLabelText();
 		}
-		
-	}
-
-	private void setupGUI() {
-
-		initFrame();
-		createButtons();
-		createLabels();
 
 	}
-	
+
 	private boolean checkGUI_Spielerprofil_active() {
-		
-		if(ObjectHandler.getGui_Spielerprofil() == null) {
+
+		if (ObjectHandler.getGui_Spielerprofil() == null) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}
-	
+
 	private void closeGUI_Spielerprofil() {
-		 this.dispose();
-		 ObjectHandler.setGui_Spielerprofil(null);
+		this.dispose();
+		ObjectHandler.setGui_Spielerprofil(null);
 	}
 
 	private void createLabels() {
@@ -77,7 +68,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpieleSiegesserie.setBounds(10, 120, 230, 20);
 		cp.add(lab_SpieleSiegesserie);
-		
+
 		lab_SpieleMaxSiegesserie.setBounds(10, 150, 230, 20);
 		cp.add(lab_SpieleMaxSiegesserie);
 
@@ -112,7 +103,7 @@ public class GUI_Spielerprofil extends JFrame {
 		btn_SpielerprofilSchliessen.setText("Profil schließen");
 		btn_SpielerprofilSchliessen.setMargin(new Insets(2, 2, 2, 2));
 		cp.add(btn_SpielerprofilSchliessen);
-		btn_SpielerprofilSchliessen.addActionListener(e ->closeGUI_Spielerprofil());
+		btn_SpielerprofilSchliessen.addActionListener(e -> closeGUI_Spielerprofil());
 
 		btn_SpielerprofilAktualisieren.setBounds(10, 450, 100, 30);
 		btn_SpielerprofilAktualisieren.setText("Aktualisieren");
@@ -123,7 +114,16 @@ public class GUI_Spielerprofil extends JFrame {
 
 	private void initFrame() {
 
-		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // Darf nicht schließen, weil sonst keine Rückmeldung an ObjectHandler geht.
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); // Darf
+																		// nicht
+																		// schließen,
+																		// weil
+																		// sonst
+																		// keine
+																		// Rückmeldung
+																		// an
+																		// ObjectHandler
+																		// geht.
 		int frameWidth = 250;
 		int frameHeight = 520;
 		setSize(frameWidth, frameHeight);
@@ -137,8 +137,6 @@ public class GUI_Spielerprofil extends JFrame {
 		cp.setLayout(null);
 		setVisible(true);
 	}
-	
-	
 
 	private void setLabelText() {
 
@@ -159,6 +157,22 @@ public class GUI_Spielerprofil extends JFrame {
 		lab_SpielHistorie.setText("<html>1: " + spieler.getSpielHistorie(0) + "<br>" + "2: "
 				+ spieler.getSpielHistorie(1) + "<br>" + "3: " + spieler.getSpielHistorie(2) + "<br>" + "4: "
 				+ spieler.getSpielHistorie(3) + "<br>" + "5: " + spieler.getSpielHistorie(4) + "</html>");
+	}
+
+	private void setupGUI() {
+
+		initFrame();
+		createButtons();
+		createLabels();
+
+	}
+
+	public void updateGUI_Spielerprofil() {
+
+		if (checkGUI_Spielerprofil_active() == true) {
+			this.setLabelText();
+		}
+
 	}
 
 }
