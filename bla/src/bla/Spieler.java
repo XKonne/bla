@@ -16,7 +16,8 @@ public class Spieler {
 	private String spielerName;
 	private String spielfolge;
 
-	private static DecimalFormat f = new DecimalFormat("#0.0"); // erzeugt einen String
+	private static DecimalFormat f = new DecimalFormat("#0.0"); // erzeugt einen
+																// String
 
 	// Arrays
 	// Spielhistorie der letzten 5 Spiele mit Sieg-Niederlage als Eintrag
@@ -37,7 +38,7 @@ public class Spieler {
 		spielerSiegesserie = 0;
 		spielerMaxSiegesserie = 0;
 		// spielfolge initialisiert mit "nie gespielt": "-", "-", "-", "-", "-"
-		spielfolge="322222";
+		spielfolge = "322222";
 	}
 
 	public void calculateSpieleGewonnenProzent() {
@@ -69,11 +70,11 @@ public class Spieler {
 		}
 		ueberpruefeMaxSiegesserie();
 	}
-		
+
 	private void erhoeheZeitGesamt(long zeitSpiel) {
 		zeitGesamt = zeitGesamt + zeitSpiel;
 	}
-	
+
 	public Integer getMaxSiegesserie() {
 		return spielerMaxSiegesserie;
 	}
@@ -81,20 +82,20 @@ public class Spieler {
 	public Integer getMinenGefunden() {
 		return minenGefunden;
 	}
-	
+
 	public String getSpielfolge() {
 		// Falls schon einmal gespielt, dann lies spielHistorie aus
 		if (spielfolge != "322222") {
-			spielfolge="3";
-			for (int i=0; i<spielHistorie.length; i++) {
+			spielfolge = "3";
+			for (int i = 0; i < spielHistorie.length; i++) {
 				if (spielHistorie[i] == "Gewonnen") {
-					spielfolge=spielfolge+1;
+					spielfolge = spielfolge + 1;
 				}
 				if (spielHistorie[i] == "-") {
-					spielfolge=spielfolge+2;
+					spielfolge = spielfolge + 2;
 				}
 				if (spielHistorie[i] == "Verloren") {
-					spielfolge=spielfolge+0;
+					spielfolge = spielfolge + 0;
 				}
 			}
 		}
@@ -143,7 +144,7 @@ public class Spieler {
 	public long getZeitSchnellsterSiegl() {
 		return zeitSchnellsterSieg;
 	}
-	
+
 	public void setMaxSiegesserieFromData(Integer maxSiegesserie) {
 		this.spielerMaxSiegesserie = maxSiegesserie;
 	}
@@ -168,8 +169,25 @@ public class Spieler {
 		this.spielerSiegesserie = Siegesserie;
 	}
 
+	private void setSpielfolge(boolean sieg) {
+
+		String tempSpielfolge = this.spielfolge.substring(1, 4);
+		
+		if (sieg == true) {
+			tempSpielfolge = "1" + tempSpielfolge;
+		} else {
+			tempSpielfolge = "0" + tempSpielfolge;
+		}
+		tempSpielfolge = "3" + tempSpielfolge;
+
+		this.spielfolge = tempSpielfolge;
+	}
+
 	// Notiert Sieg-Niederlage der letzten 5 Spiele
 	private void setSpielHistorie(boolean sieg) {
+
+		setSpielfolge(sieg);
+
 		// Einträge um 1 nach "unten" verschieben
 		for (int i = 4; i > 0; i--) {
 			spielHistorie[i] = spielHistorie[i - 1];
@@ -181,25 +199,26 @@ public class Spieler {
 			spielHistorie[0] = "Verloren";
 		}
 	}
-	
+
 	public void setSpielHistorieFromDataIO(Integer spielfolge) {
-		
+
 		String tmpString = "" + spielfolge;
-		
-		for (int i=1; i<tmpString.length(); i++) {
-			// Fälle: 	=1 ist "Gewonnen"
-			//			=2 ist nicht gespielt, also "-"
-			//			=0 ist "Verloren"
-			 if (Character.getNumericValue(tmpString.charAt(i)) == 0) {
-				spielHistorie[i-1] = "Verloren"; 
-			 }
-			 if (Character.getNumericValue(tmpString.charAt(i)) == 1) {
-				spielHistorie[i-1] = "Gewonnen"; 
-			 }
-			 if (Character.getNumericValue(tmpString.charAt(i)) == 2) {
-				 spielHistorie[i-1] = "-"; 
-			 }
-		 }
+		this.spielfolge = tmpString;
+
+		for (int i = 1; i < tmpString.length(); i++) {
+			// Fälle: =1 ist "Gewonnen"
+			// =2 ist nicht gespielt, also "-"
+			// =0 ist "Verloren"
+			if (Character.getNumericValue(tmpString.charAt(i)) == 0) {
+				spielHistorie[i - 1] = "Verloren";
+			}
+			if (Character.getNumericValue(tmpString.charAt(i)) == 1) {
+				spielHistorie[i - 1] = "Gewonnen";
+			}
+			if (Character.getNumericValue(tmpString.charAt(i)) == 2) {
+				spielHistorie[i - 1] = "-";
+			}
+		}
 	}
 
 	public void setZeitGesamt(long zeitGesamt) {
@@ -249,11 +268,11 @@ public class Spieler {
 
 		setSpielHistorie(siegNiederlage);
 	}
-	
+
 	private void ueberpruefeMaxSiegesserie() {
 		if (spielerSiegesserie > spielerMaxSiegesserie) {
 			spielerMaxSiegesserie = spielerSiegesserie;
 		}
 	}
-	
+
 }
