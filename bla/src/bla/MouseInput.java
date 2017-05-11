@@ -9,6 +9,8 @@ public class MouseInput implements MouseListener {
 
 	int mi_zeile;
 	int mi_spalte;
+	
+	boolean var = true;
 
 	public MouseInput(int zeile, int spalte) {
 		mi_zeile = zeile;
@@ -37,6 +39,12 @@ public class MouseInput implements MouseListener {
 				
 				// Decke Feld auf
 				setSpielfeldStatusZuFeld(mi_zeile, mi_spalte);
+				
+				if (Spiel.getSpielfeldStatus(mi_zeile+1,mi_spalte+1) == 0) {
+					//umkreis(mi_zeile, mi_spalte);
+					linieRechts(mi_zeile, mi_spalte);
+					linieLinks(mi_zeile, mi_spalte);
+				}
 				
 				// Feld als Mine markiert (=3), jetzt wurde es aufgedeckt, dann erhöhe restMinen um 1
 				if (Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] == 3) {
@@ -122,6 +130,43 @@ public class MouseInput implements MouseListener {
 		Spiel.aufSiegpruefen(false);
 	} // end-mousePressed
 
+	private void umkreis(int mi_zeile, int mi_spalte) {
+		if (mi_spalte >= 1) {
+		setSpielfeldStatusZuFeld(mi_zeile, mi_spalte-1);
+		Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte-1, 1);
+		}
+		if (mi_spalte+1 < Spiel.getSpielfeldSpalten()) {
+		setSpielfeldStatusZuFeld(mi_zeile, mi_spalte+1);
+		Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte+1, 1);
+		}
+	}
+	
+	private void linieRechts(int mi_zeile, int mi_spalte) {
+		for (int i=mi_spalte; i>-1; i--) {
+			if (Spiel.getSpielfeldStatus(mi_zeile+1, i) == 0) {
+				setSpielfeldStatusZuFeld(mi_zeile, i);
+			}
+			else {
+				setSpielfeldStatusZuFeld(mi_zeile, i);
+				setSpielfeldStatusZuFeld(mi_zeile,i-1);
+				i=0;
+			}
+		}
+	}
+	
+	private void linieLinks(int mi_zeile, int mi_spalte) {
+		for (int i=mi_spalte; i<Spiel.getSpielfeldSpalten(); i++) {
+			if (Spiel.getSpielfeldStatus(mi_zeile+1, i) == 0) {
+				setSpielfeldStatusZuFeld(mi_zeile, i);
+			}
+			else {
+//				setSpielfeldStatusZuFeld(mi_zeile, i);
+//				setSpielfeldStatusZuFeld(mi_zeile,i+1);
+				i=Spiel.getSpielfeldSpalten();
+			}
+		}
+	}
+
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 	}
@@ -134,15 +179,15 @@ public class MouseInput implements MouseListener {
 			{
 			case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
 			case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
-			case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
-			case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
-			case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
-			case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
-			case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
-			case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
-			case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
-			case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
+			//case 0: leeresFeldAufdecken(z, sp); links(z, sp); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true);  break;
+			case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
+			case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); GUI_Spielfeld.Felder[z][sp].setAbgearbeitet(true); break;
 		}
 	}
-
 }

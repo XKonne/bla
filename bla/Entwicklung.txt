@@ -374,6 +374,8 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					+GUI_Start.spielerWechseln(): ruft erneut GUI_SpielerAuswahl auf, um den Spieler zu wechseln.
 												  Ein entsprechener Button ist in GUI_Start neben dem Spielernamen hinzugefügt.
 		
+		donw		Erster Entwurf freie Felder aufgedecken										10.05.2017	A.3.17
+		
 		
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
