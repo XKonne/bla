@@ -60,6 +60,7 @@ public class GUI_Start extends JFrame {
 
 	public void closeGUI_Start() {
 		this.dispose();
+		ObjectHandler.setGui_Start(null);
 	}
 
 	private void createButtons() {

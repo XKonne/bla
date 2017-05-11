@@ -44,6 +44,7 @@ public class GUI_SpielerAuswahl extends JFrame {
 
 	private void closeGUI_SpielerAuswahl() {
 		this.dispose();
+		ObjectHandler.setGui_SpielerAuswahl(null);
 	}
 
 	private void createButtons() {

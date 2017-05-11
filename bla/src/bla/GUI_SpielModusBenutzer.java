@@ -169,6 +169,7 @@ public class GUI_SpielModusBenutzer extends JFrame {
 	
 	private void closeGUI_SpielModusBenutzer() {
 		this.dispose();
+		ObjectHandler.setGui_SpielModusBenutzer(null);
 	}
 
 	private void initFrame() {

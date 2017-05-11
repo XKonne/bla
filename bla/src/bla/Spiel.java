@@ -264,6 +264,8 @@ public class Spiel {
 		
 		DataIO.updateSpielerData();
 		
+		ObjectHandler.showActiveObjects();
+		
 	}
 
 	public static long zeitmessungEnde(long tmpZeit) {

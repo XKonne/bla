@@ -36,7 +36,7 @@ public class GUI_Spielfeld extends JFrame {
 
 	private static JLabel lab_MinenRichtig = new JLabel();
 	private static JLabel lab_Restminen = new JLabel();
-	
+
 	// GUI - SpielEnde
 	JLabel lab_SpielEndeInformation = new JLabel();
 	JButton btn_SpielZurueck = new JButton();
@@ -62,6 +62,12 @@ public class GUI_Spielfeld extends JFrame {
 
 	private void closeGUI_SpielEnde() {
 		gui_SpielEnde.dispose();
+	}
+
+	private void closeGUI_Spielfeld() {
+		this.dispose();
+		ObjectHandler.setGui_Spielfeld(null);
+		ObjectHandler.setGui_AddMenubar(null);
 	}
 
 	private void createButtons() {
@@ -143,7 +149,7 @@ public class GUI_Spielfeld extends JFrame {
 				// Erzeugen der Felder und Eigenschaften setzen
 				Felder[z][sp] = new Feld();
 				Felder[z][sp].setMargin(new Insets(0, 0, 0, 0));
-				
+
 				MouseInput mouse = new MouseInput(z, sp);
 				Felder[z][sp].addMouseListener(mouse);
 
@@ -164,7 +170,8 @@ public class GUI_Spielfeld extends JFrame {
 		this.getContentPane().add(panSpielfeld, BorderLayout.CENTER);
 	}
 
-	public void GUI_SpielEnde(String SiegNiederlage) { // SpielEnde: Sieg-Niederlage Frame
+	public void GUI_SpielEnde(String SiegNiederlage) { // SpielEnde:
+														// Sieg-Niederlage Frame
 
 		// Frame-Initialisierung
 		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -276,7 +283,7 @@ public class GUI_Spielfeld extends JFrame {
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
 		this.setLocation(x, y);
-		//this.setLocation(x - frameWidth / 2, y - frameHeight / 2);
+		// this.setLocation(x - frameWidth / 2, y - frameHeight / 2);
 
 		this.setTitle("Projekt 'Seawolf' <no GameApp actually found>");
 		this.setResizable(true);
@@ -288,13 +295,13 @@ public class GUI_Spielfeld extends JFrame {
 		createSpielfeldFeld();
 		setSpielfeldStatusVerdeckt();
 	}
-	
+
 	public static void refreshLabels() {
 		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
 		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
 		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
 	}
-	
+
 	private void resetMinenWerte() {
 		Spiel.setRestMinen(Spiel.getMinenGesamt());
 		Spiel.setMinenRichtig(0);
@@ -309,10 +316,10 @@ public class GUI_Spielfeld extends JFrame {
 		}
 	}
 
-	public void setSpielfeldStatusVerdeckt () {
-		
-		for (int z=0; z<Spiel.getSpielfeldZeilen(); z++) {
-			for (int sp=0; sp<Spiel.getSpielfeldSpalten(); sp++) {
+	public void setSpielfeldStatusVerdeckt() {
+
+		for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
+			for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
 				Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
 			}
 		}
@@ -334,7 +341,7 @@ public class GUI_Spielfeld extends JFrame {
 		refreshLabels();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
-		
+
 		closeGUI_SpielEnde();
 
 	}
@@ -342,8 +349,7 @@ public class GUI_Spielfeld extends JFrame {
 	private void spielNeues() {
 
 		closeGUI_SpielEnde();
-		//Spielfeld Frame schließen
-		dispose();
+		closeGUI_Spielfeld();
 		ObjectHandler.createGui_Start();
 
 	}
@@ -355,7 +361,7 @@ public class GUI_Spielfeld extends JFrame {
 		Spiel.initSpielfeldGeklickt();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
-		
+
 		Spiel.zeitMessungStart();
 
 		closeGUI_SpielEnde();
@@ -363,10 +369,10 @@ public class GUI_Spielfeld extends JFrame {
 
 	private void spielStart() {
 		Spieler spieler = ObjectHandler.getSpieler();
-		
+
 		// Labels Text setzen
 		lab_SpielerName.setText(spieler.getSpielerName());
 		resetMinenWerte();
 		refreshLabels();
-	}	
+	}
 }
