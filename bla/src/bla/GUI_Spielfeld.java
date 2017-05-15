@@ -1,6 +1,10 @@
 package bla;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -148,8 +152,12 @@ public class GUI_Spielfeld extends JFrame {
 			for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
 				// Erzeugen der Felder und Eigenschaften setzen
 				Felder[z][sp] = new Feld();
+				//System.out.println("Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
+				//System.out.println("Feld Geklickt: " + GUI_Spielfeld.Felder[z][sp].getGeklickt());
 				Felder[z][sp].setMargin(new Insets(0, 0, 0, 0));
 
+//				Felder[z][sp].addActionListener(fl);
+				
 				MouseInput mouse = new MouseInput(z, sp);
 				Felder[z][sp].addMouseListener(mouse);
 
@@ -164,6 +172,15 @@ public class GUI_Spielfeld extends JFrame {
 				gbc.weighty = feldHeight;
 
 				panSpielfeld.add(Felder[z][sp], gbc);
+			}
+		}
+		// ich hatte auch mal in Zeile 154 die Zahlen z und sp übergeben um direkt die Koordinate zu setzen. Hat auch nichts genützt
+		for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
+			for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
+				//System.out.println("Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
+				Felder[z][sp].setmyX(z);
+				Felder[z][sp].setmyY(sp);
+				System.out.println("init Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
 			}
 		}
 
@@ -358,7 +375,8 @@ public class GUI_Spielfeld extends JFrame {
 		Spielfeldgesperrt = false;
 		resetMinenWerte();
 		refreshLabels();
-		Spiel.initSpielfeldGeklickt();
+		//Spiel.initSpielfeldGeklickt();
+		Spiel.clearSpielfeldGeklickt();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
 
@@ -375,4 +393,112 @@ public class GUI_Spielfeld extends JFrame {
 		resetMinenWerte();
 		refreshLabels();
 	}
+	
+	private class FeldListener implements java.awt.event.ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			
+			for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
+				for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
+
+					if ( evt.getSource() == Felder[z][sp]) {
+						Felder[z][sp].setmyX(z);
+						Felder[z][sp].setmyY(sp);
+						
+						System.out.println("Feld " + z + " , " + sp +" geklickt");
+						System.out.println("Feld Klickstatus" + Felder[z][sp].getGeklickt());
+						System.out.println(Felder[z][sp].getmyX() + "|" + Felder[z][sp].getmyY());
+					}
+					
+					
+					
+					if (GUI_Spielfeld.Spielfeldgesperrt == false) {
+						
+						// Linksklick & Feld vorher nicht per Linksklick aufgedeckt
+//											if (e.getButton() == MouseEvent.BUTTON1 && Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] != 1) {	
+						if ( GUI_Spielfeld.Felder[z][sp].getGeklickt() != 1) {	
+							// Decke Feld auf
+							setSpielfeldStatusZuFeld(z, sp);
+														
+							// Feld als Mine markiert (=3), jetzt wurde es aufgedeckt, dann erhöhe restMinen um 1
+//												if 	(Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] == 3) {
+							if (GUI_Spielfeld.Felder[z][sp].getGeklickt() == 3) {
+								Spiel.countMinenMarkierung(1);
+							}
+							
+							// Aufgedecktes Feld ist eine Mine, dann aufSiegpruefen(true) (=Niederlage) aufrufen
+							if (Spiel.getSpielfeldStatus(z+1, sp+1) == -1) {
+								Spiel.aufSiegpruefen(true);
+							}
+							// Setze Feld auf "aufgedeckt" (=1)
+							// 					Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 1);
+							GUI_Spielfeld.Felder[z][sp].setGeklickt(1);
+						}
+						
+						else {
+							// Feld ist aufgedeckt, do nothing (=wie Feld deaktiviert)
+						}
+						
+						// Rechtsklick und Feld nicht aufgedeckt
+//						if (e.getButton() == MouseEvent.BUTTON3 && Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] != 1) {
+//						if (e.getButton() == MouseEvent.BUTTON3 && GUI_Spielfeld.Felder[mi_zeile][mi_spalte].getGeklickt() != 1) {
+//							
+//							// Feld ist nicht markiert, setze Fahne
+////							if (Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] != 3) {
+//							if (GUI_Spielfeld.Felder[mi_zeile][mi_spalte].getGeklickt() != 3) {
+//								GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne.gif")));
+//								Spiel.countMinenMarkierung(-1);
+//								
+//								// Feld ist Mine, erhöhe Minen-Richtig-Zähler                                hier +1
+//								if (Spiel.getSpielfeldStatus(mi_zeile+1, mi_spalte+1) == -1) {
+//									Spiel.countMineRichtig(1);
+//								}
+//								
+//								//Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 3);
+//								GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setGeklickt(3);
+//							}
+//							// Feld ist markiert, Spielfeld auf "nicht-aufgedeckt" zurückgesetzt
+//							else {
+//								GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
+//								//Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 0);
+//								GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setGeklickt(0);
+//								Spiel.countMinenMarkierung(1);
+//							}
+//						}
+					}
+					Spiel.aufSiegpruefen(false);
+				}
+					
+					
+					
+					
+					
+				}
+			}
+			
+			
+			
+		}
+	
+	FeldListener fl = new FeldListener();
+	
+	
+public void setSpielfeldStatusZuFeld(int z, int sp) {
+		
+		switch (Spiel.getSpielfeldStatus(z+1,sp+1))
+			{
+			case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
+			case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
+			case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
+			case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
+			case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
+			case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
+			case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
+			case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
+			case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
+			case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
+		}
+	}
+	
 }

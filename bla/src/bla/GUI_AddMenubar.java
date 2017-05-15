@@ -43,8 +43,9 @@ public class GUI_AddMenubar extends JMenuBar {
 
 		// Menu > Spiel > Sub
 		jmi_neuesSpiel = new JMenuItem("Neues Spiel");
-		jmi_neuesSpiel.setEnabled(false);
+		jmi_neuesSpiel.setEnabled(true);
 		jm_Spiel.add(jmi_neuesSpiel);
+		jmi_neuesSpiel.addActionListener(e -> neuesSpiel());
 		jm_Spiel.add(sep1);
 
 		jm_AktuellesSpiel = new JMenu("Aktuelles Spiel");
@@ -124,6 +125,13 @@ public class GUI_AddMenubar extends JMenuBar {
 		jm_Hilfe.add(jmi_ueber);
 		jmi_ueber.addActionListener(e -> JOptionPane.showMessageDialog(null, "Version: " + GUI_Spielfeld.versiont));
 
+	}
+
+	private void neuesSpiel() {
+		ObjectHandler.getGui_Spielfeld().dispose();
+		ObjectHandler.setGui_Spielfeld(null);
+		ObjectHandler.setSpiel(null);
+		ObjectHandler.createGui_Start();
 	}
 
 }

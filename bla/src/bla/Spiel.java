@@ -27,7 +27,7 @@ public class Spiel {
 
 	// Arrays
 	public static int[][] spielfeld = new int[anzahlZeilen][anzahlSpalten];
-	public static int[][] spielfeldGeklickt = new int[anzahlZeilen][anzahlSpalten];
+	//public static int[][] spielfeldGeklickt = new int[anzahlZeilen][anzahlSpalten];
 
 	public static void main(String[] args) {
 
@@ -67,7 +67,9 @@ public class Spiel {
 	public static void createSpiel() {
 
 		// Erstellt eine neue Spiel-Runde
-		initSpielfeldGeklickt();
+		//initSpielfeldGeklickt();
+		
+		
 		initSpielfeldStatus();
 		setSpielfeldMinen();
 		setSpielfeldZahlen();
@@ -114,20 +116,32 @@ public class Spiel {
 	}
 
 
-	public static void setSpielfeldgeklickt(int zeile, int spalte, int wert) {
-		spielfeldGeklickt[zeile][spalte] = wert;
-	}
+//	public static void setSpielfeldgeklickt(int zeile, int spalte, int wert) {
+//		spielfeldGeklickt[zeile][spalte] = wert;
+//	}
 
 	public static Integer getSpielfeldStatus(int zeile, int spalte) {
 		return spielfeld[zeile][spalte];
 	}
 	
-	public static void initSpielfeldGeklickt() {
+	// TODO kann entfernt werden. Der Klick-Status wird beim Object Erzeugen gesetzt
+	// aber zum zurücksetzen wird eine solche Methode gebraucht
+//	public static void initSpielfeldGeklickt() {
+//
+//		// Zu beginn ist das spielfeldGeklickt-Status 0
+//		for (int i = 0; i < anzahlZeilen + 2; i++) {
+//			for (int j = 0; j < anzahlSpalten + 2; j++) {
+//				spielfeldGeklickt[i][j] = 0;
+//			}
+//		}
+//	}
+	
+	public static void clearSpielfeldGeklickt() {
 
 		// Zu beginn ist das spielfeldGeklickt-Status 0
-		for (int i = 0; i < anzahlZeilen + 2; i++) {
-			for (int j = 0; j < anzahlSpalten + 2; j++) {
-				spielfeldGeklickt[i][j] = 0;
+		for (int i = 0; i < anzahlZeilen; i++) {
+			for (int j = 0; j < anzahlSpalten; j++) {
+				GUI_Spielfeld.Felder[i][j].setGeklickt(0);
 			}
 		}
 	}
@@ -235,7 +249,7 @@ public class Spiel {
 		spielModus = modus;
 
 		spielfeld = new int[anzahlZeilen + 2][anzahlSpalten + 2];
-		spielfeldGeklickt = new int[anzahlZeilen + 2][anzahlSpalten + 2];
+		//spielfeldGeklickt = new int[anzahlZeilen + 2][anzahlSpalten + 2];
 
 		setupSpiel(spieler);
 	}
