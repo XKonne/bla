@@ -245,8 +245,9 @@ public class Spiel {
 		leereFelder = anzahlZeilen*anzahlSpalten-countZahlenFelder-anzahlMinen;
 		System.out.println("Leere Felder: " + leereFelder);
 		
-		// Solange noch leere Felder doppelt gespeichert werden, ist hier ein fiktiver Wert 500 hinzugefügt
-		merkeArray = new int[leereFelder+500][2];
+		// Solange noch leere Felder doppelt gespeichert werden, ist hier ein fiktiver Wert 1000 hinzugefügt
+		// weniger kann auf den größten Felder mit wenigen Minen zu Fehlern führen (out of index)
+		merkeArray = new int[leereFelder+1000][2];
 	}
 	
 	public static void addMerkeArray(int z, int sp) {
