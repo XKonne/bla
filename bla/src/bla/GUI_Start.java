@@ -148,7 +148,7 @@ public class GUI_Start extends JFrame {
 	public static void setSpielerAuswahlAnzeigen(Boolean anAus) {
 		spielerAuswahlAnzeigen = anAus;
 	}
-
+	
 	private void setSpielModusLeicht() {
 		Spiel.setSpielModus(8, 8, 10, "Leicht", spieler);
 		closeGUI_Start();

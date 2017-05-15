@@ -357,7 +357,7 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						DataIO: >loadSpieler(Spieler spieler, String data): liest nun dataArray[8] aus, welches die Spielhistorie beinhaltet
 								>fetchSpielerData(Spieler spieler): um spieler.getSpielfolge() erweitert
 								
-		donw		>DataIO: Spieler-Siegesserie funktioniert nun wie vorgesehen				09.05.2017	A.3.16
+		done		>DataIO: Spieler-Siegesserie funktioniert nun wie vorgesehen				09.05.2017	A.3.16
 					>DataIO: Spieler-MaxSiegesserie an den entsprechenden Stellen hinzugefügt
 					>data.txt: Spielerstatistiken zurückgesetzt, da neue Felder hinzugefügt
 					+Spieler: Attribut "spielerMaxSiegesserie" hinzugefügt
@@ -374,9 +374,44 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					+GUI_Start.spielerWechseln(): ruft erneut GUI_SpielerAuswahl auf, um den Spieler zu wechseln.
 												  Ein entsprechener Button ist in GUI_Start neben dem Spielernamen hinzugefügt.
 		
-		donw		Erster Entwurf freie Felder aufgedecken										10.05.2017	A.3.17
+		working		Erster Entwurf freie Felder aufgedecken										10.05.2017	A.3.17
+		|
+		done		Decke-leere-zusammenhängende-Felder auf										15.05.2017	A.3.18
+						"Nachdem ein leeres Feld aufgedeckt wird, werden alle benachbarten, zusammenhängenden leeren Felder aufgedeckt, sowie
+						 die Rand-Zahlenfelder"		
+					> MouseInput: +deckeUmkreisAuf(int z, int sp)
+									Überprüft alle 8 umliegende Felder des geklickten, leeren Feldes darauf, ob sie aufgedeckt werden können
+								 +arbeiteMerkeListeAb(int z, int sp);
+								 	Ist im umliegenden Feld ein weiteres leeres Feld gewesen, so wurde dies in "Spiel.merkeArray" eingetragen
+								 	und nachdem "deckeUmkreisAuf()" fertig ist, wird gleich die Liste abgearbeitet (sprich deckeUmkreisAuf() 
+								 	wieder aufrufen)
+								 +amRand(int z, int sp):
+								 	Überprüft, ob das zu überprüfende Feld außerhalb des sichtbaren Spielfeldes liegt. Rückgabewert true = am Rand
+								 	bzw. false = im Spielfeld.
+					> Spiel: spielfeld[][] in spielfeldStatus[][] umbenannt
+							 spielfeldGeklickt ist nun wie spielfeldStatus um 2 Einheiten größer als der gewählte Spielmodus
+							 
+							 + merkeArray[][] hinzugefügt. Es dient dazu die Koordinaten der gefundenen leeren Felder zwischenzuspeichern
+							 + zaehleFelderMitZahlen();
+							 	Zählt alle Felder, die mit Zahlen besetzt sind. Wird für zaehleFelderLeer() benötigt.
+							 + zaehleFelderLeer()
+							 	Berechnet die Anzahl der leeren Felder in der aktuellen Spielrunde. Dieser Wert wird für die Länge des merkeArrays
+							 	verwendet.
+							 + addMerkeArray(int z, int sp)
+							 	Fügt die übergebenen Koordinaten in die merkeArray-'Liste' hinzu
+							  
+					> GUI_Spielfeld > Felder: Felder ist nun um 2 Einheiten größer als der gewählte Spiemodus. Die erste Zeile/Spalte bzs. die
+											  letzte Zeile/Spalte werden nicht angezeigt.
+											  Dadurch hat man auf dem Spielfeld intuitivere Koordinaten: (1,1) ... (1,8) 
+											  													    bzw. (1,1) ... (8,1) 
+											  													    im Spielmodus "Leicht"
+		Fix			> GUI_Spielfeld > GUI_SpielEnde: Der Frame wird nun mittig auf dem Bildschirm angezeigt
 		
-		
+					
+					
+		TO-DO		Bei einer Niederlage werden alle verbliebenen Minen aufgedeckt und mit einem roten Rahmen gekennzeichnet
+				
+		TO-DO		Füge keine bereits in "Spiel.merkeArray" bekannten Koordinaten leerer Felder hinzu (> Spiel.addMerkeArray())
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
 					Spielfeld ist nur eine Zeile lang
