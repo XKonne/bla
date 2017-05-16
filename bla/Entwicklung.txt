@@ -407,9 +407,14 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 											  													    im Spielmodus "Leicht"
 		Fix			> GUI_Spielfeld > GUI_SpielEnde: Der Frame wird nun mittig auf dem Bildschirm angezeigt
 		
-					
-					
-		TO-DO		Bei einer Niederlage werden alle verbliebenen Minen aufgedeckt und mit einem roten Rahmen gekennzeichnet
+		done		>GUI_Spielfeld: +spielEndeMinenAufdecken()									16.05.2017	A.3.19							
+						Bei einer Niederlage werden alle Minen aufgedeckt. 
+						   - Minen mit einem roten Rahmen waren zuvor nicht makriert gewesen.
+						   - Falsch markierte Felder haben einen orangenen Rahmen und eine durchgestrichene Fahne.
+						
+
+						
+		TO-DO		Menubar je nach Fenster richtig ansteuern. Nicht implementierte Menüpunkte unsichtbar machen.		
 				
 		TO-DO		Füge keine bereits in "Spiel.merkeArray" bekannten Koordinaten leerer Felder hinzu (> Spiel.addMerkeArray())
 								

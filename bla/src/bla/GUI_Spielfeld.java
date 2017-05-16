@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
 
-	static String versiont = "A.3.18";
+	static String versiont = "A.3.19";
 
 	// Frame-Containe-Panel
 	private JFrame gui_SpielEnde = new JFrame();
@@ -234,6 +234,9 @@ public class GUI_Spielfeld extends JFrame {
 		lab_SpielEndeInformation.setText("<HTML><font size=14><i>" + SiegNiederlage + "!</i></font><br>Spieldauer: "
 				+ ObjectHandler.getSpieler().getZeitLetztesSpiel() / 1000 + " Sekunden. </HTML>");
 		cpGUI_SpielEnde.add(lab_SpielEndeInformation);
+		
+		// Alle Minen aufdecken, die noch nicht aufgedeckt sind oder nicht richtig markiert sind
+		spielEndeMinenAufdecken();
 
 		gui_SpielEnde.setVisible(true);
 	}
@@ -324,6 +327,8 @@ public class GUI_Spielfeld extends JFrame {
 			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
 				Felder[z][sp].setText(null);
 				Felder[z][sp].setIcon(null);
+				
+				Felder[z][sp].setBorder(null);
 			}
 		}
 	}
@@ -407,6 +412,37 @@ public class GUI_Spielfeld extends JFrame {
 		lab_SpielerName.setText(spieler.getSpielerName());
 		resetMinenWerte();
 		refreshLabels();
+	}
+
+	public void spielEndeMinenAufdecken() {
+		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
+				
+				if (Spiel.getSpielfeldStatus(z, sp) == -1)
+				{
+					if (Spiel.spielfeldGeklickt[z][sp] != 1 && Spiel.spielfeldGeklickt[z][sp] != 3) 
+					{
+						Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
+					
+						// Rahmen setzen
+						Border roterRahmen = new LineBorder(Color.RED, 1);
+						Felder[z][sp].setBorder(roterRahmen);
+					}
+				}
+				
+				if (Spiel.spielfeldGeklickt[z][sp] == 3) 
+				{
+					if (Spiel.getSpielfeldStatus(z, sp) != -1)
+					{
+						Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne-falsch.gif")));
+						
+						// Rahmen setzen
+						Border roterRahmen = new LineBorder(Color.ORANGE, 1);
+						Felder[z][sp].setBorder(roterRahmen);
+					}
+				}
+			}
+		}
 	}
 	
 }
