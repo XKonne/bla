@@ -407,16 +407,27 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 											  													    im Spielmodus "Leicht"
 		Fix			> GUI_Spielfeld > GUI_SpielEnde: Der Frame wird nun mittig auf dem Bildschirm angezeigt
 		
+	
 		done		>GUI_Spielfeld: +spielEndeMinenAufdecken()									16.05.2017	A.3.19							
 						Bei einer Niederlage werden alle Minen aufgedeckt. 
 						   - Minen mit einem roten Rahmen waren zuvor nicht makriert gewesen.
 						   - Falsch markierte Felder haben einen orangenen Rahmen und eine durchgestrichene Fahne.
+	
+		
+		done		>GUI_AddMenubar: nicht implementierte Menüpunkte ausgeblendet				17.05.2017  A.3.20
+									 Shortcuts hinzugefügt
+									 
+									 Methode geschrieben zum aktivieren/deaktivieren einiger Menüpunkte je nach GUI_Frame
+									 +setOnOffForGUIstart(boolean anAus): GUI_Start: Neues Spiel, Runde wiederholen, Neue Runde deaktiviert
+									 +setOnOffForGUIspielfeld(boolean anAus):  GUI_Spielfeld: oben genannte Menüpünkte aktiviert
+					>Spiel.addMerkeArray: bereits bekannte Koordinaten werden nicht mehr doppelt gespeichert.
+					
+					Fix:	Wurde eine richtig markierte Mine wieder ent-markiert, so wurde countMinenRichtig nicht ordnungsgemäß angesprochen
+					
+					Anmerkung:  Der Tab "Mehrspieler" auf GUI_Start ist solange er nicht implementiert ist, ausgeblendet
+								"Minen richtig"-Anzeige im Spielfeld entfernt. Hier soll später einmal die Spielzeit angezeigt werden
+					
 						
-
-						
-		TO-DO		Menubar je nach Fenster richtig ansteuern. Nicht implementierte Menüpunkte unsichtbar machen.		
-				
-		TO-DO		Füge keine bereits in "Spiel.merkeArray" bekannten Koordinaten leerer Felder hinzu (> Spiel.addMerkeArray())
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
 					Spielfeld ist nur eine Zeile lang

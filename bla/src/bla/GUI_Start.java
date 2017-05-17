@@ -137,10 +137,11 @@ public class GUI_Start extends JFrame {
 		tabLeiste.addTab("Einzelspieler", panel);
 
 		// Tab Mehrspieler
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(null);
-		panel2.add(new JLabel("Dauert noch eine weile..."));
-		tabLeiste.addTab("Mehrspieler", panel2);
+		// TODO erst einmal deaktiviert
+//		JPanel panel2 = new JPanel();
+//		panel2.setLayout(null);
+//		panel2.add(new JLabel("Dauert noch eine weile..."));
+//		tabLeiste.addTab("Mehrspieler", panel2);
 
 		this.setVisible(true);
 	}
@@ -170,6 +171,7 @@ public class GUI_Start extends JFrame {
 		createButtons();
 		createLabels();
 		addMenubar();
+		ObjectHandler.getGui_AddMenubar().setOnOffForGUIstart(false);
 		this.setVisible(true);
 
 		if (spielerAuswahlAnzeigen == true) {

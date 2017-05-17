@@ -8,7 +8,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
 
-	static String versiont = "A.3.19";
+	static String versiont = "A.3.20";
 
 	// Frame-Containe-Panel
 	private JFrame gui_SpielEnde = new JFrame();
@@ -33,7 +33,7 @@ public class GUI_Spielfeld extends JFrame {
 	private JLabel lab_SpielerName = new JLabel();
 	private static JLabel lab_SpielModus = new JLabel();
 
-	private static JLabel lab_MinenRichtig = new JLabel();
+	//private static JLabel lab_MinenRichtig = new JLabel();	// deaktiviert, wird später für die Spielzeit verwendet
 	private static JLabel lab_Restminen = new JLabel();
 
 	// GUI - SpielEnde
@@ -128,10 +128,10 @@ public class GUI_Spielfeld extends JFrame {
 		cpTop.add(lab_Restminen);
 
 		// debug anzeige
-		lab_MinenRichtig.setBounds(255, 28, 100, 20);
-		lab_MinenRichtig.setVisible(true);
-		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-		cpTop.add(lab_MinenRichtig);
+//		lab_MinenRichtig.setBounds(255, 28, 100, 20);
+//		lab_MinenRichtig.setVisible(true);
+//		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
+//		cpTop.add(lab_MinenRichtig);
 
 		lab_Version.setBounds(213, 2, 120, 20); // 100
 		lab_Version.setVisible(true);
@@ -314,7 +314,7 @@ public class GUI_Spielfeld extends JFrame {
 	public static void refreshLabels() {
 		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
 		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
-		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
+//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
 	}
 
 	private void resetMinenWerte() {
@@ -362,6 +362,7 @@ public class GUI_Spielfeld extends JFrame {
 	{
 		initFrame();
 		addMenubar();
+		ObjectHandler.getGui_AddMenubar().setOnOffForGUIspielfeld(true);
 		createButtons();
 		createLabels();
 

@@ -95,6 +95,7 @@ public class MouseInput implements MouseListener {
 					GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
 					Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 0);
 					Spiel.countMinenMarkierung(1);
+					Spiel.countMineRichtig(-1);
 				}
 			}
 		}

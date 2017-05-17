@@ -15,7 +15,7 @@ public class Spiel {
 	static int anzahlMinen = 0;
 	static int countZahlenFelder = 0;
 	static int leereFelder = 0;
-	static int i=0;
+	static int indexMerkeArray=0;
 	
 	// Long
 	private static long zeittmp = 0;
@@ -129,7 +129,10 @@ public class Spiel {
 	}
 	
 	public static void initSpielfeldGeklickt() {
-
+		
+		// Setze index im MerkeArray zurück
+		indexMerkeArray=0;
+		
 		// Zu beginn ist das spielfeldGeklickt-Status 0
 		for (int i = 0; i < anzahlZeilen + 2; i++) {
 			for (int j = 0; j < anzahlSpalten + 2; j++) {
@@ -202,7 +205,7 @@ public class Spiel {
 		
 		countZahlenFelder = 0;
 		leereFelder = 0;
-		i=0;
+		indexMerkeArray=0;
 
 		// Berechnet für jedes Feld die Anzahl der umliegenden Minen
 		// Es durchläuft den äußeren Rand nicht, da es nicht zum angezeigten
@@ -242,22 +245,34 @@ public class Spiel {
 	}
 
 	private static void zaehleFelderLeer() {
-		leereFelder = anzahlZeilen*anzahlSpalten-countZahlenFelder-anzahlMinen;
+		leereFelder = (anzahlZeilen*anzahlSpalten)-countZahlenFelder-anzahlMinen;
 		System.out.println("Leere Felder: " + leereFelder);
 		
-		// Solange noch leere Felder doppelt gespeichert werden, ist hier ein fiktiver Wert 1000 hinzugefügt
-		// weniger kann auf den größten Felder mit wenigen Minen zu Fehlern führen (out of index)
-		merkeArray = new int[leereFelder+1000][2];
+		merkeArray = new int[leereFelder+anzahlMinen][2];
 	}
 	
 	public static void addMerkeArray(int z, int sp) {
 		
-		//TODO füge nur Feld-Koordinaten hinzu, die noch nicht vorkommen
+		boolean eintragGefunden = false;
 		
-		merkeArray[i][0]=z;
-		merkeArray[i][1]=sp;
-		i=i+1;
-		
+		for (int index=0; index < merkeArray.length; index++) {
+			if (merkeArray[index][0] == z && merkeArray[index][1] == sp) 
+			{
+				eintragGefunden = true;
+				System.out.println("Eintrag gefunden");
+			}
+		}
+		// Füge Eintrag hinzu
+		if (eintragGefunden == false)
+			{
+				merkeArray[indexMerkeArray][0]=z;
+				merkeArray[indexMerkeArray][1]=sp;
+				indexMerkeArray=indexMerkeArray+1;
+				
+				System.out.println("Eintrag hinzugefügt");
+				
+			}
+				
 		//debug
 			for (int i=0; i<merkeArray.length; i++) {
 				if (merkeArray[i][0] == 0 && merkeArray[i][1] == 0)
