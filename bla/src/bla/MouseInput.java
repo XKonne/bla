@@ -32,10 +32,8 @@ public class MouseInput implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
-		System.out.println("- - - - - - - - - - - ");
-		System.out.println("Wert an MouseInput uebergeben: " + mi_zeile + " | " + mi_spalte);
-		
-		
+		Debug.debugFeld(0, mi_zeile, mi_spalte);
+				
 		if (GUI_Spielfeld.Spielfeldgesperrt == false) {
 			
 			// Linksklick & Feld vorher nicht per Linksklick aufgedeckt
@@ -62,12 +60,11 @@ public class MouseInput implements MouseListener {
 				}
 				// Setze Feld auf "aufgedeckt" (=1)
 				Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 1);
-				System.out.println("Klickstatus: " + GUI_Spielfeld.Felder[mi_zeile][mi_spalte].getGeklickt());
 			}
 			
 			else {
 				// Feld ist aufgedeckt, do nothing (=wie Feld deaktiviert)
-				System.out.println("nothing");
+				Debug.debugFeld(1, 0, 0);
 			}
 			
 			// Rechtsklick und Feld nicht aufgedeckt
@@ -77,14 +74,18 @@ public class MouseInput implements MouseListener {
 				if (Spiel.spielfeldGeklickt[mi_zeile][mi_spalte] != 3) 
 				{
 					GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne.gif")));
-					System.out.println("Fahne auf " +mi_zeile+","+mi_spalte);
+					Debug.debugFeld(2, 0, 0);
 					Spiel.countMinenMarkierung(-1);
 					
 					// Feld ist Mine, erhöhe Minen-Richtig-Zähler
 					if (Spiel.getSpielfeldStatus(mi_zeile, mi_spalte) == -1) 
 					{
 						Spiel.countMineRichtig(1);
-						System.out.println("Mine richtig markiert");
+						Debug.debugFeld(3, 0, 0);
+					}
+					else 
+					{
+						Debug.debugFeld(4, 0, 0);
 					}
 
 					Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 3);
@@ -94,8 +95,16 @@ public class MouseInput implements MouseListener {
 				{
 					GUI_Spielfeld.Felder[mi_zeile][mi_spalte].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
 					Spiel.setSpielfeldgeklickt(mi_zeile, mi_spalte, 0);
+					
+					// Fahne entfernt > Minen Markierung erhöhen
 					Spiel.countMinenMarkierung(1);
-					Spiel.countMineRichtig(-1);
+					
+					// Falls unter der Fahne eine Mine war, erniedrige Minen-Richtig-Zähler
+					if (Spiel.getSpielfeldStatus(mi_zeile, mi_spalte) == -1)
+					{
+						Spiel.countMineRichtig(-1);
+					}
+					Debug.debugFeld(6, 0, 0);
 				}
 			}
 		}
@@ -111,15 +120,17 @@ public class MouseInput implements MouseListener {
 		if (Spiel.merkeArray[i][0] == 0 && Spiel.merkeArray[i][1] == 0) 
 		{
 			// do nothing
-			System.out.println("0,0 mache nichts in Liste");
 		}
 		// Arbeite eingetragene Felder ab
 		else 
 		{
-			System.out.println("Listenaufruf");
+			Debug.debugLeeresFeld(4, 0, 0);
+			
 			// Rufe Eintrag ab und decke sein Umkreis auf
 			deckeUmkreisAuf(Spiel.merkeArray[i][0], Spiel.merkeArray[i][1]);
-			System.out.println("Alten Eintrag negieren");
+			
+			Debug.debugLeeresFeld(5, i, 0);
+			
 			// Lösche Eintrag von dem eben betrachteten Eintrag
 			Spiel.merkeArray[i][0]=0;
 			Spiel.merkeArray[i][1]=0;
@@ -128,221 +139,69 @@ public class MouseInput implements MouseListener {
 	}
 
 private void deckeUmkreisAuf(int z, int sp) {
-	System.out.println("Decke Umkreis auf von: " + z + " | " + sp);
-	// Zeile über dem Feld
-	// X - -
-	// - 0 -
-	// - - -
-	if (amRand(z-1, sp-1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z-1,sp-1) == 0 && Spiel.spielfeldGeklickt[z-1][sp-1] != 1 && Spiel.spielfeldGeklickt[z-1][sp-1] != 3) 
-		{
-	 		Spiel.addMerkeArray(z-1, sp-1);
-			setSpielfeldStatusZuFeld(z-1, sp-1);
-			Spiel.spielfeldGeklickt[z-1][sp-1] = 1;
-		}
-		else
-		{
-			if (Spiel.getSpielfeldStatus(z-1,sp-1) != -1 && Spiel.spielfeldGeklickt[z-1][sp-1] != 1 && Spiel.spielfeldGeklickt[z-1][sp-1] != 3) 
-			{
-				if (amRand(z-1, sp-1) == false) 
+	
+	Debug.debugLeeresFeld(0, z, sp);
+	
+	// Schleifen, um 1 Zeile drüber, mittig und drunter (hr=hoch-runter) 
+	for (int hr = -1; hr <= 1; hr++) {
+		// ..sowie links, mittig, rechts vom Feld (lr=links-rechts)
+		for (int lr = -1; lr <= 1; lr ++) {
+			
+			// wenn kein Rand-Feld (=Feld außerhalb des Spielfeldes)
+			if (amRand(z + hr, sp + lr) == false) {
+				// und es Leer ist und nicht-aufgedeckt und nicht-markiert
+				if (Spiel.getSpielfeldStatus(z + hr, sp +lr) == 0 && Spiel.spielfeldGeklickt[z + hr][sp + lr] != 1 && Spiel.spielfeldGeklickt[z + hr][sp + lr] != 3) 
 				{
-					setSpielfeldStatusZuFeld(z-1, sp-1);
-					Spiel.spielfeldGeklickt[z-1][sp-1] = 1;
+					// füge es dem merkeArray hinzu
+			 		Spiel.addMerkeArray(z + hr, sp + lr);
+			 		
+			 		// decke auf
+					setSpielfeldStatusZuFeld(z + hr, sp + lr);
+					// setze es als geklickt
+					Spiel.spielfeldGeklickt[z + hr][sp + lr] = 1;
+				}
+				else
+				{
+					// Nicht Leer und keine Mine, d.h. es ist ein Zahlenfeld!
+					// und es soll nicht-aufgedeckt und nicht markiert sein
+					if (Spiel.getSpielfeldStatus(z + hr, sp + lr) != -1 && Spiel.spielfeldGeklickt[z + hr][sp + lr] != 1 && Spiel.spielfeldGeklickt[z + hr][sp + lr] != 3) 
+					{
+						// decke auf
+						setSpielfeldStatusZuFeld(z + hr, sp + lr);
+						// setze als geklickt
+						Spiel.spielfeldGeklickt[z + hr][sp + lr] = 1;
+					}
 				}
 			}
 		}
 	}
-	// - X -
-	// - 0 -
-	// - - -
-	if (amRand(z-1, sp) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z-1,sp) == 0 && Spiel.spielfeldGeklickt[z-1][sp] != 1 && Spiel.spielfeldGeklickt[z-1][sp] != 3) 
-		{
-			Spiel.addMerkeArray(z-1, sp);
-			setSpielfeldStatusZuFeld(z-1, sp);
-			Spiel.spielfeldGeklickt[z-1][sp] = 1;
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z-1,sp) != -1 && Spiel.spielfeldGeklickt[z-1][sp] != 1 && Spiel.spielfeldGeklickt[z-1][sp] != 3) 
-			{
-				if (amRand(z-1, sp) == false) 
-				{
-					setSpielfeldStatusZuFeld(z-1, sp);
-					Spiel.spielfeldGeklickt[z-1][sp] = 1;
-				}
-			}
-		}
-	}
-	// - - X
-	// - 0 -
-	// - - -
-	if (amRand(z-1, sp+1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z-1,sp+1) == 0 && Spiel.spielfeldGeklickt[z-1][sp+1] != 1 && Spiel.spielfeldGeklickt[z-1][sp+1] != 3) 
-		{
-			Spiel.addMerkeArray(z-1, sp+1);
-			setSpielfeldStatusZuFeld(z-1, sp+1);
-			Spiel.spielfeldGeklickt[z-1][sp+-1] = 1;
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z-1,sp+1) != -1 && Spiel.spielfeldGeklickt[z-1][sp+1] != 1 && Spiel.spielfeldGeklickt[z-1][sp+1] != 3) 
-			{
-				if (amRand(z-1, sp+1) == false) 
-				{
-					setSpielfeldStatusZuFeld(z-1, sp+1);
-					Spiel.spielfeldGeklickt[z-1][sp+1] = 1;
-				}
-			}
-		}
-	}
-	// Zeile mit Feld
-	// - - -
-	// X 0 -
-	// - - -
-	if (amRand(z, sp-1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z,sp-1) == 0 && Spiel.spielfeldGeklickt[z][sp-1] != 1 && Spiel.spielfeldGeklickt[z][sp-1] != 3) 
-		{
-			Spiel.addMerkeArray(z, sp-1);
-			setSpielfeldStatusZuFeld(z, sp-1);
-			Spiel.spielfeldGeklickt[z][sp-1] = 1;
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z,sp-1) != -1 && Spiel.spielfeldGeklickt[z][sp-1] != 1 && Spiel.spielfeldGeklickt[z][sp-1] != 3) 
-			{
-				if (amRand(z, sp-1) == false) 
-				{
-					setSpielfeldStatusZuFeld(z, sp-1);
-					Spiel.spielfeldGeklickt[z][sp-1] = 1;
-				}
-			}
-		}
-	}
-	// - - -
-	// - 0 X
-	// - - -
-	if (amRand(z, sp+1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z,sp+1) == 0 && Spiel.spielfeldGeklickt[z][sp+1] != 1 && Spiel.spielfeldGeklickt[z][sp+1] != 3) 
-		{
-			Spiel.addMerkeArray(z, sp+1);
-			setSpielfeldStatusZuFeld(z, sp+1);
-			Spiel.spielfeldGeklickt[z][sp+1] = 1;
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z,sp+1) != -1 && Spiel.spielfeldGeklickt[z][sp+1] != 1 && Spiel.spielfeldGeklickt[z][sp+1] != 3) 
-			{
-				if (amRand(z, sp+1) == false) 
-				{
-					setSpielfeldStatusZuFeld(z, sp+1);
-					Spiel.spielfeldGeklickt[z][sp+1] = 1;
-				}
-			}
-		}
-	}
-	// Zeile unter dem Feld
-	// - - -
-	// - 0 -
-	// X - -
-	if (amRand(z+1, sp-1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z+1,sp-1) == 0 && Spiel.spielfeldGeklickt[z+1][sp-1] != 1 && Spiel.spielfeldGeklickt[z+1][sp-1] != 3) 
-		{
-			Spiel.addMerkeArray(z+1, sp-1);
-			setSpielfeldStatusZuFeld(z+1, sp-1);
-			Spiel.spielfeldGeklickt[z+1][sp-1] = 1;
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z+1,sp-1) != -1 && Spiel.spielfeldGeklickt[z+1][sp-1] != 1 && Spiel.spielfeldGeklickt[z+1][sp-1] != 3) 
-			{
-				if (amRand(z+1, sp-1) == false) 
-				{
-					setSpielfeldStatusZuFeld(z+1, sp-1);
-					Spiel.spielfeldGeklickt[z+1][sp-1] = 1;
-				}
-			}
-		}
-	}
-	// - - -
-	// - 0 -
-	// - X -
-	if (amRand(z+1, sp) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z+1,sp) == 0 && Spiel.spielfeldGeklickt[z+1][sp] != 1 && Spiel.spielfeldGeklickt[z+1][sp] != 3) 
-		{
-			if (amRand(z+1, sp) == false) 
-			{
-				Spiel.addMerkeArray(z+1, sp);
-				setSpielfeldStatusZuFeld(z+1, sp);
-				Spiel.spielfeldGeklickt[z+1][sp] = 1;
-			}
-		}
-		else 
-		{
-			if (Spiel.getSpielfeldStatus(z+1,sp) != -1 && Spiel.spielfeldGeklickt[z+1][sp] != 1 && Spiel.spielfeldGeklickt[z+1][sp] != 3) 
-			{
-				if (amRand(z+1, sp) == false) 
-				{
-					setSpielfeldStatusZuFeld(z+1, sp);
-					Spiel.spielfeldGeklickt[z+1][sp] = 1;
-				}
-			}
-		}
-	}
-	// - - -
-	// - 0 -
-	// - - X
-	if (amRand(z+1, sp+1) == false) 
-	{
-		if (Spiel.getSpielfeldStatus(z+1,sp+1) == 0 && Spiel.spielfeldGeklickt[z+1][sp+1] != 1 && Spiel.spielfeldGeklickt[z+1][sp+1] != 3) 
-		{
-			Spiel.addMerkeArray(z+1, sp+1);
-			setSpielfeldStatusZuFeld(z+1, sp+1);
-			Spiel.spielfeldGeklickt[z+1][sp+1] = 1;
-		}
-		else
-		{
-			if (Spiel.getSpielfeldStatus(z+1,sp+1) != -1 && Spiel.spielfeldGeklickt[z+1][sp+1] != 1 && Spiel.spielfeldGeklickt[z+1][sp+1] != 3) 
-			{
-				if (amRand(z+1, sp+1) == false) 
-				{
-					setSpielfeldStatusZuFeld(z+1, sp+1);
-					Spiel.spielfeldGeklickt[z+1][sp+1] = 1;
-				}
-			}
-		}
-	}
-	System.out.println("Decke Umkreis auf - FERTIG");
+	
 	} // end-deckeUmkreisAuf()
 
 	private boolean amRand(int z, int sp) {
 		
 		// Rückgabe Variable
 		boolean antwort=false;
-		System.out.println("Überprüfe ob rand: " +"("+ z +"_"+ sp+")");
+		Debug.debugFeldIstRand(0, z, sp);
 		
 		// Wenn Zeilen kleiner-gleich 0   oder   Spalten kleiner-gleich 0
 		// dann ist das Feld außerhalb des Spielfeldes
-		if (z <= 0 || sp <= 0)
+		if (z <= 0 || z > Spiel.getSpielfeldZeilen() )
 		{
-			System.out.println("ACHTUNG !!! Rand bei Z");
+			Debug.debugFeldIstRand(1, z, 0);
 			antwort = true;
 		}
 		// Wenn Zeilen größer-gleich "Spielfeld-Zeilen"   oder   Spalten größer-gleich "Spielfeld-Spalten"
 		// dann ist das Feld außerhalb des Spielfeldes
-		if (z > Spiel.getSpielfeldZeilen() || sp > Spiel.getSpielfeldSpalten() )
+		if (sp <= 0 || sp > Spiel.getSpielfeldSpalten() )
 		{
-			System.out.println("ACHTUNG !!! Rand bei SP");
+			Debug.debugFeldIstRand(2, 0, sp);
 			antwort = true;
 		}
-		System.out.println(antwort);
+		
+		if (Debug.debugAnAus == true && Debug.msgFeldIstRand == true) {
+			System.out.println(antwort);
+		}
 		return antwort;
 	}
 
@@ -358,6 +217,8 @@ private void deckeUmkreisAuf(int z, int sp) {
 		// Prüfe ob Feld noch im Spielfeld liegt
 		if (amRand(z,sp) == false)
 		{
+			Debug.debugFeld(5, z, sp);
+						
 			// Decke das Feld mit dem entsprecheneden Bild auf
 			switch (Spiel.getSpielfeldStatus(z,sp))
 			{

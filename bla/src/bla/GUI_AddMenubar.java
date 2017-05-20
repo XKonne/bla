@@ -146,7 +146,7 @@ public class GUI_AddMenubar extends JMenuBar {
 		// Shortcut "b"
 		jmi_ueber.setMnemonic(KeyEvent.VK_B);
 		jm_Hilfe.add(jmi_ueber);
-		jmi_ueber.addActionListener(e -> JOptionPane.showMessageDialog(null, "Version: " + GUI_Spielfeld.versiont));
+		jmi_ueber.addActionListener(e -> JOptionPane.showMessageDialog(null, "Version: " + GUI_Start.version));
 
 	}
 

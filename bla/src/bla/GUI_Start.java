@@ -16,6 +16,7 @@ public class GUI_Start extends JFrame {
 
 	// Varialblen
 	private static boolean spielerAuswahlAnzeigen = true;
+	static String version = "A.3.21";
 
 	// Buttons
 	private static JButton btn_ModusLeicht = new JButton();
@@ -27,6 +28,7 @@ public class GUI_Start extends JFrame {
 
 	// Labels
 	private static JLabel lab_SpielerName = new JLabel();
+	private static JLabel lab_Version = new JLabel();
 
 	public GUI_Start() {
 
@@ -65,7 +67,7 @@ public class GUI_Start extends JFrame {
 
 	private void createButtons() {
 		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
-		btn_SpielerProfil.setBounds(325, 5, 40, 40);
+		btn_SpielerProfil.setBounds(305, 5, 40, 40);
 		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
 		btn_SpielerProfil.setEnabled(false);
 		btn_SpielerProfil.setVisible(false);
@@ -115,11 +117,16 @@ public class GUI_Start extends JFrame {
 
 	private void createLabels() {
 		Border border = LineBorder.createGrayLineBorder();
-		lab_SpielerName.setBounds(375, 5, 160, 40);
+		lab_SpielerName.setBounds(350, 5, 185, 40);
 		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
 		lab_SpielerName.setBorder(border);
 		lab_SpielerName.setVisible(false);
 		panel.add(lab_SpielerName);
+		
+		lab_Version.setBounds(5, 0, 120, 20);
+		lab_Version.setVisible(true);
+		lab_Version.setText(version);
+		panel.add(lab_Version);
 	}
 
 	private void initFrame() {
@@ -130,7 +137,7 @@ public class GUI_Start extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.add(tabLeiste);
-		this.setTitle("Projekt 'Seawolf'");
+		this.setTitle("Namenloses Programmierprojekt");
 		this.setResizable(false);
 
 		panel.setLayout(null);

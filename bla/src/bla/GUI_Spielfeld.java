@@ -8,9 +8,7 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
 
-	static String versiont = "A.3.20";
-
-	// Frame-Containe-Panel
+	// Frame-Container-Panel
 	private JFrame gui_SpielEnde = new JFrame();
 	GridBagConstraints gbc = new GridBagConstraints();
 
@@ -87,27 +85,11 @@ public class GUI_Spielfeld extends JFrame {
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		cpTop.add(btn_SpielNeustart);
 		btn_SpielNeustart.addActionListener(e -> spielNochmal());
-
-		// Button-Rahmen für später nützlich
-
-		// reload.addMouseListener(new java.awt.event.MouseAdapter() {
-		// public void mouseEntered(java.awt.event.MouseEvent evt) {
-		// //reload.setBackground(Color.GREEN);
-		//
-		// reload.setBorder(BorderFactory.createLineBorder(Color.red));
-		// }
-		//
-		// public void mouseExited(java.awt.event.MouseEvent evt) {
-		// // reload.setBackground(UIManager.getColor("control"));
-		// reload.setBorder(BorderFactory.createLineBorder(null));
-		// }
-		// });
 	}
 
 	private void createLabels() {
 
 		Border border = LineBorder.createGrayLineBorder();
-		JLabel lab_Version = new JLabel();
 
 		// GUI-Spielfeld
 		lab_SpielerName.setBounds(50, 5, 200, 40);
@@ -132,13 +114,6 @@ public class GUI_Spielfeld extends JFrame {
 //		lab_MinenRichtig.setVisible(true);
 //		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
 //		cpTop.add(lab_MinenRichtig);
-
-		lab_Version.setBounds(213, 2, 120, 20); // 100
-		lab_Version.setVisible(true);
-		lab_Version.setText(versiont);
-		// debug: lab_Version.setText(" W: "+this.getWidth()+", H:
-		// "+this.getHeight());
-		cpTop.add(lab_Version);
 	}
 
 	private void createSpielfeldFeld() {
@@ -282,8 +257,6 @@ public class GUI_Spielfeld extends JFrame {
 		this.getContentPane().add(cpBot, BorderLayout.PAGE_END);
 
 		// Center > Spielfeld
-		// panSpielfeld.setLayout(new GridLayout(Spiel.getSpielfeldZeilen(),
-		// Spiel.getSpielfeldSpalten(), feldAbstand,feldAbstand));
 		panSpielfeld.setLayout(new GridBagLayout());
 
 		// 73 anscheinend top und 23 menubar
@@ -298,9 +271,8 @@ public class GUI_Spielfeld extends JFrame {
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
 		this.setLocation(x, y);
-		//this.setLocation(x - frameWidth / 2, y - frameHeight / 2);
 
-		this.setTitle("Projekt 'Seawolf' <no GameApp actually found>");
+		this.setTitle("Namenloses Programmierprojekt");
 		this.setResizable(true);
 		this.repaint();
 		this.setVisible(true);
@@ -325,9 +297,10 @@ public class GUI_Spielfeld extends JFrame {
 	private void resetSpielfeldStatusToFeld() {
 		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
 			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
+				
+				// Text bzw. Bilder bzw. Rahmen entfernen
 				Felder[z][sp].setText(null);
 				Felder[z][sp].setIcon(null);
-				
 				Felder[z][sp].setBorder(null);
 			}
 		}
@@ -365,9 +338,6 @@ public class GUI_Spielfeld extends JFrame {
 		ObjectHandler.getGui_AddMenubar().setOnOffForGUIspielfeld(true);
 		createButtons();
 		createLabels();
-
-		System.out.println("Spielfeld-Zeilen: " + Spiel.getSpielfeldZeilen());
-		System.out.println("Spielfeld-Spalten: " + Spiel.getSpielfeldSpalten());
 	}
 
 	public void spielNeueRunde() 
@@ -380,7 +350,6 @@ public class GUI_Spielfeld extends JFrame {
 		setSpielfeldStatusVerdeckt();
 
 		closeGUI_SpielEnde();
-
 	}
 
 	private void spielNeues() 

@@ -68,17 +68,18 @@ public class Spiel {
 	}
 
 
-	public static void createSpiel() {
-
+	public static void createSpiel() 
+	{
 		// Erstellt eine neue Spiel-Runde
 		initSpielfeldGeklickt();
-		
 		
 		initSpielfeldStatus();
 		setSpielfeldMinen();
 		setSpielfeldZahlen();
 		
 		zeitMessungStart();
+		
+		Debug.debugSpiel();
 	}
 
 
@@ -133,7 +134,7 @@ public class Spiel {
 		// Setze index im MerkeArray zurück
 		indexMerkeArray=0;
 		
-		// Zu beginn ist das spielfeldGeklickt-Status 0
+		// Zu beginn ist das spielfeldGeklickt-Status 0 (=nicht angeklickt)
 		for (int i = 0; i < anzahlZeilen + 2; i++) {
 			for (int j = 0; j < anzahlSpalten + 2; j++) {
 				spielfeldGeklickt[i][j] = 0;
@@ -145,7 +146,7 @@ public class Spiel {
 
 		// Spielfeldstatus ist um 2 Einheiten größer als das angezeigte
 		// Spielfeld
-		// Zu beginn ist das Spielfeld leer (Wert: 0)
+		// Zu beginn ist der Spielfeld-Status leer (Wert: 0)
 		for (int i = 0; i < anzahlZeilen + 2; i++) {
 			for (int j = 0; j < anzahlSpalten + 2; j++) {
 				spielfeldStatus[i][j] = 0;
@@ -185,19 +186,14 @@ public class Spiel {
 			int zeile = random.nextInt(anzahlZeilen) + 1;
 			int spalte = random2.nextInt(anzahlSpalten) + 1;
 			
-			//JOptionPane.showMessageDialog(null, "zeile " + zeile + "spalte " + spalte);
-
 			// Auf dem Spielfeld existiert bereits eine Mine. Neuer Versuch
 			if (spielfeldStatus[zeile][spalte] == -1) {
 				i = i - 1;
-				// debug: JOptionPane.showMessageDialog(null, "boing");
 			}
 			// Freies Feld > platziere Mine (Wert: -1)
 			else {
 				spielfeldStatus[zeile][spalte] = -1;
 			}
-			// debug: JOptionPane.showMessageDialog(null, "x: " + x + "/ y: " +
-			// y);
 		}
 	}
 
@@ -208,34 +204,22 @@ public class Spiel {
 		indexMerkeArray=0;
 
 		// Berechnet für jedes Feld die Anzahl der umliegenden Minen
-		// Es durchläuft den äußeren Rand nicht, da es nicht zum angezeigten
-		// Spielfeld gehört
 		for (int i = 0; i < anzahlZeilen+2; i++) {
 			for (int j = 0; j < anzahlSpalten+2; j++) {
-				if (spielfeldStatus[i][j] == -1) {
-					if (spielfeldStatus[i - 1][j - 1] != -1) {
-						spielfeldStatus[i - 1][j - 1] = spielfeldStatus[i - 1][j - 1] + 1;
-					}
-					if (spielfeldStatus[i][j - 1] != -1) {
-						spielfeldStatus[i][j - 1] = spielfeldStatus[i][j - 1] + 1;
-					}
-					if (spielfeldStatus[i + 1][j - 1] != -1) {
-						spielfeldStatus[i + 1][j - 1] = spielfeldStatus[i + 1][j - 1] + 1;
-					}
-					if (spielfeldStatus[i - 1][j] != -1) {
-						spielfeldStatus[i - 1][j] = spielfeldStatus[i - 1][j] + 1;
-					}
-					if (spielfeldStatus[i + 1][j] != -1) {
-						spielfeldStatus[i + 1][j] = spielfeldStatus[i + 1][j] + 1;
-					}
-					if (spielfeldStatus[i - 1][j + 1] != -1) {
-						spielfeldStatus[i - 1][j + 1] = spielfeldStatus[i - 1][j + 1] + 1;
-					}
-					if (spielfeldStatus[i][j + 1] != -1) {
-						spielfeldStatus[i][j + 1] = spielfeldStatus[i][j + 1] + 1;
-					}
-					if (spielfeldStatus[i + 1][j + 1] != -1) {
-						spielfeldStatus[i + 1][j + 1] = spielfeldStatus[i + 1][j + 1] + 1;
+				if (spielfeldStatus[i][j] == -1) 
+				{
+					// Schleifen, um 1 Zeile drüber, mittig und drunter
+					for (int z = -1; z <= 1; z++) {
+						// ..sowie links, mittig, rechts vom Feld
+						for (int sp = -1; sp <= 1; sp ++) {
+							
+							// Wenn keine Mine..
+							if (spielfeldStatus[i + z][j + sp] != -1) 
+							{
+								// ..dann setze spielfeldStatus plus 1, um ein Zahlenfeld zu definieren
+								spielfeldStatus[i + z][j + sp] = spielfeldStatus[i + z][j + sp] + 1;
+							}
+						}
 					}
 				}
 			}
@@ -246,8 +230,7 @@ public class Spiel {
 
 	private static void zaehleFelderLeer() {
 		leereFelder = (anzahlZeilen*anzahlSpalten)-countZahlenFelder-anzahlMinen;
-		System.out.println("Leere Felder: " + leereFelder);
-		
+				
 		merkeArray = new int[leereFelder+anzahlMinen][2];
 	}
 	
@@ -259,7 +242,7 @@ public class Spiel {
 			if (merkeArray[index][0] == z && merkeArray[index][1] == sp) 
 			{
 				eintragGefunden = true;
-				System.out.println("Eintrag gefunden");
+				Debug.debugLeeresFeld(1, z, sp);
 			}
 		}
 		// Füge Eintrag hinzu
@@ -269,21 +252,9 @@ public class Spiel {
 				merkeArray[indexMerkeArray][1]=sp;
 				indexMerkeArray=indexMerkeArray+1;
 				
-				System.out.println("Eintrag hinzugefügt");
-				
-			}
-				
-		//debug
-			for (int i=0; i<merkeArray.length; i++) {
-				if (merkeArray[i][0] == 0 && merkeArray[i][1] == 0)
-				{
-					//do nothing
-				}
-				else {
-					System.out.println("MerkeArray: "+ merkeArray[i][0] + " , " + merkeArray[i][1]);
-				}
-			}
-			System.out.println("v v v");
+				Debug.debugLeeresFeld(2, z, sp);
+			}	
+		Debug.debugLeeresFeld(3, 0, 0);
 	}
 
 	private static void zaehleFelderMitZahlen() {
@@ -295,9 +266,7 @@ public class Spiel {
 					countZahlenFelder = countZahlenFelder + 1;
 				}
 			}
-		}
-		System.out.println("Felder mit Zahlen: " + countZahlenFelder);
-		
+		}		
 	}
 
 	// Spielfeld-Daten
@@ -347,6 +316,10 @@ public class Spiel {
 	
 	public static void zeitMessungStart() {
 		zeittmp = saveAktuelleZeit();
+	}
+
+	public static Integer getIndexMerkeArray() {
+		return indexMerkeArray;
 	}
 
 

@@ -426,6 +426,22 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					
 					Anmerkung:  Der Tab "Mehrspieler" auf GUI_Start ist solange er nicht implementiert ist, ausgeblendet
 								"Minen richtig"-Anzeige im Spielfeld entfernt. Hier soll später einmal die Spielzeit angezeigt werden
+								
+		done		+Class Debug(): Sämtliche Konsolenausgaben sind hier gesammelt.				20.05.2017  A.3.21
+						Steuerungsvariablen: Durch true- oder false-setzen kann die Ausgabe an- bzw. ausgeschaltet werden.
+						
+							__Methode__				__Variable__		__Beschreibung__
+													debugAnAus 			gobal anAus
+							debugActiveObjects()	msgActiveObjects 	Ausgabe für aktive Objekte aus ObjectHandler
+							debugFeld()				msgFeld				Alles das Felder betrifft, vor allem das Klicken
+							debugFeldIstRand()		msgFeldIstRand		Abfrage ob betrachtetes Feld im Spielfeld liegt
+							debugLeeresFeld()		msgLeeresFeld		Ausgaben für "Decke-leere-Felder-auf"-Algorithmus
+							debugSpiel()			msgSpiel			Ausgaben für Spielinformationen
+							
+					Codeoptimierung, u.a.
+						Versionsnummer wird nun auf GUI_Start angezeigt
+						Algorithmen, die den Umkreis eines Spielfeldes überprüfen von 8 if-Abfragen in eine doppel-Schleife mit
+							1 if-Abfrage optimiert ( betrifft Spiel.setSpielfeldZahlen() und MouseInput.deckeUmkreisAuf() )
 					
 						
 								

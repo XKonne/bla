@@ -49,6 +49,23 @@ B.2	Spiel pausieren/unterbrechen = Speichern
 
 Codeschnipsel
 
+
+		// Button-Rahmen für später nützlich
+
+		// reload.addMouseListener(new java.awt.event.MouseAdapter() {
+		// public void mouseEntered(java.awt.event.MouseEvent evt) {
+		// //reload.setBackground(Color.GREEN);
+		//
+		// reload.setBorder(BorderFactory.createLineBorder(Color.red));
+		// }
+		//
+		// public void mouseExited(java.awt.event.MouseEvent evt) {
+		// // reload.setBackground(UIManager.getColor("control"));
+		// reload.setBorder(BorderFactory.createLineBorder(null));
+		// }
+		// });
+
+
 in jave objekte zerstören - 3 methoden - http://mein-javablog.de/java-objekte-zerstoeren/
 
 
