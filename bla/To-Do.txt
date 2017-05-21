@@ -49,6 +49,15 @@ B.2	Spiel pausieren/unterbrechen = Speichern
 
 Codeschnipsel
 
+	JTable
+	https://www.tutorials.de/threads/jtable-zeile-markieren.238432/
+	http://blog.mynotiz.de/programmieren/java-jtable-beispiel-491/
+	
+
+	Timer
+	http://blog.mynotiz.de/category/programmieren/java/page/3/
+	
+	
 
 		// Button-Rahmen für später nützlich
 

@@ -1,9 +1,13 @@
 package bla;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.Timer;
 
 @SuppressWarnings("serial")
 public class GUI_Spielfeld extends JFrame {
@@ -25,14 +29,20 @@ public class GUI_Spielfeld extends JFrame {
 	private int frameWidth = 0;
 	private int feldHeight = 25;
 	private int feldWidth = 25;
-
+	
+	// Timer
+	static Timer spielzeit;
+	
 	// GUI-Elemente
 	// Labels - guiSpielfeld
 	private JLabel lab_SpielerName = new JLabel();
 	private static JLabel lab_SpielModus = new JLabel();
 
-	//private static JLabel lab_MinenRichtig = new JLabel();	// deaktiviert, wird später für die Spielzeit verwendet
+	private static JLabel lab_Spielzeit = new JLabel();	// deaktiviert, wird später für die Spielzeit verwendet
 	private static JLabel lab_Restminen = new JLabel();
+	
+	// Buttons
+	static JButton btn_SpielZeit = new JButton();
 
 	// GUI - SpielEnde
 	JLabel lab_SpielEndeInformation = new JLabel();
@@ -49,9 +59,8 @@ public class GUI_Spielfeld extends JFrame {
 		setupGUI();
 		neueRunde();
 		spielStart();
-
 	}
-
+	
 	private void addMenubar() {
 		ObjectHandler.createGui_AddMenubar();
 		this.setJMenuBar(ObjectHandler.getGui_AddMenubar());
@@ -85,6 +94,19 @@ public class GUI_Spielfeld extends JFrame {
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		cpTop.add(btn_SpielNeustart);
 		btn_SpielNeustart.addActionListener(e -> spielNochmal());
+		
+		Border loweredbevel;
+		loweredbevel = BorderFactory.createLineBorder(Color.black);
+		
+		//btn_SpielZeit.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
+		btn_SpielZeit.setBounds(255, 30, 115, 15);
+		btn_SpielZeit.setFont(new Font("Dialog", Font.PLAIN, 11));
+		btn_SpielZeit.setText("(>) Spielzeit: 00:00");
+		btn_SpielZeit.setMargin(new Insets(2, 2, 2, 2));
+		btn_SpielZeit.setBorder(loweredbevel);
+		btn_SpielZeit.setBackground(Color.LIGHT_GRAY);
+		cpTop.add(btn_SpielZeit);
+		btn_SpielZeit.addActionListener(e -> zeitAnzeigenPause());
 	}
 
 	private void createLabels() {
@@ -104,16 +126,16 @@ public class GUI_Spielfeld extends JFrame {
 		lab_SpielModus.setVisible(true);
 		cpTop.add(lab_SpielModus);
 
-		lab_Restminen.setBounds(255, 14, 100, 20);
+		lab_Restminen.setBounds(255, 12, 100, 20);
 		lab_Restminen.setVisible(true);
 		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
 		cpTop.add(lab_Restminen);
 
-		// debug anzeige
-//		lab_MinenRichtig.setBounds(255, 28, 100, 20);
-//		lab_MinenRichtig.setVisible(true);
-//		lab_MinenRichtig.setFont(new Font("Dialog", Font.PLAIN, 11));
-//		cpTop.add(lab_MinenRichtig);
+//		lab_Spielzeit.setBounds(255, 28, 100, 20);
+//		lab_Spielzeit.setVisible(true);
+//		lab_Spielzeit.setFont(new Font("Dialog", Font.PLAIN, 11));
+//		lab_Spielzeit.setText("Spielzeit: 0 Sek.");
+//		cpTop.add(lab_Spielzeit);
 	}
 
 	private void createSpielfeldFeld() {
@@ -207,7 +229,7 @@ public class GUI_Spielfeld extends JFrame {
 		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
 		lab_SpielEndeInformation.setVisible(true);
 		lab_SpielEndeInformation.setText("<HTML><font size=14><i>" + SiegNiederlage + "!</i></font><br>Spieldauer: "
-				+ ObjectHandler.getSpieler().getZeitLetztesSpiel() / 1000 + " Sekunden. </HTML>");
+				+ zeitformatMMSS(ObjectHandler.getSpieler().getZeitLetztesSpiel() / 1000) + "</HTML>");
 		cpGUI_SpielEnde.add(lab_SpielEndeInformation);
 		
 		// Alle Minen aufdecken, die noch nicht aufgedeckt sind oder nicht richtig markiert sind
@@ -215,7 +237,7 @@ public class GUI_Spielfeld extends JFrame {
 
 		gui_SpielEnde.setVisible(true);
 	}
-
+	
 	private void initFrame() {
 
 		// Hauptcontainer mit Borderlayout
@@ -286,7 +308,6 @@ public class GUI_Spielfeld extends JFrame {
 	public static void refreshLabels() {
 		lab_SpielModus.setText("Modus: " + Spiel.getSpielModus());
 		lab_Restminen.setText("Minen: " + Integer.toString(Spiel.getRestMinen()));
-//		lab_MinenRichtig.setText("Mine Richtig: " + Integer.toString(Spiel.getMinenRichtig()));
 	}
 
 	private void resetMinenWerte() {
@@ -330,6 +351,34 @@ public class GUI_Spielfeld extends JFrame {
 			}
 		}
 	}
+	
+	public void setSpielfeldStatusNachPause() {
+		
+		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
+				
+				if (Spiel.spielfeldGeklickt[z][sp] == 1) 
+				{
+					switch (Spiel.getSpielfeldStatus(z,sp))
+					{
+						case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
+						case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
+						case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
+						case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
+						case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
+						case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
+						case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
+						case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
+						case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
+						case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
+					}
+				}
+				if (Spiel.spielfeldGeklickt[z][sp] == 3) {
+					GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne.gif")));
+				}
+			}
+		}
+	}
 
 	private void setupGUI() 
 	{
@@ -338,6 +387,7 @@ public class GUI_Spielfeld extends JFrame {
 		ObjectHandler.getGui_AddMenubar().setOnOffForGUIspielfeld(true);
 		createButtons();
 		createLabels();
+		zeitAnzeigen();
 	}
 
 	public void spielNeueRunde() 
@@ -348,6 +398,9 @@ public class GUI_Spielfeld extends JFrame {
 		refreshLabels();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
+		
+		lab_Spielzeit.setText("Spielzeit: 0");
+		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
 	}
@@ -370,6 +423,9 @@ public class GUI_Spielfeld extends JFrame {
 		setSpielfeldStatusVerdeckt();
 
 		Spiel.zeitMessungStart();
+		
+		lab_Spielzeit.setText("Spielzeit: 0 Sek.");
+		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
 	}
@@ -413,6 +469,79 @@ public class GUI_Spielfeld extends JFrame {
 				}
 			}
 		}
+	}
+	
+	public static void zeitAnzeigen() {
+		
+		spielzeit = new Timer(1000, new ActionListener() 
+			{
+				public void actionPerformed( ActionEvent e ) {
+					if (Spiel.spielPause == 0) 
+						{
+							btn_SpielZeit.setText("(>) Spielzeit: "+ zeitformatMMSS((Spiel.zeitMessungAktuell()-1000) / 1000));
+						}
+					else 
+						{
+							btn_SpielZeit.setText("(||) Spielzeit: "+ zeitformatMMSS((Spiel.zeitMessungAktuell()-1000) / 1000));
+						}	
+					if (Spielfeldgesperrt == true ) 
+						{
+							spielzeit.stop();
+						}
+					}
+			});
+		zeitAnzeigenStart();
+	}
+	
+	private void zeitAnzeigenPause() {
+		if (Spiel.spielPause == 0) {
+			setSpielfeldStatusVerdeckt();
+			Spielfeldgesperrt = true;
+			Spiel.zeitMessungPause();
+			Spiel.spielPause = 1;
+		}
+		else {
+			setSpielfeldStatusNachPause();
+			Spielfeldgesperrt = false;
+			Spiel.zeitMessungPause();
+			zeitAnzeigenStart();
+			Spiel.spielPause = 0;
+		}
+	}
+	
+	private static void zeitAnzeigenStart() {
+		spielzeit.start();
+	}
+	
+	private static String zeitformatMMSS(long spielZeit) {
+		
+		String ausgabe="";
+		String minuten="";
+		String sekunden="";
+		
+		Double minute = Math.floor(((spielZeit) % 3600) / 60);
+		int min = minute.intValue();
+		
+		Double sekunde = Math.floor(((spielZeit) % 60));
+		int sek = sekunde.intValue();
+		
+		// Zeit Minute
+		if ( (min) < 10 ) {
+			minuten = "0"+(min);
+		}
+		else {
+			minuten = ""+min;
+		}
+		if ( (sek) < 10 ) {
+			sekunden = "0"+(sek);
+		}
+		else {
+			sekunden = ""+sek;
+		}
+		
+		ausgabe = minuten +":"+ sekunden;
+		
+		return ausgabe;
 	}
 	
 }

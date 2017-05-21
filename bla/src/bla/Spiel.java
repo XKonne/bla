@@ -16,9 +16,11 @@ public class Spiel {
 	static int countZahlenFelder = 0;
 	static int leereFelder = 0;
 	static int indexMerkeArray=0;
+	static int spielPause = 0;
 	
 	// Long
 	private static long zeittmp = 0;
+	static long pause = 0;
 
 	// String
 	static String spielModus = "noModus";
@@ -29,9 +31,9 @@ public class Spiel {
 	static Random random2 = new Random();
 
 	// Arrays
+	public static int[][] merkeArray = new int[0][0];
 	public static int[][] spielfeldStatus = new int[anzahlZeilen][anzahlSpalten];
 	public static int[][] spielfeldGeklickt = new int[anzahlZeilen][anzahlSpalten];
-	public static int[][] merkeArray = new int[0][0];
 
 	public static void main(String[] args) {
 
@@ -115,20 +117,23 @@ public class Spiel {
 	public static int getRestMinen() {
 		return restMinen;
 	}
+	
+	public static Integer getSpielfeldStatus(int zeile, int spalte) {
+		return spielfeldStatus[zeile][spalte];
+	}
 
 	public static String getSpielModus() {
 		return Integer.toString(anzahlZeilen) + "x" + Integer.toString(anzahlSpalten) + " " + spielModus;
 	}
-
+	
+	public static Integer getIndexMerkeArray() {
+		return indexMerkeArray;
+	}
 
 	public static void setSpielfeldgeklickt(int zeile, int spalte, int wert) {
 		spielfeldGeklickt[zeile][spalte] = wert;
 	}
 
-	public static Integer getSpielfeldStatus(int zeile, int spalte) {
-		return spielfeldStatus[zeile][spalte];
-	}
-	
 	public static void initSpielfeldGeklickt() {
 		
 		// Setze index im MerkeArray zurück
@@ -161,7 +166,7 @@ public class Spiel {
 	public static Integer getSpielfeldSpalten() {
 		return anzahlSpalten;
 	}
-	
+		
 	private static long saveAktuelleZeit() {
 		long timeMs = System.currentTimeMillis();
 		return timeMs;
@@ -295,8 +300,9 @@ public class Spiel {
 	
 	private static void spielEnde(boolean winlose, String spielEndeText) {
 		
-		// Spieler Stats aktualisieren & Zeitmessung stoppen
+		 // Spieler Stats aktualisieren & Zeitmessung stoppen
 		 ObjectHandler.getSpieler().spielerAktualisieren(zeitmessungEnde(zeittmp), getMinenRichtig(), winlose);
+
 
 		// Ausgabe > Spielende
 		ObjectHandler.getGui_Spielfeld().GUI_SpielEnde(spielEndeText);
@@ -308,20 +314,30 @@ public class Spiel {
 		DataIO.updateSpielerData();
 		
 	}
+	
+	public static long zeitMessungAktuell() {
+		long spielZeitAktuell = System.currentTimeMillis() - zeittmp;
+		return spielZeitAktuell;
+	}
 
 	public static long zeitmessungEnde(long tmpZeit) {
 		long spielZeit = System.currentTimeMillis() - tmpZeit;
 		return spielZeit;
 	}
 	
+	public static void zeitMessungPause() {
+		if ( spielPause == 0) {
+			pause = System.currentTimeMillis() - zeittmp;
+		}
+		else {
+			zeittmp = System.currentTimeMillis() - pause;
+		}
+		
+	}
+	
 	public static void zeitMessungStart() {
 		zeittmp = saveAktuelleZeit();
 	}
-
-	public static Integer getIndexMerkeArray() {
-		return indexMerkeArray;
-	}
-
 
 
 }

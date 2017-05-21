@@ -16,7 +16,7 @@ public class GUI_Start extends JFrame {
 
 	// Varialblen
 	private static boolean spielerAuswahlAnzeigen = true;
-	static String version = "A.3.21";
+	static String version = "A.3.22";
 
 	// Buttons
 	private static JButton btn_ModusLeicht = new JButton();

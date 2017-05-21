@@ -442,7 +442,33 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 						Versionsnummer wird nun auf GUI_Start angezeigt
 						Algorithmen, die den Umkreis eines Spielfeldes überprüfen von 8 if-Abfragen in eine doppel-Schleife mit
 							1 if-Abfrage optimiert ( betrifft Spiel.setSpielfeldZahlen() und MouseInput.deckeUmkreisAuf() )
+		
+		done		>GUI_Spielfeld: Die aktuelle Spielzeit wird auf dem Spielfeld angezeigt		21.05.2017  A.3.22
+						Die Spielzeit ist ein Button, der wenn er gedrückt wird die Zeit und das Spiel pausiert. Dabei wird das
+						Spielfeld wieder verdeckt - bis die Pause (erneutes drücken des Spielzeit-Buttons) aufgehoben wird. Das
+						Spiel soweit es aufgedeckt war, wird wieder angezeigt.
+					>GUI_Spielfeld: +zeitAnzeigenStart(): Startet den Timer für das Spielfeld
+									+zeitAnzeigenPause(): Methodenaufrufe für die Pause
+									+zeitAnzeigen(): Erzeugt den Timer und definiert seine Aufgabe. Sobald das "Spielfeldgesperrt=true"
+													 eintritt, stoppt der Timer (zB durch Pause oder Sieg-Niederlage)
+									+setSpielfeldStatusNachPause(): Stellt den Spielzustand (=aufgedeckte, markierte Felder) von vor 
+																	der Pause wieder her
+					>Spiel: +zeitmessungAktuell(): Gibt die bisher verstrichene Spielzeit zurück. Diese wird dann im Spielfeld-Button
+												   angezeigt.
+							+zeitMessungPause(): Pausiert die Spielzeit. Erneuter Aufruf lässt die Zeit weiterlaufen.
 					
+					Zeitdarstellung 
+					>GUI_Spielerprofil: Die Gesamtspielzeit wird nun nicht mehr in Sekunden, sondern in Stunden, Minuten, Sekunden
+										angezeigt. Dazu sind folgende Methoden hinzugefügt, welche die gespeicherte Zeit (in Milisekunden)
+										in Stunden, Minuten, Sekunden zerlegt und in einen String verpackt
+										+zeitStunden()
+										+zeitMinuten()
+										+zeitSekunden()
+					>GUI_Spielfeld: Die aktuelle Spielzeit wird im Format mm:ss angezeigt.
+					>GUI_Spielfeld >GUI_SpielEnde: Die Spielzeit nach dem Ende der Runde wird im Format mm:ss angezeigt.
+					
+					>GUI_Spielfeld: +zeitformatMMSS(long spielZeit): Übergabe der Spielzeit in Milisekunden und formatiert die Eingabe
+																	 in der Ausgabeformat mm:ss um.	
 						
 								
 		TO-DO		Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
