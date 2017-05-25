@@ -13,54 +13,57 @@ import javax.swing.Timer;
 public class GUI_Spielfeld extends JFrame {
 
 	// Frame-Container-Panel
-	private JFrame gui_SpielEnde = new JFrame();
-	GridBagConstraints gbc = new GridBagConstraints();
+	private JFrame gui_SpielEnde;
+	GridBagConstraints gbc;
 
 	// Container für Borderlayout: TOP
-	private Container cpTop = new Container();
-	private static JPanel panSpielfeld = new JPanel(); // Gridlayout
+	private Container cpTop;
+	private static JPanel panSpielfeld; // Gridlayout
 
 	// Variablen
 	// Boolean
-	static boolean Spielfeldgesperrt = false;
+	static boolean Spielfeldgesperrt;
 
 	// Integer
-	private int frameHeight = 0;
-	private int frameWidth = 0;
-	private int feldHeight = 25;
-	private int feldWidth = 25;
-	
+	private int frameHeight;
+	private int frameWidth;
+	private int feldHeight;
+	private int feldWidth;
+
 	// Timer
 	static Timer spielzeit;
-	
+
 	// GUI-Elemente
 	// Labels - guiSpielfeld
-	private JLabel lab_SpielerName = new JLabel();
-	private static JLabel lab_SpielModus = new JLabel();
+	private JLabel lab_SpielerName;
+	private static JLabel lab_SpielModus;
 
-	private static JLabel lab_Spielzeit = new JLabel();	// deaktiviert, wird später für die Spielzeit verwendet
-	private static JLabel lab_Restminen = new JLabel();
-	
+	private static JLabel lab_Spielzeit; // deaktiviert, wird später für die
+											// Spielzeit verwendet
+	private static JLabel lab_Restminen;
+
 	// Buttons
-	static JButton btn_SpielZeit = new JButton();
+	static JButton btn_SpielZeit;
 
 	// GUI - SpielEnde
-	JLabel lab_SpielEndeInformation = new JLabel();
-	JButton btn_SpielZurueck = new JButton();
-	JButton btn_SpielNochmal = new JButton();
-	JButton btn_SpielNeueRunde = new JButton();
-	JButton btn_SpielNeues = new JButton();
+	JLabel lab_SpielEndeInformation;
+	JButton btn_SpielZurueck;
+	JButton btn_SpielNochmal;
+	JButton btn_SpielNeueRunde;
+	JButton btn_SpielNeues;
 
 	// Arrays
-	static Feld[][] Felder = new Feld[Spiel.getSpielfeldZeilen()+2][Spiel.getSpielfeldSpalten()+2];
+	static Feld[][] Felder;
 
 	public GUI_Spielfeld() {
 
+		initClassVariables();
 		setupGUI();
 		neueRunde();
 		spielStart();
+
 	}
-	
+
 	private void addMenubar() {
 		ObjectHandler.createGui_AddMenubar();
 		this.setJMenuBar(ObjectHandler.getGui_AddMenubar());
@@ -71,9 +74,13 @@ public class GUI_Spielfeld extends JFrame {
 	}
 
 	private void closeGUI_Spielfeld() {
+		
+		clearClassVariables();
+		this.setVisible(false);
 		this.dispose();
 		ObjectHandler.setGui_Spielfeld(null);
 		ObjectHandler.setGui_AddMenubar(null);
+		
 	}
 
 	private void createButtons() {
@@ -94,11 +101,12 @@ public class GUI_Spielfeld extends JFrame {
 		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
 		cpTop.add(btn_SpielNeustart);
 		btn_SpielNeustart.addActionListener(e -> spielNochmal());
-		
+
 		Border loweredbevel;
 		loweredbevel = BorderFactory.createLineBorder(Color.black);
-		
-		//btn_SpielZeit.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
+
+		// btn_SpielZeit.setIcon(new
+		// ImageIcon(getClass().getResource("img/neustart.png")));
 		btn_SpielZeit.setBounds(255, 30, 115, 15);
 		btn_SpielZeit.setFont(new Font("Dialog", Font.PLAIN, 11));
 		btn_SpielZeit.setText("(>) Spielzeit: 00:00");
@@ -131,23 +139,26 @@ public class GUI_Spielfeld extends JFrame {
 		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
 		cpTop.add(lab_Restminen);
 
-//		lab_Spielzeit.setBounds(255, 28, 100, 20);
-//		lab_Spielzeit.setVisible(true);
-//		lab_Spielzeit.setFont(new Font("Dialog", Font.PLAIN, 11));
-//		lab_Spielzeit.setText("Spielzeit: 0 Sek.");
-//		cpTop.add(lab_Spielzeit);
+		// lab_Spielzeit.setBounds(255, 28, 100, 20);
+		// lab_Spielzeit.setVisible(true);
+		// lab_Spielzeit.setFont(new Font("Dialog", Font.PLAIN, 11));
+		// lab_Spielzeit.setText("Spielzeit: 0 Sek.");
+		// cpTop.add(lab_Spielzeit);
 	}
 
 	private void createSpielfeldFeld() {
 
-		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
-			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
+		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
 				// Erzeugen der Felder und Eigenschaften setzen
 				Felder[z][sp] = new Feld();
-				//System.out.println("Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
-				//System.out.println("Feld Geklickt: " + GUI_Spielfeld.Felder[z][sp].getGeklickt());
+				// System.out.println("Feld x: " +
+				// GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " +
+				// GUI_Spielfeld.Felder[z][sp].getmyY());
+				// System.out.println("Feld Geklickt: " +
+				// GUI_Spielfeld.Felder[z][sp].getGeklickt());
 				Felder[z][sp].setMargin(new Insets(0, 0, 0, 0));
-				
+
 				MouseInput mouse = new MouseInput(z, sp);
 				Felder[z][sp].addMouseListener(mouse);
 
@@ -164,15 +175,20 @@ public class GUI_Spielfeld extends JFrame {
 				panSpielfeld.add(Felder[z][sp], gbc);
 			}
 		}
-		// ich hatte auch mal in Zeile 154 die Zahlen z und sp übergeben um direkt die Koordinate zu setzen. Hat auch nichts genützt
-//		for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
-//			for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
-//				//System.out.println("Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
-//				Felder[z][sp].setmyX(z);
-//				Felder[z][sp].setmyY(sp);
-//				//System.out.println("init Feld x: " + GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " + GUI_Spielfeld.Felder[z][sp].getmyY());
-//			}
-//		}
+		// ich hatte auch mal in Zeile 154 die Zahlen z und sp übergeben um
+		// direkt die Koordinate zu setzen. Hat auch nichts genützt
+		// for (int z = 0; z < Spiel.getSpielfeldZeilen(); z++) {
+		// for (int sp = 0; sp < Spiel.getSpielfeldSpalten(); sp++) {
+		// //System.out.println("Feld x: " +
+		// GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " +
+		// GUI_Spielfeld.Felder[z][sp].getmyY());
+		// Felder[z][sp].setmyX(z);
+		// Felder[z][sp].setmyY(sp);
+		// //System.out.println("init Feld x: " +
+		// GUI_Spielfeld.Felder[z][sp].getmyX() + " , y: " +
+		// GUI_Spielfeld.Felder[z][sp].getmyY());
+		// }
+		// }
 
 		this.getContentPane().add(panSpielfeld, BorderLayout.CENTER);
 	}
@@ -182,8 +198,8 @@ public class GUI_Spielfeld extends JFrame {
 
 		// Frame-Initialisierung
 		gui_SpielEnde.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		int sp_frameWidth=380;
-		int sp_frameHeight=170;
+		int sp_frameWidth = 380;
+		int sp_frameHeight = 170;
 		gui_SpielEnde.setSize(sp_frameWidth, sp_frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = d.width / 2;
@@ -193,7 +209,7 @@ public class GUI_Spielfeld extends JFrame {
 		gui_SpielEnde.setResizable(false);
 		Container cpGUI_SpielEnde = gui_SpielEnde.getContentPane();
 		cpGUI_SpielEnde.setLayout(null);
-		
+
 		// Frame-Elemente
 		// Buttons
 		btn_SpielZurueck.setBounds(10, 100, 80, 30);
@@ -231,13 +247,14 @@ public class GUI_Spielfeld extends JFrame {
 		lab_SpielEndeInformation.setText("<HTML><font size=14><i>" + SiegNiederlage + "!</i></font><br>Spieldauer: "
 				+ zeitformatMMSS(ObjectHandler.getSpieler().getZeitLetztesSpiel() / 1000) + "</HTML>");
 		cpGUI_SpielEnde.add(lab_SpielEndeInformation);
-		
-		// Alle Minen aufdecken, die noch nicht aufgedeckt sind oder nicht richtig markiert sind
+
+		// Alle Minen aufdecken, die noch nicht aufgedeckt sind oder nicht
+		// richtig markiert sind
 		spielEndeMinenAufdecken();
 
 		gui_SpielEnde.setVisible(true);
 	}
-	
+
 	private void initFrame() {
 
 		// Hauptcontainer mit Borderlayout
@@ -316,9 +333,9 @@ public class GUI_Spielfeld extends JFrame {
 	}
 
 	private void resetSpielfeldStatusToFeld() {
-		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
-			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
-				
+		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
+
 				// Text bzw. Bilder bzw. Rahmen entfernen
 				Felder[z][sp].setText(null);
 				Felder[z][sp].setIcon(null);
@@ -329,48 +346,96 @@ public class GUI_Spielfeld extends JFrame {
 
 	public void setSpielfeldStatusVerdeckt() {
 
-		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
-			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
+		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
 				Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/nicht-aufgedeckt.gif")));
 
-// 				Debug um aufgedeckte Spielfeld zu erhalten	
-				
-//				switch (Spiel.getSpielfeldStatus(z,sp))
-//				{
-//				case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
-//				case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
-//				case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
-//				case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
-//				case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
-//				case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
-//				case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
-//				case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
-//				case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
-//				case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
-//			}
+				// Debug um aufgedeckte Spielfeld zu erhalten
+
+				// switch (Spiel.getSpielfeldStatus(z,sp))
+				// {
+				// case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
+				// break;
+				// case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif")));
+				// break;
+				// case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif")));
+				// break;
+				// case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif")));
+				// break;
+				// case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif")));
+				// break;
+				// case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif")));
+				// break;
+				// case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif")));
+				// break;
+				// case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif")));
+				// break;
+				// case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif")));
+				// break;
+				// case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new
+				// ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif")));
+				// break;
+				// }
 			}
 		}
 	}
-	
+
 	public void setSpielfeldStatusNachPause() {
-		
-		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
-			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
-				
-				if (Spiel.spielfeldGeklickt[z][sp] == 1) 
-				{
-					switch (Spiel.getSpielfeldStatus(z,sp))
-					{
-						case -1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif"))); break;
-						case 0: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif"))); break;
-						case 1: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif"))); break;
-						case 2: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif"))); break;
-						case 3: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif"))); break;
-						case 4: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif"))); break;
-						case 5: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif"))); break;
-						case 6: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif"))); break;
-						case 7: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif"))); break;
-						case 8: GUI_Spielfeld.Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif"))); break;
+
+		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
+
+				if (Spiel.spielfeldGeklickt[z][sp] == 1) {
+					switch (Spiel.getSpielfeldStatus(z, sp)) {
+					case -1:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
+						break;
+					case 0:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-leer.gif")));
+						break;
+					case 1:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-1.gif")));
+						break;
+					case 2:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-2.gif")));
+						break;
+					case 3:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-3.gif")));
+						break;
+					case 4:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-4.gif")));
+						break;
+					case 5:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-5.gif")));
+						break;
+					case 6:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-6.gif")));
+						break;
+					case 7:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-7.gif")));
+						break;
+					case 8:
+						GUI_Spielfeld.Felder[z][sp]
+								.setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-8.gif")));
+						break;
 					}
 				}
 				if (Spiel.spielfeldGeklickt[z][sp] == 3) {
@@ -380,8 +445,7 @@ public class GUI_Spielfeld extends JFrame {
 		}
 	}
 
-	private void setupGUI() 
-	{
+	private void setupGUI() {
 		initFrame();
 		addMenubar();
 		ObjectHandler.getGui_AddMenubar().setOnOffForGUIspielfeld(true);
@@ -390,31 +454,30 @@ public class GUI_Spielfeld extends JFrame {
 		zeitAnzeigen();
 	}
 
-	public void spielNeueRunde() 
-	{
+	public void spielNeueRunde() {
 		Spiel.createSpiel();
 		Spielfeldgesperrt = false;
 		resetMinenWerte();
 		refreshLabels();
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
-		
+
 		lab_Spielzeit.setText("Spielzeit: 0");
 		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
 	}
 
-	private void spielNeues() 
-	{
+	private void spielNeues() {
+		
+		Spiel.clearClassVariables();
 		closeGUI_SpielEnde();
 		closeGUI_Spielfeld();
 		ObjectHandler.createGui_Start();
 
 	}
 
-	public void spielNochmal() 
-	{
+	public void spielNochmal() {
 		Spielfeldgesperrt = false;
 		resetMinenWerte();
 		refreshLabels();
@@ -423,15 +486,14 @@ public class GUI_Spielfeld extends JFrame {
 		setSpielfeldStatusVerdeckt();
 
 		Spiel.zeitMessungStart();
-		
+
 		lab_Spielzeit.setText("Spielzeit: 0 Sek.");
 		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
 	}
 
-	private void spielStart() 
-	{
+	private void spielStart() {
 		Spieler spieler = ObjectHandler.getSpieler();
 
 		// Labels Text setzen
@@ -441,27 +503,23 @@ public class GUI_Spielfeld extends JFrame {
 	}
 
 	public void spielEndeMinenAufdecken() {
-		for (int z = 1; z < Spiel.getSpielfeldZeilen()+1; z++) {
-			for (int sp = 1; sp < Spiel.getSpielfeldSpalten()+1; sp++) {
-				
-				if (Spiel.getSpielfeldStatus(z, sp) == -1)
-				{
-					if (Spiel.spielfeldGeklickt[z][sp] != 1 && Spiel.spielfeldGeklickt[z][sp] != 3) 
-					{
+		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
+			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
+
+				if (Spiel.getSpielfeldStatus(z, sp) == -1) {
+					if (Spiel.spielfeldGeklickt[z][sp] != 1 && Spiel.spielfeldGeklickt[z][sp] != 3) {
 						Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
-					
+
 						// Rahmen setzen
 						Border roterRahmen = new LineBorder(Color.RED, 1);
 						Felder[z][sp].setBorder(roterRahmen);
 					}
 				}
-				
-				if (Spiel.spielfeldGeklickt[z][sp] == 3) 
-				{
-					if (Spiel.getSpielfeldStatus(z, sp) != -1)
-					{
+
+				if (Spiel.spielfeldGeklickt[z][sp] == 3) {
+					if (Spiel.getSpielfeldStatus(z, sp) != -1) {
 						Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/fahne-falsch.gif")));
-						
+
 						// Rahmen setzen
 						Border roterRahmen = new LineBorder(Color.ORANGE, 1);
 						Felder[z][sp].setBorder(roterRahmen);
@@ -470,37 +528,33 @@ public class GUI_Spielfeld extends JFrame {
 			}
 		}
 	}
-	
+
 	public static void zeitAnzeigen() {
-		
-		spielzeit = new Timer(1000, new ActionListener() 
-			{
-				public void actionPerformed( ActionEvent e ) {
-					if (Spiel.spielPause == 0) 
-						{
-							btn_SpielZeit.setText("(>) Spielzeit: "+ zeitformatMMSS((Spiel.zeitMessungAktuell()-1000) / 1000));
-						}
-					else 
-						{
-							btn_SpielZeit.setText("(||) Spielzeit: "+ zeitformatMMSS((Spiel.zeitMessungAktuell()-1000) / 1000));
-						}	
-					if (Spielfeldgesperrt == true ) 
-						{
-							spielzeit.stop();
-						}
-					}
-			});
+
+		spielzeit = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Spiel.spielPause == 0) {
+					btn_SpielZeit
+							.setText("(>) Spielzeit: " + zeitformatMMSS((Spiel.zeitMessungAktuell() - 1000) / 1000));
+				} else {
+					btn_SpielZeit
+							.setText("(||) Spielzeit: " + zeitformatMMSS((Spiel.zeitMessungAktuell() - 1000) / 1000));
+				}
+				if (Spielfeldgesperrt == true) {
+					spielzeit.stop();
+				}
+			}
+		});
 		zeitAnzeigenStart();
 	}
-	
+
 	private void zeitAnzeigenPause() {
 		if (Spiel.spielPause == 0) {
 			setSpielfeldStatusVerdeckt();
 			Spielfeldgesperrt = true;
 			Spiel.zeitMessungPause();
 			Spiel.spielPause = 1;
-		}
-		else {
+		} else {
 			setSpielfeldStatusNachPause();
 			Spielfeldgesperrt = false;
 			Spiel.zeitMessungPause();
@@ -508,40 +562,101 @@ public class GUI_Spielfeld extends JFrame {
 			Spiel.spielPause = 0;
 		}
 	}
-	
+
 	private static void zeitAnzeigenStart() {
 		spielzeit.start();
 	}
-	
+
 	private static String zeitformatMMSS(long spielZeit) {
-		
-		String ausgabe="";
-		String minuten="";
-		String sekunden="";
-		
+
+		String ausgabe = "";
+		String minuten = "";
+		String sekunden = "";
+
 		Double minute = Math.floor(((spielZeit) % 3600) / 60);
 		int min = minute.intValue();
-		
+
 		Double sekunde = Math.floor(((spielZeit) % 60));
 		int sek = sekunde.intValue();
-		
+
 		// Zeit Minute
-		if ( (min) < 10 ) {
-			minuten = "0"+(min);
+		if ((min) < 10) {
+			minuten = "0" + (min);
+		} else {
+			minuten = "" + min;
 		}
-		else {
-			minuten = ""+min;
+		if ((sek) < 10) {
+			sekunden = "0" + (sek);
+		} else {
+			sekunden = "" + sek;
 		}
-		if ( (sek) < 10 ) {
-			sekunden = "0"+(sek);
-		}
-		else {
-			sekunden = ""+sek;
-		}
-		
-		ausgabe = minuten +":"+ sekunden;
-		
+
+		ausgabe = minuten + ":" + sekunden;
+
 		return ausgabe;
 	}
-	
+
+	private void initClassVariables() {
+
+		gui_SpielEnde = new JFrame();
+		gbc = new GridBagConstraints();
+
+		cpTop = new Container();
+		panSpielfeld = new JPanel(); // Gridlayout
+
+		Spielfeldgesperrt = false;
+
+		frameHeight = 0;
+		frameWidth = 0;
+		feldHeight = 25;
+		feldWidth = 25;
+
+		lab_SpielerName = new JLabel();
+		lab_SpielModus = new JLabel();
+		lab_Spielzeit = new JLabel(); // deaktiviert, wird später für die
+										// Spielzeit verwendet
+		lab_Restminen = new JLabel();
+		lab_SpielEndeInformation = new JLabel();
+
+		btn_SpielZurueck = new JButton();
+		btn_SpielNochmal = new JButton();
+		btn_SpielNeueRunde = new JButton();
+		btn_SpielNeues = new JButton();
+		btn_SpielZeit = new JButton();
+
+		Felder = new Feld[Spiel.getSpielfeldZeilen() + 2][Spiel.getSpielfeldSpalten() + 2];
+
+	}
+
+	private void clearClassVariables() {
+
+		gui_SpielEnde = null;
+		gbc = null;
+
+		cpTop = null;
+		panSpielfeld = null;
+
+		Spielfeldgesperrt = false;
+
+		frameHeight = 0;
+		frameWidth = 0;
+		feldHeight = 25;
+		feldWidth = 25;
+
+		lab_SpielerName = null;
+		lab_SpielModus = null;
+		lab_Spielzeit = null;
+		lab_Restminen = null;
+		lab_SpielEndeInformation = null;
+
+		btn_SpielZurueck = null;
+		btn_SpielNochmal = null;
+		btn_SpielNeueRunde = null;
+		btn_SpielNeues = null;
+		btn_SpielZeit = null;
+
+		Felder = null;
+
+	}
+
 }

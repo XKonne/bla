@@ -471,7 +471,7 @@ A.1		done		GUI: 3x3 groﬂes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 																	 in der Ausgabeformat mm:ss um.	
 						
 								
-		TO-DO		Wenn "Neues Spiel" gew‰hlt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
+		done		Bug behoben: Wenn "Neues Spiel" gew‰hlt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
 					Spielfeld ist nur eine Zeile lang
 								
 								

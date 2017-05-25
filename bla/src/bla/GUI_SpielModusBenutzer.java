@@ -17,9 +17,6 @@ import javax.swing.WindowConstants;
 @SuppressWarnings("serial")
 public class GUI_SpielModusBenutzer extends JFrame {
 
-	// Objekte
-	Spieler spieler;
-
 	// Frame-Container
 	Container cp = this.getContentPane();
 
@@ -40,10 +37,7 @@ public class GUI_SpielModusBenutzer extends JFrame {
 
 	
 	public GUI_SpielModusBenutzer() {
-
-		spieler = ObjectHandler.getSpieler();
 		setupGUI();
-
 	}
 
 	private void createButtons() {
@@ -218,7 +212,7 @@ public class GUI_SpielModusBenutzer extends JFrame {
 
 	private void startSpiel() {
 		
-		Spiel.setSpielModus(sb_spalten.getValue(), sb_zeilen.getValue(), sb_minen.getValue(), "Benutzer", spieler);
+		Spiel.setSpielModus(sb_spalten.getValue(), sb_zeilen.getValue(), sb_minen.getValue(), "Benutzer");
 		closeGUI_SpielModusBenutzer();
 		
 		GUI_Start guiStart = ObjectHandler.getGui_Start();

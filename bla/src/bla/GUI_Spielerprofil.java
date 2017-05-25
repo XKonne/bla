@@ -9,37 +9,32 @@ public class GUI_Spielerprofil extends JFrame {
 
 	// Frame-Container
 	private Container cp = getContentPane();
-	
+
 	// Objekte
 	Spieler spieler = ObjectHandler.getSpieler();
 
 	// GUI-Elemente
 	// Labels
-	private static JLabel lab_MinenGefunden = new JLabel();
-	private static JLabel lab_profilBild = new JLabel();
-	private static JLabel lab_SpieleGespielt = new JLabel();
-	private static JLabel lab_SpieleGewonnen = new JLabel();
-	private static JLabel lab_SpieleGewonnenProzent = new JLabel();
-	private static JLabel lab_SpielHistorie = new JLabel();
-	private static JLabel lab_SpielerName = new JLabel();
-	private static JLabel lab_SpieleSiegesserie = new JLabel();
-	private static JLabel lab_SpieleMaxSiegesserie = new JLabel();
-	private static JLabel lab_SpielVerlauf = new JLabel();
-	private static JLabel lab_ZeitGesamt = new JLabel();
-	private static JLabel lab_ZeitStdMinSek = new JLabel();
-	private static JLabel lab_ZeitLetztesSpiel = new JLabel();
-	private static JLabel lab_ZeitSchnellstesSpiel = new JLabel();
+	private JLabel lab_MinenGefunden = new JLabel();
+	private JLabel lab_profilBild = new JLabel();
+	private JLabel lab_SpieleGespielt = new JLabel();
+	private JLabel lab_SpieleGewonnen = new JLabel();
+	private JLabel lab_SpieleGewonnenProzent = new JLabel();
+	private JLabel lab_SpielHistorie = new JLabel();
+	private JLabel lab_SpielerName = new JLabel();
+	private JLabel lab_SpieleSiegesserie = new JLabel();
+	private JLabel lab_SpieleMaxSiegesserie = new JLabel();
+	private JLabel lab_SpielVerlauf = new JLabel();
+	private JLabel lab_ZeitGesamt = new JLabel();
+	private JLabel lab_ZeitStdMinSek = new JLabel();
+	private JLabel lab_ZeitLetztesSpiel = new JLabel();
+	private JLabel lab_ZeitSchnellstesSpiel = new JLabel();
 
 	public GUI_Spielerprofil() {
-
-		if (checkGUI_Spielerprofil_active() == false) {
-			setupGUI();
-			setLabelText();
-		}
-
+		setupGUI();
 	}
 
-	private static boolean checkGUI_Spielerprofil_active() {
+	private boolean checkGUI_Spielerprofil_active() {
 
 		if (ObjectHandler.getGui_Spielerprofil() == null) {
 			return false;
@@ -90,7 +85,7 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_ZeitGesamt.setBounds(10, 260, 230, 20);
 		cp.add(lab_ZeitGesamt);
-		
+
 		lab_ZeitStdMinSek.setBounds(110, 256, 230, 60);
 		cp.add(lab_ZeitStdMinSek);
 
@@ -158,35 +153,36 @@ public class GUI_Spielerprofil extends JFrame {
 		lab_ZeitLetztesSpiel.setText("Spielzeit Letztes Spiel: " + spieler.getZeitLetztesSpiel() / 1000 + " Sekunden");
 		lab_ZeitSchnellstesSpiel.setText("Schnellster Sieg: " + spieler.getZeitSchnellsterSiegl() / 1000 + " Sekunden");
 		lab_ZeitGesamt.setText("Spielzeit gesamt: ");
-		lab_ZeitStdMinSek.setText("<html>" + zeitStunden() + "<br>" + zeitMinuten() + " <br>" + zeitSekunden() + " </html>");
+		lab_ZeitStdMinSek
+				.setText("<html>" + zeitStunden() + "<br>" + zeitMinuten() + " <br>" + zeitSekunden() + " </html>");
 		lab_SpielVerlauf.setText("Spielverlauf: ");
 		lab_SpielHistorie.setText("<html>1: " + spieler.getSpielHistorie(0) + "<br>" + "2: "
 				+ spieler.getSpielHistorie(1) + "<br>" + "3: " + spieler.getSpielHistorie(2) + "<br>" + "4: "
 				+ spieler.getSpielHistorie(3) + "<br>" + "5: " + spieler.getSpielHistorie(4) + "</html>");
 	}
-	
 
-	private void setupGUI() {
+	public void setupGUI() {
 
 		initFrame();
 		createButtons();
 		createLabels();
+		setLabelText();
 
 	}
 
-	public static void updateGUI_Spielerprofil() {
+	public void updateGUI_Spielerprofil() {
 
 		if (checkGUI_Spielerprofil_active() == true) {
 			ObjectHandler.getGui_Spielerprofil().setLabelText();
 		}
 
 	}
-	
+
 	private String zeitStunden() {
-		String ausgabeStd="";
+		String ausgabeStd = "";
 		Double stunden = Math.floor((spieler.getZeitGesamt() / 1000) / 3600);
-		int std = stunden.intValue(); 
-		
+		int std = stunden.intValue();
+
 		// String für Stunde(n)
 		if (std == 0) {
 			ausgabeStd = "0 Stunden";
@@ -197,15 +193,15 @@ public class GUI_Spielerprofil extends JFrame {
 		if (std >= 2) {
 			ausgabeStd = Integer.toString(std) + " Stunden";
 		}
-		
+
 		return ausgabeStd;
 	}
 
 	private String zeitMinuten() {
-		String ausgabeMin="";
+		String ausgabeMin = "";
 		Double minuten = Math.floor(((spieler.getZeitGesamt() / 1000) % 3600) / 60);
 		int min = minuten.intValue();
-		
+
 		// String für Minute(n)
 		if (min == 0) {
 			ausgabeMin = "0 Minuten";
@@ -216,15 +212,15 @@ public class GUI_Spielerprofil extends JFrame {
 		if (min >= 2) {
 			ausgabeMin = Integer.toString(min) + " Minuten";
 		}
-		
+
 		return ausgabeMin;
 	}
-	
+
 	private String zeitSekunden() {
-		String ausgabeSek="";
+		String ausgabeSek = "";
 		Double sekunden = Math.floor(((spieler.getZeitGesamt() / 1000) % 60));
 		int sek = sekunden.intValue();
-		
+
 		// String für Sekunde(n)
 		if (sek == 0) {
 			ausgabeSek = "0 Sekunden";
@@ -235,7 +231,7 @@ public class GUI_Spielerprofil extends JFrame {
 		if (sek >= 2) {
 			ausgabeSek = Integer.toString(sek) + " Sekunden";
 		}
-		
+
 		return ausgabeSek;
 	}
 

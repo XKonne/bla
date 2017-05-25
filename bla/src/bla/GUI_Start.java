@@ -8,8 +8,6 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GUI_Start extends JFrame {
-	// Objekte
-	private static Spieler spieler;
 
 	// Frame-Container-Tabs
 	private JPanel panel = new JPanel(); // Tab Einzelspieler
@@ -33,7 +31,6 @@ public class GUI_Start extends JFrame {
 	public GUI_Start() {
 
 		ObjectHandler.setGui_Start(this);
-		spieler = ObjectHandler.getSpieler();
 		setupGUI();
 		
 	}
@@ -158,17 +155,17 @@ public class GUI_Start extends JFrame {
 	}
 	
 	private void setSpielModusLeicht() {
-		Spiel.setSpielModus(8, 8, 10, "Leicht", spieler);
+		Spiel.setSpielModus(8, 8, 10, "Leicht");
 		closeGUI_Start();
 	}
 
 	private void setSpielModusMittel() {
-		Spiel.setSpielModus(16, 16, 40, "Mittel", spieler);
+		Spiel.setSpielModus(16, 16, 40, "Mittel");
 		closeGUI_Start();
 	}
 
 	private void setSpielModusSchwer() {
-		Spiel.setSpielModus(24, 16, 60, "Schwer", spieler);
+		Spiel.setSpielModus(24, 16, 60, "Schwer");
 		closeGUI_Start();
 	}
 

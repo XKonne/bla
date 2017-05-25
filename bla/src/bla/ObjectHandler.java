@@ -20,15 +20,29 @@ public abstract class ObjectHandler {
 	}
 
 	public static void createGui_Spielerprofil() {
-		ObjectHandler.gui_Spielerprofil = new GUI_Spielerprofil();
+
+		if (gui_Spielerprofil == null) {
+			ObjectHandler.gui_Spielerprofil = new GUI_Spielerprofil();
+		} else {
+			gui_Spielerprofil.setupGUI();
+		}
+
 	}
 
 	public static void createGui_Spielfeld() {
-		ObjectHandler.gui_Spielfeld = new GUI_Spielfeld();
+
+		if (gui_Spielfeld == null) {
+			ObjectHandler.gui_Spielfeld = new GUI_Spielfeld();
+		}
+
 	}
 
 	public static void createGui_SpielModusBenutzer() {
-		ObjectHandler.gui_SpielModusBenutzer = new GUI_SpielModusBenutzer();
+
+		if (gui_SpielModusBenutzer == null) {
+			ObjectHandler.gui_SpielModusBenutzer = new GUI_SpielModusBenutzer();
+		}
+
 	}
 
 	public static void createGui_Start() {
@@ -52,7 +66,12 @@ public abstract class ObjectHandler {
 	}
 
 	public static GUI_Spielerprofil getGui_Spielerprofil() {
+
+		if (gui_Spielerprofil == null) {
+			createGui_Spielerprofil();
+		}
 		return gui_Spielerprofil;
+
 	}
 
 	public static GUI_Spielfeld getGui_Spielfeld() {
