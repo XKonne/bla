@@ -239,7 +239,6 @@ public class GUI_Spielfeld extends JFrame {
 		btn_SpielNeues.setToolTipText("Kehrt zum Hauptmenü zurück, um einen anderen Spielmodus zu wählen.");
 		cpGUI_SpielEnde.add(btn_SpielNeues);
 		btn_SpielNeues.addActionListener(e -> spielNeues());
-		btn_SpielNeues.setEnabled(false);
 
 		// Labels
 		lab_SpielEndeInformation.setBounds(10, 10, 250, 65);
@@ -470,9 +469,10 @@ public class GUI_Spielfeld extends JFrame {
 
 	private void spielNeues() {
 		
-		Spiel.clearClassVariables();
 		closeGUI_SpielEnde();
-		closeGUI_Spielfeld();
+		ObjectHandler.getGui_Spielfeld().dispose();
+		ObjectHandler.setGui_Spielfeld(null);
+		ObjectHandler.setSpiel(null);
 		ObjectHandler.createGui_Start();
 
 	}

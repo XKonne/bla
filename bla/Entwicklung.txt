@@ -470,9 +470,12 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					>GUI_Spielfeld: +zeitformatMMSS(long spielZeit): Übergabe der Spielzeit in Milisekunden und formatiert die Eingabe
 																	 in der Ausgabeformat mm:ss um.	
 						
+
+		done		Bug behoben: Wenn "Neues Spiel" gewählt wird und ein neues Spiel 			25.05.2017  A.3.23
+					erstellt wird, dann existiert GUI_Spielfeld doppelt und das Spielfeld ist nur eine Zeile lang
+					
+					>GUI_Spielfeld >GUI_SpielEnde: Button "Neues Spiel" aktiviert
 								
-		done		Bug behoben: Wenn "Neues Spiel" gewählt wird und ein neues Spiel erstellt wird, dann existiert GUI_Spielfeld doppelt und das 
-					Spielfeld ist nur eine Zeile lang
 								
 								
 								
