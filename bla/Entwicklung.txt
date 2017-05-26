@@ -475,6 +475,9 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					erstellt wird, dann existiert GUI_Spielfeld doppelt und das Spielfeld ist nur eine Zeile lang
 					
 					>GUI_Spielfeld >GUI_SpielEnde: Button "Neues Spiel" aktiviert
+					
+		
+		bug			SpielModus Benuter-Fenster wird manchmal nicht mehr geöffnet (wenn er vorher geschlossen wurde)
 								
 								
 								
