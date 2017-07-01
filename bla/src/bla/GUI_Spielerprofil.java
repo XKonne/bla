@@ -3,6 +3,11 @@ package bla;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.JScrollPane;
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class GUI_Spielerprofil extends JFrame {
@@ -14,6 +19,27 @@ public class GUI_Spielerprofil extends JFrame {
 	Spieler spieler = ObjectHandler.getSpieler();
 
 	// GUI-Elemente
+	// Tables
+	JTable tabelle;
+	DefaultTableModel spielerStats;
+	
+	//†Spalten†anlegen
+	String spalten[] = { "Modus", "Schwierigkeitsgrad", "Minen", "Zeit", "Ergebnis"};
+
+	
+	//†Datenmodelle†anlegen
+	String stats[][] = {
+			{ "Klassik", "Leicht", "10", "0:48", "Sieg" },
+			{ "PvP", "Normal", "11-14", "2:16", "Niederlage" },
+			{ "Punktejagt", "Schwer", "60", "4:01", "Sieg" },
+			{ "FFA-3", "Groﬂ", "3-7-11", "8:26", "Niederlage" }
+		};
+	
+	Object[][] data = new Object[][] {
+		{1, "John", 40.0, false},
+		{2, "Rambo", 20.0, true}
+	};
+	
 	// Labels
 	private JLabel lab_MinenGefunden = new JLabel();
 	private JLabel lab_profilBild = new JLabel();
@@ -46,6 +72,27 @@ public class GUI_Spielerprofil extends JFrame {
 	private void closeGUI_Spielerprofil() {
 		this.dispose();
 		ObjectHandler.setGui_Spielerprofil(null);
+	}
+	
+	private void createTables() {
+		JTable tabelle = new JTable(stats, spalten);
+//		spielerStats = new DefaultTableModel(stats, spalten);
+//		tabelle = new JTable(spielerStats);
+		//tabelle.setBounds(5, 450, 350, 80);
+		
+		tabelle.getColumnModel().getColumn(0).setPreferredWidth(15);
+		tabelle.getColumnModel().getColumn(1).setPreferredWidth(10);
+		tabelle.getColumnModel().getColumn(2).setPreferredWidth(5);
+		tabelle.getColumnModel().getColumn(3).setPreferredWidth(5);
+		tabelle.getColumnModel().getColumn(4).setPreferredWidth(10);
+		
+		tabelle.changeSelection(0, 0, true, false);
+		
+//		cp.add(new JScrollPane(tabelle));
+		JScrollPane sPane = new JScrollPane(tabelle);
+		sPane.setBounds(5,450, 350, 80);
+		cp.add(sPane);
+		//cp.add(tabelle);
 	}
 
 	private void createLabels() {
@@ -126,13 +173,13 @@ public class GUI_Spielerprofil extends JFrame {
 																		// an
 																		// ObjectHandler
 																		// geht.
-		int frameWidth = 250;
-		int frameHeight = 480;
+		int frameWidth = 400; //250
+		int frameHeight = 600; //480
 		setSize(frameWidth, frameHeight);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
-		setLocation(x - 250, y);
+		setLocation(x - 325, y);
 		setTitle("Spielerprofil");
 		setResizable(false);
 
@@ -164,9 +211,13 @@ public class GUI_Spielerprofil extends JFrame {
 	public void setupGUI() {
 
 		initFrame();
+		
+		createTables();
+		
 		createButtons();
 		createLabels();
 		setLabelText();
+		
 
 	}
 

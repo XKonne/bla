@@ -8,6 +8,7 @@ public abstract class ObjectHandler {
 	private static GUI_SpielerAuswahl gui_SpielerAuswahl;
 	private static GUI_Spielerprofil gui_Spielerprofil;
 	private static GUI_Spielfeld gui_Spielfeld;
+	private static GUI_SpielfeldMP gui_SpielfeldMP;
 	private static GUI_SpielModusBenutzer gui_SpielModusBenutzer;
 	private static GUI_Start gui_Start;
 
@@ -33,6 +34,14 @@ public abstract class ObjectHandler {
 
 		if (gui_Spielfeld == null) {
 			ObjectHandler.gui_Spielfeld = new GUI_Spielfeld();
+		}
+
+	}
+	
+	public static void createGui_SpielfeldMP() {
+
+		if (gui_SpielfeldMP == null) {
+			ObjectHandler.gui_SpielfeldMP = new GUI_SpielfeldMP();
 		}
 
 	}

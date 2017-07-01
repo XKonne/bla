@@ -3,6 +3,7 @@ package bla;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +11,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.Timer;
 
 @SuppressWarnings("serial")
-public class GUI_Spielfeld extends JFrame {
+public class GUI_SpielfeldMP extends JFrame {
 
 	// Frame-Container-Panel
 	private JFrame gui_SpielEnde;
@@ -20,6 +21,10 @@ public class GUI_Spielfeld extends JFrame {
 	private Container cpTop;
 	private static JPanel panSpielfeld; // Gridlayout
 
+	static int spielerAnzahl = 2;
+	String spielArt = "lok_SP";
+	static JButton l_minenFortschritt[] = new JButton[Spiel.getMinenGesamt()/spielerAnzahl];
+	
 	// Variablen
 	// Boolean
 	static boolean Spielfeldgesperrt;
@@ -37,6 +42,9 @@ public class GUI_Spielfeld extends JFrame {
 	// Labels - guiSpielfeld
 	private JLabel lab_SpielerName;
 	private static JLabel lab_SpielModus;
+
+	private static JLabel lab_Spielzeit; // deaktiviert, wird später für die
+											// Spielzeit verwendet
 	private static JLabel lab_Restminen;
 
 	// Buttons
@@ -52,7 +60,7 @@ public class GUI_Spielfeld extends JFrame {
 	// Arrays
 	static Feld[][] Felder;
 
-	public GUI_Spielfeld() {
+	public GUI_SpielfeldMP() {
 
 		initClassVariables();
 		setupGUI();
@@ -70,7 +78,7 @@ public class GUI_Spielfeld extends JFrame {
 		gui_SpielEnde.dispose();
 	}
 
-	private void closeGUI_Spielfeld() {
+	private void closeGUI_SpielfeldMP() {
 		
 		clearClassVariables();
 		this.setVisible(false);
@@ -81,23 +89,75 @@ public class GUI_Spielfeld extends JFrame {
 	}
 
 	private void createButtons() {
+		
+		Border border = LineBorder.createGrayLineBorder();
+		
+		JButton b_SpielerProfil[] = new JButton[spielerAnzahl];
+		JLabel l_SpielerName[] = new JLabel[spielerAnzahl];
+		
+		for (int i=0; i<spielerAnzahl; i++) {
+			b_SpielerProfil[i] = new JButton();
+			b_SpielerProfil[i].setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
+			b_SpielerProfil[i].setVisible(true);
+			b_SpielerProfil[i].setMargin(new Insets(2, 2, 2, 2));
+			cpTop.add(b_SpielerProfil[i]);
+			b_SpielerProfil[i].addActionListener(e -> ObjectHandler.createGui_Spielerprofil());
+			
+			l_SpielerName[i] = new JLabel();
+			l_SpielerName[i].setFont(new Font("Dialog", Font.PLAIN, 35));
+			l_SpielerName[i].setBorder(border);
+			l_SpielerName[i].setVisible(true);
+			cpTop.add(l_SpielerName[i]);
+						
+			switch (i) {
+				case 0: b_SpielerProfil[i].setBounds(4, 5, 40, 40); 
+						l_SpielerName[i].setBounds(50, 5, 204, 40);
+						break;
+				case 1: b_SpielerProfil[i].setBounds(this.getWidth() - 45 - 15, 5, 40, 40);
+						l_SpielerName[i].setBounds(this.getWidth() - 250 - 15 - 4, 5, 204, 40); break;
+			}
+		}
+		
+		
+		
+		for (int i=0; i<Spiel.getMinenGesamt()/spielerAnzahl; i++) {
+			l_minenFortschritt[i] = new JButton();
+			l_minenFortschritt[i].setVisible(true);
+			l_minenFortschritt[i].setBounds(4+i*(250/(Spiel.getMinenGesamt()/spielerAnzahl)), 47, 250/(Spiel.getMinenGesamt()/spielerAnzahl), 8);
+			l_minenFortschritt[i].setBackground(Color.RED);
+			cpTop.add(l_minenFortschritt[i]);
+		}
+		
+		if (spielerAnzahl > 1) {
+		
+			JButton l_minenFortschritt2[] = new JButton[Spiel.getMinenGesamt()/2];
+			
+			for (int i=0; i<Spiel.getMinenGesamt()/2; i++) {
+				l_minenFortschritt2[i] = new JButton();
+				l_minenFortschritt2[i].setVisible(true);
+				l_minenFortschritt2[i].setBounds(this.getWidth() - 70 - i*(250/(Spiel.getMinenGesamt()/2)), 47, 250/(Spiel.getMinenGesamt()/2), 8);
+				l_minenFortschritt2[i].setBackground(Color.RED);
+				cpTop.add(l_minenFortschritt2[i]);
+			}
+		}
+		
 
-		JButton btn_SpielerProfil = new JButton();
+//		JButton btn_SpielerProfil = new JButton();
 		JButton btn_SpielNeustart = new JButton();
 
-		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
-		btn_SpielerProfil.setBounds(4, 5, 40, 40);
-		btn_SpielerProfil.setVisible(true);
-		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
-		cpTop.add(btn_SpielerProfil);
-		btn_SpielerProfil.addActionListener(e -> ObjectHandler.createGui_Spielerprofil());
+//		btn_SpielerProfil.setIcon(new ImageIcon(getClass().getResource("img/profil.jpg")));
+//		btn_SpielerProfil.setBounds(4, 5, 40, 40);
+//		btn_SpielerProfil.setVisible(true);
+//		btn_SpielerProfil.setMargin(new Insets(2, 2, 2, 2));
+//		cpTop.add(btn_SpielerProfil);
+//		btn_SpielerProfil.addActionListener(e -> ObjectHandler.createGui_Spielerprofil());
 
-		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
-		btn_SpielNeustart.setToolTipText("Startet aktuelle Runde neu.");
-		btn_SpielNeustart.setBounds(this.getWidth() - 60, 5, 40, 40);
-		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
-		cpTop.add(btn_SpielNeustart);
-		btn_SpielNeustart.addActionListener(e -> spielNochmal());
+//		btn_SpielNeustart.setIcon(new ImageIcon(getClass().getResource("img/neustart.png")));
+//		btn_SpielNeustart.setToolTipText("Startet aktuelle Runde neu.");
+//		btn_SpielNeustart.setBounds(this.getWidth() - 60, 5, 40, 40);
+//		btn_SpielNeustart.setMargin(new Insets(2, 2, 2, 2));
+//		cpTop.add(btn_SpielNeustart);
+//		btn_SpielNeustart.addActionListener(e -> spielNochmal());
 
 		Border loweredbevel;
 		loweredbevel = BorderFactory.createLineBorder(Color.black);
@@ -119,11 +179,11 @@ public class GUI_Spielfeld extends JFrame {
 		Border border = LineBorder.createGrayLineBorder();
 
 		// GUI-Spielfeld
-		lab_SpielerName.setBounds(50, 5, 200, 40);
-		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
-		lab_SpielerName.setBorder(border);
-		lab_SpielerName.setVisible(true);
-		cpTop.add(lab_SpielerName);
+//		lab_SpielerName.setBounds(50, 5, 200, 40);
+//		lab_SpielerName.setFont(new Font("Dialog", Font.PLAIN, 35));
+//		lab_SpielerName.setBorder(border);
+//		lab_SpielerName.setVisible(true);
+//		cpTop.add(lab_SpielerName);
 
 		lab_SpielModus.setBounds(255, 0, 120, 20);
 		lab_SpielModus.setVisible(false);
@@ -135,6 +195,12 @@ public class GUI_Spielfeld extends JFrame {
 		lab_Restminen.setVisible(true);
 		lab_Restminen.setFont(new Font("Dialog", Font.PLAIN, 11));
 		cpTop.add(lab_Restminen);
+
+		// lab_Spielzeit.setBounds(255, 28, 100, 20);
+		// lab_Spielzeit.setVisible(true);
+		// lab_Spielzeit.setFont(new Font("Dialog", Font.PLAIN, 11));
+		// lab_Spielzeit.setText("Spielzeit: 0 Sek.");
+		// cpTop.add(lab_Spielzeit);
 	}
 
 	private void createSpielfeldFeld() {
@@ -267,10 +333,16 @@ public class GUI_Spielfeld extends JFrame {
 			// pro Spalte unter 15 ist das Spielfeld um 29 zu klein
 			extraBreiteLinks = 15 * (15 - Spiel.getSpielfeldSpalten());
 			extraBreiteRechts = 14 * (15 - Spiel.getSpielfeldSpalten());
+			
+			if (spielerAnzahl == 2) {
+				extraBreiteLinks = 15 * (15 - Spiel.getSpielfeldSpalten()) + 75;
+				extraBreiteRechts = 14 * (15 - Spiel.getSpielfeldSpalten()) + 74; 
+			}
+			
 		}
 
 		cpTop.setLayout(null);
-		cpTop.setPreferredSize(new Dimension(600, 50));
+		cpTop.setPreferredSize(new Dimension(600, 50+15));
 		this.getContentPane().add(cpTop, BorderLayout.PAGE_START);
 
 		cpLeft.setLayout(null);
@@ -289,23 +361,51 @@ public class GUI_Spielfeld extends JFrame {
 		panSpielfeld.setLayout(new GridBagLayout());
 
 		// 73 anscheinend top und 23 menubar
-		frameHeight = Spiel.getSpielfeldZeilen() * (feldHeight) + Spiel.getSpielfeldZeilen() * 4 + 16 + 73 + 23;
+		frameHeight = Spiel.getSpielfeldZeilen() * (feldHeight) + Spiel.getSpielfeldZeilen() * 4 + 16 + 73 + 23 + 15;
 		frameWidth = Spiel.getSpielfeldSpalten() * (feldWidth) + Spiel.getSpielfeldSpalten() * 4 + 16 + extraBreiteLinks
 				+ extraBreiteRechts;
 
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-		this.setSize(frameWidth, frameHeight);
+		switch (spielerAnzahl) {
+			case 1: this.setSize(frameWidth, frameHeight); break;
+			case 2: this.setSize(600, frameHeight); break;
+		}
+				
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (d.width - getSize().width) / 2;
 		int y = (d.height - getSize().height) / 2;
 		this.setLocation(x, y);
 
-		this.setTitle("Namenloses Programmierprojekt");
+		this.setTitle("MP test");
 		this.setResizable(true);
 		this.repaint();
 		this.setVisible(true);
 	}
+	
+//	  @Override public void paint(Graphics g) { // @Override ermöglicht dem Compiler die Kontrolle
+//			//Upcast --> mehr Funktionen in Graphics2D
+//			Graphics2D g2d=(Graphics2D)g;
+//			
+//			// "normales Rechteck" erstellen:
+//			Rectangle2D r1 = new Rectangle2D.Double( 
+//				100,60, //Ecke links oben (X,Y)
+//				200,10 //Breite, Höhe
+//				);
+//			
+//			Rectangle2D r2 = new Rectangle2D.Double( 
+//					50,60, //Ecke links oben (X,Y)
+//					r1.getWidth()*0.7,10 //Breite, Höhe
+//					);
+//			
+//			// nun füllen wir die Rechtecke mit Farben:
+//			g2d.setPaint( Color.red );
+//			g2d.fill( r1 );		
+//			
+//			// nun füllen wir die Rechtecke mit Farben:
+//			g2d.setPaint( Color.blue );
+//			g2d.fill( r2 );	
+//		  }
 
 	public void neueRunde() {
 		createSpielfeldFeld();
@@ -452,6 +552,7 @@ public class GUI_Spielfeld extends JFrame {
 		resetSpielfeldStatusToFeld();
 		setSpielfeldStatusVerdeckt();
 
+		lab_Spielzeit.setText("Spielzeit: 0");
 		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
@@ -477,6 +578,7 @@ public class GUI_Spielfeld extends JFrame {
 
 		Spiel.zeitMessungStart();
 
+		lab_Spielzeit.setText("Spielzeit: 0 Sek.");
 		zeitAnzeigenStart();
 
 		closeGUI_SpielEnde();
@@ -602,7 +704,8 @@ public class GUI_Spielfeld extends JFrame {
 
 		lab_SpielerName = new JLabel();
 		lab_SpielModus = new JLabel();
-
+		lab_Spielzeit = new JLabel(); // deaktiviert, wird später für die
+										// Spielzeit verwendet
 		lab_Restminen = new JLabel();
 		lab_SpielEndeInformation = new JLabel();
 
@@ -633,6 +736,7 @@ public class GUI_Spielfeld extends JFrame {
 
 		lab_SpielerName = null;
 		lab_SpielModus = null;
+		lab_Spielzeit = null;
 		lab_Restminen = null;
 		lab_SpielEndeInformation = null;
 

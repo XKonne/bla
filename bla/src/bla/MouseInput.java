@@ -1,5 +1,6 @@
 package bla;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -81,6 +82,10 @@ public class MouseInput implements MouseListener {
 					if (Spiel.getSpielfeldStatus(mi_zeile, mi_spalte) == -1) 
 					{
 						Spiel.countMineRichtig(1);
+						
+						//Fortschrittsbalken
+						GUI_SpielfeldMP.l_minenFortschritt[Spiel.getMinenRichtig()-1].setBackground(Color.GREEN);;
+						
 						Debug.debugFeld(3, 0, 0);
 					}
 					else 

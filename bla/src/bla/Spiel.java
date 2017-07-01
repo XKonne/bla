@@ -288,6 +288,7 @@ public class Spiel {
 
 		createSpiel();
 		ObjectHandler.createGui_Spielfeld();
+		ObjectHandler.createGui_SpielfeldMP();
 
 	}
 
