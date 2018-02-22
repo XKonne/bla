@@ -479,7 +479,20 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		
 		bug			SpielModus Benuter-Fenster wird manchmal nicht mehr geöffnet (wenn er vorher geschlossen wurde)
 								
-								
+		
+		
+		Spieldaten in eingebettete DB-Speichern (soll data.txt langfristig ablösen)
+		
+		01.02.2018	HSQLDB 2.4 wird verwendet
+					> DB herunterladen, Treiber einbinden
+					Datenspeicher in Datei				
+					> "DatenDB" heißt die Datenbankdatei im Hauptverzeichnis "bla"		
+					Steuerung über "db.java": Aktuell noch "Stand-Alone"
+					
+					https://javabeginners.de/Datenbanken/HyperSQLDB.php
+		
+		02.02.2018	Erweiterung der DB mit gewünschten gespeicherten Daten
+					Dummy-Daten eingefügt
 								
 								
 								
