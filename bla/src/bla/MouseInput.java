@@ -43,9 +43,15 @@ public class MouseInput implements MouseListener {
 				// Decke Feld auf
 				setSpielfeldStatusZuFeld(mi_zeile, mi_spalte);
 				
+				
 				// Wenn das aufgedeckte Feld leer ist, suche sein Umfeld ab
-				if (Spiel.getSpielfeldStatus(mi_zeile,mi_spalte) == 0) 
+				if (Spiel.getSpielfeldStatus(mi_zeile,mi_spalte) == 0)
 				{
+					/* Ein leeres Feld wurde geklickt und wird bei "deckeUmkreisAuf" nochmals
+					 * aufgedeckt (bzw. gezählt, daher -1 bei countFelderAufgedeckt
+					 */
+					Spiel.countFelderAufgedeckt(-1);
+					// Decke umliegende Felder auf
 					deckeUmkreisAuf(mi_zeile, mi_spalte);
 					arbeiteMerkeListeAb();
 				}
@@ -83,9 +89,12 @@ public class MouseInput implements MouseListener {
 					{
 						Spiel.countMineRichtig(1);
 						
-						//Fortschrittsbalken
-						GUI_SpielfeldMP.l_minenFortschritt[Spiel.getMinenRichtig()-1].setBackground(Color.GREEN);;
-						
+						// TODO: code multiplayer
+						if (Spiel.multiplayer == true)
+						{
+							//Fortschrittsbalken
+							GUI_SpielfeldMP.l_minenFortschritt[Spiel.getMinenRichtig()-1].setBackground(Color.GREEN);;
+						}
 						Debug.debugFeld(3, 0, 0);
 					}
 					else 
@@ -218,6 +227,8 @@ private void deckeUmkreisAuf(int z, int sp) {
 
 	// Deckt einzelnes Feld auf und ordnet ihm sein passenden Status (=Bild) zu
 	public void setSpielfeldStatusZuFeld(int z, int sp) {
+		// Erhöhe Variable in Klasse Spiel - Zählt jedes aufgedeckte Feld
+		Spiel.countFelderAufgedeckt(1);
 		
 		// Prüfe ob Feld noch im Spielfeld liegt
 		if (amRand(z,sp) == false)

@@ -3,11 +3,16 @@ package bla;
 import java.util.Random;
 
 public class Spiel {
+	
+	// Test-Variable für Multiplayer-Layout
+	// =true, GUI_SpieldfeldMP wird geladen
+	static boolean multiplayer = false;
 
 	// Integer
 	private static int minenGesamt;
 	private static int minenRichtig;
 	private static int restMinen;
+	private static int felderAufgedeckt;
 	static int anzahlSpalten;
 	static int anzahlZeilen;
 	static int anzahlMinen;
@@ -48,16 +53,7 @@ public class Spiel {
 
 		// Spielfeld-Labels aktualisieren
 		GUI_Spielfeld.refreshLabels();
-
-		// Sieg (=alle Minen richtig markiert
-		if (getMinenRichtig() == getMinenGesamt() && getRestMinen() == 0 && GUI_Spielfeld.Spielfeldgesperrt == false) {
-
-			// Setze Hilfsvariable auf Sieg (=true) für Spielhistorie
-			winlose = true;
-			spielEnde(winlose, "Sieg");
-
-		}
-
+		
 		// Niederlage (=Mine aufgedeckt)
 		if (mineGetroffen == true && GUI_Spielfeld.Spielfeldgesperrt == false) {
 
@@ -66,6 +62,49 @@ public class Spiel {
 			spielEnde(winlose, "Niederlage");
 			mineGetroffen = false;
 		}
+
+		// Sieg (=alle Minen richtig markiert)
+		if (getMinenRichtig() == getMinenGesamt() && getRestMinen() == 0 && GUI_Spielfeld.Spielfeldgesperrt == false) {
+
+			// Setze Hilfsvariable auf Sieg (=true) für Spielhistorie
+			winlose = true;
+			spielEnde(winlose, "Sieg1");
+		}
+		// Sieg-2 (=alle Felder aufgedeckt, bis auf die Minen selbst)
+		if (nurNochMinen() == true && GUI_Spielfeld.Spielfeldgesperrt == false) {
+			
+			// Setze Hilfsvariable auf Sieg (=true) für Spielhistorie
+			winlose = true;
+			spielEnde(winlose, "Sieg2");
+		}
+	}
+
+	private static boolean nurNochMinen() {
+		
+		// debug:
+		System.out.println("aufgedeckte felder: " + Spiel.felderAufgedeckt);
+		// Hilfvariablen in der Methode
+		int restlicheNichtAufgedeckteFelder = 0;
+		boolean ergebnis=false;
+		
+		// Berechne: #Spielfeld-Felder minus Aufgedeckte-Felder (plus 1 da variable mit 0 anfängt)
+		restlicheNichtAufgedeckteFelder = anzahlSpalten*anzahlZeilen - Spiel.getFelderAufgedeckt();
+		// debug
+		System.out.println("restliiche Nicht aufgedeckte Felder: "+restlicheNichtAufgedeckteFelder);
+		/* Wenn restlicheNichtAufgedeckteFelder minus MinenGesamt gleich 0 ergibt
+		 * dann sind die restlichen Felder nur noch Minen und nicht aufgedeckt.
+		 * = zweite Siegbedingung
+		 * 
+		 * Anmerkung: 	Markierte Felder sind aufgedeckte Felder, das Spiel ist
+		 * 				also auch zu Ende, wenn die Minen richtig markiert sind und sonst
+		 * 				alles aufgedeckt ist
+		 */
+		if (restlicheNichtAufgedeckteFelder - Spiel.getMinenGesamt() == 0) {
+			// debug:
+			System.out.println("if-bed: " + (restlicheNichtAufgedeckteFelder - Spiel.getMinenGesamt()));
+			ergebnis = true;
+		}
+		return ergebnis;
 	}
 
 	public static void createSpiel() {
@@ -80,6 +119,16 @@ public class Spiel {
 		zeitMessungStart();
 
 		Debug.debugSpiel();
+	}
+	
+	/**
+	 * Feld per Linksklick aufgedeckt > Erhöhe Felder-Zähle um +-1.
+	 * 
+	 * @param i
+	 *            Integer, der die Änderung beinhaltet
+	 */
+	public static void countFelderAufgedeckt(int aenderung) {
+		felderAufgedeckt += aenderung;
 	}
 
 	/**
@@ -113,6 +162,10 @@ public class Spiel {
 
 	public static int getRestMinen() {
 		return restMinen;
+	}
+	
+	public static int getFelderAufgedeckt() {
+		return felderAufgedeckt;
 	}
 
 	public static Integer getSpielfeldStatus(int zeile, int spalte) {
@@ -175,6 +228,10 @@ public class Spiel {
 
 	public static void setMinenRichtig(int minenRichtig1) {
 		minenRichtig = minenRichtig1;
+	}
+	
+	public static void setFelderAufgedeckt() {
+		felderAufgedeckt = 0;
 	}
 
 	public static void setRestMinen(int minen) {
@@ -288,7 +345,10 @@ public class Spiel {
 
 		createSpiel();
 		ObjectHandler.createGui_Spielfeld();
+		
+		if (multiplayer == true) {
 		ObjectHandler.createGui_SpielfeldMP();
+		}
 
 	}
 
@@ -364,6 +424,7 @@ public class Spiel {
 		minenGesamt = 0;
 		minenRichtig = 0;
 		restMinen = 0;
+		felderAufgedeckt = 0;
 		anzahlSpalten = 0;
 		anzahlZeilen = 0;
 		anzahlMinen = 0;

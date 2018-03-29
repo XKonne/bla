@@ -86,7 +86,9 @@ public class Debug {
 				switch ( auswahl )
 				{
 					case 0: System.out.println("- - - - - - - - - -");
-							System.out.println("Feld[" + z + "][" + sp + "] ausgewählt"); break;
+							System.out.println("Feld[" + z + "][" + sp + "] ausgewählt"); 
+							//System.out.println("Felder aufgedeckt: " + Spiel.getFelderAufgedeckt());
+							break;
 					case 1: System.out.print("Rechtsklick "); break;
 					case 2: System.out.print("> Fahne gesetzt >");; break;
 					case 3: System.out.println(" Mine markiert. (Restminen: " + Spiel.getRestMinen() + ", Minen-Richtig: " + Spiel.getMinenRichtig() + ")"); break;

@@ -240,7 +240,7 @@ public class GUI_Spielfeld extends JFrame {
 
 		// Alle Minen aufdecken, die noch nicht aufgedeckt sind oder nicht
 		// richtig markiert sind
-		spielEndeMinenAufdecken();
+		spielEndeMinenAufdecken(SiegNiederlage);
 
 		gui_SpielEnde.setVisible(true);
 	}
@@ -318,6 +318,7 @@ public class GUI_Spielfeld extends JFrame {
 	}
 
 	private void resetMinenWerte() {
+		Spiel.setFelderAufgedeckt();
 		Spiel.setRestMinen(Spiel.getMinenGesamt());
 		Spiel.setMinenRichtig(0);
 	}
@@ -491,7 +492,7 @@ public class GUI_Spielfeld extends JFrame {
 		refreshLabels();
 	}
 
-	public void spielEndeMinenAufdecken() {
+	public void spielEndeMinenAufdecken(String siegNiederlage) {
 		for (int z = 1; z < Spiel.getSpielfeldZeilen() + 1; z++) {
 			for (int sp = 1; sp < Spiel.getSpielfeldSpalten() + 1; sp++) {
 
@@ -500,8 +501,17 @@ public class GUI_Spielfeld extends JFrame {
 						Felder[z][sp].setIcon(new ImageIcon(getClass().getResource("img/felder/aufgedeckt-mine.gif")));
 
 						// Rahmen setzen
-						Border roterRahmen = new LineBorder(Color.RED, 1);
-						Felder[z][sp].setBorder(roterRahmen);
+						if (siegNiederlage == "Niederlage") {
+							// Rahmen rot
+							Border roterRahmen = new LineBorder(Color.RED, 1);
+							Felder[z][sp].setBorder(roterRahmen);
+						}
+						else
+						{
+							// Rahmen grün (erweiterte Siegbedingung)
+							Border roterRahmen = new LineBorder(Color.GREEN, 1);
+							Felder[z][sp].setBorder(roterRahmen);
+						}
 					}
 				}
 

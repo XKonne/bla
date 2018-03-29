@@ -477,10 +477,6 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 					>GUI_Spielfeld >GUI_SpielEnde: Button "Neues Spiel" aktiviert
 					
 		
-		bug			SpielModus Benuter-Fenster wird manchmal nicht mehr geöffnet (wenn er vorher geschlossen wurde)
-								
-		
-		
 		Spieldaten in eingebettete DB-Speichern (soll data.txt langfristig ablösen)
 		
 		01.02.2018	HSQLDB 2.4 wird verwendet
@@ -493,7 +489,38 @@ A.1		done		GUI: 3x3 großes vorgegebenes Spielfeld; 3 Minen; als Buttons					09.0
 		
 		02.02.2018	Erweiterung der DB mit gewünschten gespeicherten Daten
 					Dummy-Daten eingefügt
+		
+		done		Sieg-Bedingung erweitert													 29.03.2018 A.3.24 
+					Bisher: Das Spiel ist gewonnen, wenn alle Minen richtig markiert sind.
+					Neu dazu: Das Spiel ist gewonnen, wenn alle nicht-Minen-Felder aufgedeckt sind, d.h. die restlichen
+							  nicht aufgedeckten Felder sind Minen.
+							  Das Spiel ist ebenso gewonnen, wenn ein Teil der Minen richtig markiert wurde und ansonsten
+							  alle nicht-Minen-Felder aufgedeckt sind.
+				    Spiel läuft weiter (keine Änderung): Siegbedingung nicht erfüllt, weil z.B. zu viele Fahnen gesetzt
+				                                         sind.
+				    Niederlage (keine Änderung): Eine Mine wird aufgedeckt.
+				    
+				    Optische Anpassung: Wird das Spiel über die "erweiterte Siegbedingung" gewonnen, d.h. durch aufdecken
+				                        aller nicht-Minen-Felder, dann erscheinen die Minen mit einem grünen Rahmen
+				                        (wie bei richtigen Fahnen).
+				                        Bei der Niederlage erhalten alle Minen wie bisher einen roten Rahmen, außer sie
+				                        sind richtig markiert.
+				                        
+				    >Spiel: +private nurNochMinen(): true/false
+				    		Rechnet, ob nur noch Minen-Felder übrig sind. Falls ja > true / ansonsten > false
+				    		+getFelderAufgedeckt()
+				    		+setFelderAufgedeckt()
+				    			Reset-Funktion ! Setzt Wert auf 0
+				    		+countFelderAufgedeckt(int aenderung)
+				    			Zählt die aufgedeckten Felder. Aufruf in Mouse-Input.
+				    			Kann erhöht (positiver Wert) oder erniedrigt (negativer Wert) werden.
+				    		+int felderAufgedeckt
+				    			Die Zählvariable für die oberen Methoden
 								
+		bug (??.??.2017)   SpielModus Benuter-Fenster wird manchmal nicht mehr geöffnet (wenn er vorher geschlossen wurde)
+		
+		bug (29.03.2018)   Wenn man mind. 1 Spiel gewonnen hat und im SiegNiederlage-Dialog "Neues Spiel" klickt,
+		                   kommt eine Nullpointer-Fehlermeldung. Bei Niederlage komischerweise nicht!	
 								
 								
 	
