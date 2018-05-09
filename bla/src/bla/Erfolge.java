@@ -1,20 +1,71 @@
 package bla;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+
 public class Erfolge {
 
 	public Erfolge() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void spieleGespielt(String modus, int bisherigeSpiele) {
-		if (modus == "Leicht" || modus == "Mittel" || modus== "Schwer") {
-			if (bisherigeSpiele > 25) {
-				setErfolge(1, true);
-			}
-		}
+//	public void spieleGespielt(String modus, int bisherigeSpiele) {
+//		if (modus == "Leicht" || modus == "Mittel" || modus== "Schwer") {
+//			if (bisherigeSpiele > 25) {
+//				setErfolge(1, true);
+//			}
+//		}
+//	}
+	
+	public static void getDB() {
+        System.out.println("DB aktiv"); 
+        ResultSet rs = null; 
+        Statement stmt = null; 
+        Connection c = null; 
+        try {
+        	String fileName = "datenDB";
+        	c = DriverManager.getConnection("jdbc:hsqldb:file:" + fileName + ";shutdown=true", "jb", "123");
+        	stmt = c.createStatement(); 
+        	
+            String query = "SELECT * FROM Erfolge WHERE erreicht='1';"; 
+            rs = stmt.executeQuery(query); 
+            
+            while (rs.next()) {
+            	setErfolge(rs.getString("id_erfolge"));
+            	//System.out.println("ID: " + rs.getString("id_erfolge") + "Status: " + rs.getString("erreicht"));
+            } 
+            rs.close(); 
+            stmt.close(); 
+            c.close(); 
+        } catch (SQLException e) { 
+            e.printStackTrace(); 
+        } finally { 
+            try { 
+                if (rs != null && !rs.isClosed()) 
+                    rs.close(); 
+                if (stmt != null && !stmt.isClosed()) 
+                    stmt.close(); 
+                if (c != null && !c.isClosed()) 
+                    c.close(); 
+            } catch (SQLException e) { 
+            } 
+        } 
+    } 
+	
+	public void pruefeErfolge() {
+		//TODO
+		// hier ist noch nix da ... schreibt den erfolg in die db
 	}
 	
-	private void setErfolge(int idErfolg, boolean onOff) {
+	private static void setErfolge(String idErfolg) {
+						
+		GUI_Spielerprofil.setErfolgAn(idErfolg);
+		
+		/* Ausgabe Kommandozeile /Debug
 		switch(idErfolg) {
 			case 0: System.out.println("Erfolg 0 errungen"); break;
 			case 1: System.out.println("Erfolg 1 errungen"); break;
@@ -43,6 +94,7 @@ public class Erfolge {
 			
 			default: System.out.println("Erfolge: Error - Erfolge-ID nicht gefunden."); 
         } 
+        */
 	}
 
 }

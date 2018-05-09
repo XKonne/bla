@@ -9,10 +9,6 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import javax.swing.*;
-import javax.swing.JScrollPane;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
@@ -27,6 +23,21 @@ public class GUI_Spielerprofil extends JFrame {
 	int aktiv = 0;
 	
 	// GUI-Elemente
+	
+	// Btn
+	// Erfolge-Buttons
+	static JButton btn_erf_1 = new JButton();
+	static JButton btn_erf_2 = new JButton();
+	static JButton btn_erf_3 = new JButton();
+	static JButton btn_erf_4 = new JButton();
+	static JButton btn_erf_5 = new JButton();
+	static JButton btn_erf_6 = new JButton();
+	static JButton btn_erf_7 = new JButton();
+	static 	JButton btn_erf_8 = new JButton();
+	static 	JButton btn_erf_9 = new JButton();
+	static 	JButton btn_erf_10 = new JButton();
+	
+	JButton [] btn_erf = new JButton[25];
 
 	
 	DefaultTableModel spielerStats;
@@ -52,6 +63,11 @@ public class GUI_Spielerprofil extends JFrame {
 //	JTable tabelle = new JTable(stats, spalten);
 	JScrollPane sPane = new JScrollPane(tabelle);
 	
+	// Layout-Komponenten Erfolge
+	JPanel panErfolge = new JPanel();
+	JScrollPane sPaneE = new JScrollPane();
+
+	
 	// Labels
 	private JLabel lab_MinenGefunden = new JLabel();
 	private JLabel lab_profilBild = new JLabel();
@@ -67,15 +83,12 @@ public class GUI_Spielerprofil extends JFrame {
 	private JLabel lab_ZeitStdMinSek = new JLabel();
 	private JLabel lab_ZeitLetztesSpiel = new JLabel();
 	private JLabel lab_ZeitSchnellstesSpiel = new JLabel();
+	
+	private JLabel erf_ZeitSchnellstesSpiel = new JLabel();
+	JTextField erf_infobox = new JTextField();
 
-	//String query;
 	
-	
-	public static void start() {
-		new GUI_Spielerprofil().getDB(); 
-	}
-	
-	public void getDB() {
+	public void getDB_Spiele() {
         System.out.println("DB aktiv"); 
         ResultSet rs = null; 
         Statement stmt = null; 
@@ -90,22 +103,43 @@ public class GUI_Spielerprofil extends JFrame {
 //            String query = "SELECT * FROM USERS;"; 
 //            
 //            rs = stmt.executeQuery(query); 
+                    	
+//            // DB anlegen
+//        	// Dateiname
+//            String fileName = "datenDB";
+//            // Verbindung zur DB
+//            c = DriverManager.getConnection("jdbc:hsqldb:file:" + fileName + ";shutdown=true", "jb", "123");
+//            
+//            // DB: Spiele
+//            String query = "CREATE TABLE IF NOT EXISTS Spiele (spiel_id CHAR(4),  modus char(20), schwierigkeit CHAR(20),  minen CHAR(3), ergebnis CHAR(20))"
+//            		+ "CREATE TABLE IF NOT EXISTS Erfolge (erfolge_id INT(4),  beschreibung char(20), erreich CHAR(1);"; 
+//            stmt = c.createStatement(); 
+//            stmt.executeQuery(query); 
+//            
+//            // DB: Spieler
+//            String query2 = "CREATE TABLE IF NOT EXISTS Spieler (spielername CHAR(12),  modus char(20), schwierigkeit CHAR(20),  minen CHAR(3), ergebnis CHAR(20));"; 
+////            stmt = c.createStatement(); 
+////            stmt.executeQuery(query2); 
+//            
+//            // DB: spielt
+//            String query3 = "CREATE TABLE IF NOT EXISTS Spieler (spielername CHAR(12),  modus char(20), schwierigkeit CHAR(20),  minen CHAR(3), ergebnis CHAR(20));"; 
+////            stmt = c.createStatement(); 
+////            stmt.executeQuery(query3); 
+//            
+//            // DB: Erfolge
+//            String query4 = "CREATE TABLE IF NOT EXISTS Erfolge (erfolge_id INT(4),  beschreibung char(20), erreich CHAR(1);"; 
+////            stmt = c.createStatement(); 
+////            stmt.executeQuery(query4); 
             
-            
-            
-            String fileName = "datenDB";
-            c = DriverManager.getConnection("jdbc:hsqldb:file:" + fileName + ";shutdown=true", "jb", "123");
-            
-            String query = "CREATE TABLE IF NOT EXISTS PUBLIC.USERS (spiel_id CHAR(4),  modus char(20), schwierigkeit CHAR(20),  minen CHAR(3), ergebnis CHAR(20));"; 
-//            String query = "CREATE TABLE IF NOT EXISTS PUBLIC.USERS (spiel_id INTEGER NOT NULL, modus char(20), schwierigkeit CHAR(20));";
-            
-            stmt = c.createStatement(); 
-            stmt.executeQuery(query); 
+
 //            query = "INSERT INTO USERS (spiel_id, modus, schwierigkeit, minen, zeit_std, zeit_min, zeit_sek, ergebnis) VALUES ('0001', 'Klassik', 'Leicht', 10, 0, 0, 12, 'Sieg')";
-            query = "INSERT INTO USERS (spiel_id, modus, schwierigkeit, minen, ergebnis) VALUES ('1', 'Klassik', 'Leicht', '10', 'Sieg')"; 
+        	String fileName = "datenDB";
+        	c = DriverManager.getConnection("jdbc:hsqldb:file:" + fileName + ";shutdown=true", "jb", "123");
+        	stmt = c.createStatement(); 
+        	String query = "INSERT INTO Spiele (spiel_id, modus, schwierigkeit, minen, ergebnis) VALUES ('1', 'Klassik', 'Leicht', '10', 'Sieg')"; 
             rs = stmt.executeQuery(query); 
             rs.close(); 
-            query = "SELECT * FROM USERS;"; 
+            query = "SELECT * FROM Spiele;"; 
             rs = stmt.executeQuery(query); 
             
             while (rs.next()) {
@@ -119,50 +153,8 @@ public class GUI_Spielerprofil extends JFrame {
 	        	  daten.add(rs.getString("ergebnis"));
 	          }
 	          model.addRow(daten);
-//            
-//            while (rs.next()) { 
-//              Vector daten = new Vector(1);
-//              daten.add(rs.getString("spiel_id"));
-//            //  System.out.println(rs.getInt("spiel_id"));
-//           //   System.out.println(daten);
-//              model.addRow(daten);
-            	
-            	
-            	
-                System.out.println("vector done"); 
-//                System.out.println(rs.getString("modus")); 
-//                System.out.println(rs.getString("schwierigkeit")); 
-//                System.out.println(rs.getString("minen")); 
-//                System.out.println(rs.getString("ergebnis")); 
+              System.out.println("vector done"); 
             } 
-            
-//            Vector newDatas = createDataVector(rs.getString("spiel_id"), 1);
-//            String name = String.valueOf( model.getColumnCount() );
-//            model.addColumn( name, newDatas );
-            
-//            Vector daten = new Vector(1);
-//            daten.add(rs.getString("spiel_id"));
-//            System.out.println(rs.getInt("spiel_id"));
-//            System.out.println(daten);
-//            model.addRow(daten);
-            
-//    		String stats[][] = {
-//    				{ rs.getString("spiel_id"), rs.getString("modus"), rs.getString("minen"), "0:48", rs.getString("ergebnis") },
-//    				{ "PvP", "Normal", "11-14", "2:16", "Niederlage" },
-//    				{ "Punktejagt", "Schwer", "60", "4:01", "Sieg" },
-//    				{ "FFA-3", "Groß", "3-7-11", "8:26", "Niederlage" }
-//    			};
-            
-//            while (rs.next()) { 
-//                System.out.println(rs.getInt("spiel_id")); 
-//                System.out.println(rs.getString("modus")); 
-//                System.out.println(rs.getString("schwierigkeit")); 
-//                System.out.println(rs.getInt("minen")); 
-//                System.out.println(rs.getString("ergebnis")); 
-//            } 
-            
-  
-            
             rs.close(); 
             stmt.close(); 
             c.close(); 
@@ -185,19 +177,6 @@ public class GUI_Spielerprofil extends JFrame {
     } 
 	
 	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
 
     public static Vector createDataVector( String prefix, int size ){
         Vector vector = new Vector( size );
@@ -308,6 +287,12 @@ public class GUI_Spielerprofil extends JFrame {
 
 		lab_SpielHistorie.setBounds(87+110, 317, 200, 80);
 		cp.add(lab_SpielHistorie);
+		
+		// Erfolge
+//		erf_infobox.setBounds(140, 30, 150, 30);
+//		erf_infobox.setVisible(true);
+//		.add(erf_infobox);
+//		
 	}
 
 	private void createButtons() {
@@ -315,7 +300,7 @@ public class GUI_Spielerprofil extends JFrame {
 		JButton btn_uebersicht = new JButton();
 		JButton btn_spielverlauf = new JButton();
 		JButton btn_erfolge = new JButton();
-		
+				
 		btn_uebersicht.setBounds(10, 70, 105, 30);
 		btn_uebersicht.setText("Übersicht");
 		btn_uebersicht.setMargin(new Insets(0, 0, 0, 0));
@@ -331,7 +316,7 @@ public class GUI_Spielerprofil extends JFrame {
 		btn_erfolge.setBounds(10, 150, 105, 30);
 		btn_erfolge.setText("Erfolge");
 		btn_erfolge.setMargin(new Insets(0, 0, 0, 0));
-		btn_erfolge.setEnabled(false);
+		btn_erfolge.setEnabled(true);
 		cp.add(btn_erfolge);
 		btn_erfolge.addActionListener(e -> setProfilAktiv(3));
 		
@@ -429,7 +414,8 @@ public class GUI_Spielerprofil extends JFrame {
 		}
 		
 		if (aktiv == 2) {
-			getDB();
+			db.createDB();
+			getDB_Spiele();
 	         			
 			setProfilUebersicht(false);
 			setProfilErfolge(false);
@@ -460,13 +446,85 @@ public class GUI_Spielerprofil extends JFrame {
 	}
 	
 	private void setProfilSpielverlauf(boolean anAus) {
+
 		sPane.setVisible(anAus);		
 		tabelle.setVisible(anAus);
 	}
 	
 	private void setProfilErfolge(boolean anAus) {
-		//inaktiv
+		// TODO
+		
+
+		
+		initGUI_Erfolge();
+		panErfolge.setVisible(anAus);
+		
+		//db.insertDB_Erfolge();
+		Erfolge.getDB();
+		
+		
 	}
+
+	private void initGUI_Erfolge() {
+		
+		// Layout vom Panel "Erfolge" definieren
+		panErfolge.setLayout(null);
+		panErfolge.setBounds(10+115, 70, 400, 240);
+		panErfolge.setBackground(Color.GREEN);
+						
+		// Btn_Erfolge_ID erzeugen & panErfolge hinzufügen
+		int id=0;							// Nummer zur Beschriftung
+		for (int i=0; i<3; i++) {
+			for (int j=0; j<5; j++) {
+				btn_erf[i] = new JButton();
+				btn_erf[i].setBounds(0+j*81, 55+i*81, 76, 76);
+				btn_erf[i].setText("Erf_"+id);
+				btn_erf[i].setMargin(new Insets(0, 0, 0, 0));
+				btn_erf[i].setEnabled(false);
+				panErfolge.add(btn_erf[i]);
+				id=id+1;
+			}
+		}
+		
+		// Infobox an panErfolge definieren & hinzufügen
+		erf_infobox.setBounds(0, 0, 400, 50);
+		panErfolge.add(erf_infobox);
+		
+		// Scollbar panErfolge hinzufügen
+		JScrollPane sPaneX = new JScrollPane(panErfolge, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		sPaneX.setLayout(null);
+		sPaneX.setBounds(0, 0, 200, 200);
+		sPaneX.setBackground(Color.RED);
+		//panErfolge.add(sPaneE);
+		
+		// Panel "Erfolge" dem (Grund)Container hinzufügen
+		cp.add(panErfolge);
+	}
+
+
+
+	public static void setErfolgAn(String i) {
+		// TODO Auto-generated method stub
+		System.out.println(i);
+		
+		switch (i) {
+		case "1": btn_erf_1.setEnabled(true); break; 
+		case "2": btn_erf_2.setEnabled(true); break; 
+		case "3": btn_erf_3.setEnabled(true); break;
+		case "4": btn_erf_4.setEnabled(true); break;
+		case "5": btn_erf_5.setEnabled(true); break;
+		case "6": btn_erf_6.setEnabled(true); break;
+		case "7": btn_erf_7.setEnabled(true); break;
+		case "8": btn_erf_8.setEnabled(true); break;
+		case "9": btn_erf_9.setEnabled(true); break;
+		case "0": btn_erf_10.setEnabled(true); break;
+		
+		default: System.out.println("Error kein Erfolge-Button");; 
+		}
+	}
+
+
 
 	public void updateGUI_Spielerprofil() {
 

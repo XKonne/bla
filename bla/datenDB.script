@@ -1,4 +1,4 @@
-SET DATABASE UNIQUE NAME HSQLDB6156730EEB
+SET DATABASE UNIQUE NAME HSQLDB628DC8CD92
 SET DATABASE GC 0
 SET DATABASE DEFAULT RESULT MEMORY ROWS 0
 SET DATABASE EVENT LOG LEVEL 0
@@ -32,7 +32,9 @@ CREATE USER "jb" PASSWORD DIGEST '202cb962ac59075b964b07152d234b70'
 ALTER USER "jb" SET LOCAL TRUE
 CREATE SCHEMA PUBLIC AUTHORIZATION DBA
 SET SCHEMA PUBLIC
-CREATE MEMORY TABLE PUBLIC.USERS(SPIEL_ID INTEGER NOT NULL,MODUS CHARACTER(20),SCHWIERIGKEIT CHARACTER(20),MINEN INTEGER NOT NULL,ERGEBNIS CHARACTER(20))
+CREATE MEMORY TABLE PUBLIC.SPIELE(SPIEL_ID CHARACTER(4),MODUS CHARACTER(20),SCHWIERIGKEIT CHARACTER(20),MINEN CHARACTER(3),ERGEBNIS CHARACTER(20))
+CREATE MEMORY TABLE PUBLIC.SPIELER(SPIELERNAME CHARACTER(4))
+CREATE MEMORY TABLE PUBLIC.ERFOLGE(ID_ERFOLGE CHARACTER(1),ERREICHT CHARACTER(1))
 ALTER SEQUENCE SYSTEM_LOBS.LOB_ID RESTART WITH 1
 SET DATABASE DEFAULT INITIAL SCHEMA PUBLIC
 GRANT USAGE ON DOMAIN INFORMATION_SCHEMA.SQL_IDENTIFIER TO PUBLIC
@@ -44,31 +46,21 @@ GRANT DBA TO "jb"
 SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
-INSERT INTO USERS VALUES(1,'Klassik             ','Leicht              ',10,'Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO SPIELE VALUES('1   ','Klassik             ','Leicht              ','10 ','Sieg                ')
+INSERT INTO ERFOLGE VALUES('1','0')
+INSERT INTO ERFOLGE VALUES('2','1')
+INSERT INTO ERFOLGE VALUES('3','0')
+INSERT INTO ERFOLGE VALUES('4','0')
+INSERT INTO ERFOLGE VALUES('5','1')
+INSERT INTO ERFOLGE VALUES('6','1')
+INSERT INTO ERFOLGE VALUES('7','0')
+INSERT INTO ERFOLGE VALUES('8','0')
+INSERT INTO ERFOLGE VALUES('9','1')
+INSERT INTO ERFOLGE VALUES('0','0')
+INSERT INTO ERFOLGE VALUES('1','0')
